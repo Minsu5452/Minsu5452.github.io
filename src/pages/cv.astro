@@ -3,16 +3,47 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
 ---
 
-<BaseLayout title="Resume" sideBarActiveItemID="cv">
+<BaseLayout title="CV · 강민수" sideBarActiveItemID="cv">
   <div class="mb-5">
     <div class="text-3xl w-full font-bold">Profile</div>
   </div>
 
   <div class="mb-10 text-justify">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    데이터 분석·예측 모델링·서비스 구현을 실제 문제에 연결하는 데이터 사이언티스트입니다.
+    교통·해양·법률 등 여러 도메인에서 ML 모델·LLM/RAG 시스템·웹 서비스를 단독으로 설계·개발한 경험이 있고,
+    현재 데이콘에서 대회·해커톤 기획·운영과 AI 시스템 개발을 함께 다루고 있습니다.
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Contact</div>
+  </div>
+
+  <ul class="list-disc mx-6 mb-10 grid gap-2">
+    <li><b>Email:</b> <a href="mailto:daro980722@gmail.com" class="link">daro980722@gmail.com</a> · <a href="mailto:daro98@naver.com" class="link">daro98@naver.com</a></li>
+    <li><b>GitHub:</b> <a href="https://github.com/Minsu5452" target="_blank" class="link">github.com/Minsu5452</a></li>
+    <li><b>DACON:</b> <a href="https://dacon.io/myprofile/457768/home" target="_blank" class="link">dacon.io/myprofile/457768/home</a></li>
+  </ul>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Work Experience</div>
+  </div>
+
+  <div class="time-line-container mb-10">
+    <TimeLineElement
+      title="데이콘 · Data Science팀 매니저"
+      subtitle="2025.12.29 – 현재"
+    >
+      대회 기획 및 운영. AI 평가 시스템 개발 (LLM Council 채점, FastAPI/Redis/asyncio).
+      행안부·NIA·한국교통안전공단 위탁사업으로 운수종사자 교통사고 위험 예측 모델·관리 웹 단독 개발.
+    </TimeLineElement>
+    <TimeLineElement
+      title="슈어소프트테크 · AX응용기술팀 AI 개발자 (인턴)"
+      subtitle="2025.06.02 – 2025.11.30"
+    >
+      해양사고 위험 예측 시스템 (격자×시간, LightGBM + SHAP + FastAPI/Streamlit/Docker) 단독 개발.
+      해양 법령 도메인 RAG (CDX, GraphRAG + LangGraph + EXAONE GGUF) 단독 개발.
+      KT 에이전트 검증 데이터셋 구축.
+    </TimeLineElement>
   </div>
 
   <div class="mb-5">
@@ -21,38 +52,99 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
 
   <div class="time-line-container grid gap-4 mb-10">
     <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
-    />
-    <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
+      title="국민대학교 · AI빅데이터융합경영학과 (심화전공) 학사"
+      subtitle="2018.03 – 2024.08 졸업"
     />
   </div>
 
   <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Experience</div>
+    <div class="text-3xl w-full font-bold">Awards</div>
   </div>
 
   <div class="time-line-container mb-10">
     <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
+      title="법원 판결 예측 AI 경진대회 · 2등"
+      subtitle="2023.07.26 · 데이콘 주최/주관 · 5인팀(팀장)"
+    />
     <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
+      title="유전체 정보 품종 분류 AI 경진대회 · 1등"
+      subtitle="2023.02.14 · 충남대학교 바이오AI융합연구센터 주최 · 데이콘 주관 · 3인팀(팀장)"
+    />
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Competitions</div>
+  </div>
+
+  <div class="time-line-container mb-10">
     <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
+      title="제3회 국민대학교 AI빅데이터 분석 경진대회 · 50등"
+      subtitle="2025.11.10 – 2025.11.28 · 2인팀(팀장)"
+    />
+    <TimeLineElement
+      title="운수종사자 인지적 특성 데이터 활용 교통사고 위험 예측 AI 경진대회 · 34등"
+      subtitle="2025.10.13 – 2025.11.14 · 행정안전부·NIA 주최 · 한국교통안전공단 주관 · 개인"
+    />
+    <TimeLineElement
+      title="HD현대 AI Challenge · 예선 2등 / 본선 6등"
+      subtitle="2023.09.25 – 2023.10.30 · HD한국조선해양 AI Center 주최 · 데이콘 주관 · 3인팀(팀장)"
+    />
+    <TimeLineElement
+      title="2023 전력사용량 예측 AI 경진대회 · 107등"
+      subtitle="2023.07.17 – 2023.08.28 · 한국에너지공단 주최 · 데이콘 주관 · 3인팀(팀장)"
+    />
+    <TimeLineElement
+      title="온라인 채널 제품 판매량 예측 AI 온라인 해커톤 · 예선 12등 / 본선 24등"
+      subtitle="2023.08.01 – 2023.08.28 · LG AI Research 주최 · 데이콘 주관 · 4인팀(팀원) · LG Aimers 연계"
+    />
+    <TimeLineElement
+      title="감귤 착과량 예측 AI 경진대회 · 17등"
+      subtitle="2022.12.12 – 2022.12.14 · 제주테크노파크 주최 · 데이콘 주관 · 3인팀(팀장)"
+    />
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Publications</div>
+  </div>
+
+  <div class="time-line-container mb-10">
+    <TimeLineElement
+      title="SNP 정보를 활용한 유전체 품종 분류 모델링에 대한 연구"
+      subtitle="2023.02.09 – 2023.02.10 · 에이아이프렌즈학회 · 2023년 제2차 실용 인공지능 학술대회"
     >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+      연구 논문 제출 및 학술대회 발표.
     </TimeLineElement>
+  </div>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Activities</div>
+  </div>
+
+  <div class="time-line-container mb-10">
+    <TimeLineElement
+      title="국민대학교 경영대학 · 연결고리 14기 멘티"
+      subtitle="2023.10.06 – 2023.11.23 · 현업 동문 선배 진로 멘토링 프로그램"
+    />
+    <TimeLineElement
+      title="BDA (현 BDAI, 대학생 연합 빅데이터 학회) · 7기 데이터 분석 고급반 수료"
+      subtitle="2023.09.01 – 2024.03.31"
+    />
+    <TimeLineElement
+      title="LG AI Research · LG Aimers 3기 교육생"
+      subtitle="2023.07.01 – 2023.09.27 · LG 청년 AI 인재 양성 프로그램"
+    />
+    <TimeLineElement
+      title="D&A (국민대학교 빅데이터 분석 학회) · 딥러닝 세션"
+      subtitle="2023.03.01 – 2023.12.31"
+    />
+    <TimeLineElement
+      title="D&A · 머신러닝 세션"
+      subtitle="2022.03.01 – 2022.12.31"
+    />
+    <TimeLineElement
+      title="D&A · Python 기초 스터디"
+      subtitle="2021.12.01 – 2022.01.31"
+    />
   </div>
 
   <div class="mb-5">
@@ -60,33 +152,79 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <ul class="list-disc mx-6 mb-10 grid gap-2">
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
+    <li>제12회 빅데이터분석기사 (필기) · 한국데이터산업진흥원 · 2026.04.24</li>
+    <li>제60회 SQL 개발자 (SQLD) · 한국데이터산업진흥원 · 2026.03.27</li>
+  </ul>
+
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Languages</div>
+  </div>
+
+  <ul class="list-disc mx-6 mb-10 grid gap-2">
+    <li>TOEIC Speaking Test · Intermediate Mid 3 (130점) · 2025.02.22</li>
   </ul>
 
   <div class="mb-5">
     <div class="text-3xl w-full font-bold">Skills</div>
   </div>
 
-  <ul class="list-disc md:columns-5 columns-2 mx-6">
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-  </ul>
+  <div class="grid md:grid-cols-2 gap-4 mb-10">
+    <div>
+      <div class="font-semibold mb-2">Languages</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">Python</span>
+        <span class="badge badge-outline">SQL</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">ML / DL</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">PyTorch</span>
+        <span class="badge badge-outline">scikit-learn</span>
+        <span class="badge badge-outline">LightGBM</span>
+        <span class="badge badge-outline">XGBoost</span>
+        <span class="badge badge-outline">CatBoost</span>
+        <span class="badge badge-outline">SHAP</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">LLM / RAG</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">LangChain</span>
+        <span class="badge badge-outline">LangGraph</span>
+        <span class="badge badge-outline">Hugging Face</span>
+        <span class="badge badge-outline">FAISS</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Backend</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">FastAPI</span>
+        <span class="badge badge-outline">Spring Boot (eGovFrame)</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Frontend</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">React (Vite, Mantine)</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Data / Viz</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">Pandas</span>
+        <span class="badge badge-outline">NumPy</span>
+        <span class="badge badge-outline">Streamlit</span>
+        <span class="badge badge-outline">Matplotlib</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-semibold mb-2">Infra</div>
+      <div class="flex flex-wrap gap-2">
+        <span class="badge badge-outline">Docker</span>
+        <span class="badge badge-outline">Redis</span>
+        <span class="badge badge-outline">Nginx</span>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
