@@ -1,289 +1,117 @@
-# Astrofy | Personal Portfolio Website Template
+# 강민수 · Minsu Kang Portfolio
 
-![Astrofy | Personal Porfolio Website Template](public/social_img.webp)
+> 데이터로 문제를 풀고, 서비스로 만듭니다.
 
-Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS. Create in minutes a website with a Blog, CV, Project Section, Store, and RSS Feed.
+개인 포트폴리오 사이트의 소스 레포입니다. Astro + Tailwind + DaisyUI 기반으로 작성됐고, GitHub Actions로 빌드되어 GitHub Pages에 자동 배포됩니다.
 
-## Demo
+- **라이브 사이트**: <https://minsu5452.github.io>
+- **GitHub 프로필**: <https://github.com/Minsu5452>
 
-View a live demo of [Astrofy](https://astrofy-template.netlify.app/)
+## 페이지 구성
 
-## Installation
+| 경로 | 설명 |
+| --- | --- |
+| `/` | Home — 인사말, 대표 프로젝트 5장 |
+| `/projects/` | Projects — Work / Awards / Competitions / Academic 4개 탭, 총 20개 프로젝트 |
+| `/projects/<slug>/` | 프로젝트 상세 — 기간·역할·소속, 배경/접근/결과, 기술 스택, GitHub 링크 |
+| `/cv/` | CV — Profile, Work Experience, Education, Awards, Competitions, Publications, Activities, Certifications, Languages, Skills (인쇄 친화 CSS 포함) |
 
-Run the following command in your terminal
+## 기술 스택
+
+- **Framework**: [Astro 4](https://astro.build)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/) + [DaisyUI](https://daisyui.com/)
+- **Font**: [Pretendard Variable](https://github.com/orioncactus/pretendard) (본문) + JetBrains Mono (모노스페이스 액센트)
+- **배포**: GitHub Actions → GitHub Pages (`.github/workflows/deploy.yml`)
+
+## 프로젝트 데이터 구조
+
+모든 프로젝트(20개)는 `src/data/projects.ts` 한 파일에서 관리합니다. 홈, 프로젝트 목록, 프로젝트 상세 페이지가 같은 데이터를 참조해 정보 불일치를 차단합니다.
+
+```ts
+// src/data/projects.ts
+export interface Project {
+  slug: string;
+  title: string;
+  category: "work" | "award" | "comp" | "academic";
+  badge: string;       // 예: "2026 · 데이콘"
+  period: string;      // 예: "2026.01 – 진행 중"
+  role: string;
+  team: string;
+  org: string;
+  summary: string;
+  hero?: string;       // /projects/<name>.svg
+  color?: string;      // 도메인 액센트 색
+  github?: string;
+  external?: { label: string; url: string }[];
+  stack: string[];
+  body: { heading: string; text: string }[];
+  featured?: boolean;
+  featuredOrder?: number;
+}
+```
+
+`featured: true` 표시된 프로젝트가 홈의 "대표 프로젝트" 5장으로 노출됩니다.
+
+## 디렉터리 구조
+
+```
+src/
+├── components/
+│   ├── cv/TimeLine.astro
+│   ├── BaseHead.astro       # 공유 메타 (canonical, OG, Schema.org)
+│   ├── Footer.astro
+│   ├── Header.astro
+│   ├── HorizontalCard.astro # 프로젝트 카드 (hero + badge + 호버)
+│   ├── SideBar.astro
+│   ├── SideBarFooter.astro
+│   └── SideBarMenu.astro
+├── data/
+│   └── projects.ts          # 모든 프로젝트의 단일 소스
+├── layouts/
+│   └── BaseLayout.astro
+├── pages/
+│   ├── 404.astro
+│   ├── cv.astro
+│   ├── index.astro
+│   ├── projects.astro
+│   └── projects/[slug].astro # 동적 디테일 페이지
+├── styles/
+│   └── global.css           # 폰트, 탭 스택, 인쇄 CSS
+└── config.ts                # 사이트 제목, 설명
+
+public/
+├── favicon.svg              # MK 이니셜
+├── og-default.svg / .png    # 1200x630 공유 이미지
+├── profile.png / .webp
+└── projects/<slug>.svg      # 프로젝트별 hero 일러스트 20장
+```
+
+## 로컬 실행
 
 ```bash
-pnpm install
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # dist/ 정적 빌드
+npm run preview  # 빌드 결과 미리보기
 ```
 
-Once the packages are installed you are ready to run astro. Astro comes with a built-in development server that has everything you need for project development. The astro dev command will start the local development server so that you can see your new website in action for the very first time.
+## 배포
 
-```bash
-pnpm run dev
-```
+`main` 브랜치로 push하면 `.github/workflows/deploy.yml`이 자동 실행됩니다.
 
-## Tech Stack
+1. Astro 정적 빌드 (`npm run build`)
+2. `dist/` 산출물을 `actions/deploy-pages@v4`로 업로드
+3. GitHub Pages가 1–2분 내 반영
 
-- [Astro](https://astro.build)
-- [tailwindcss](https://tailwindcss.com/)
-- [DaisyUI](https://daisyui.com/)
+## SEO / 공유 메타
 
-## Project Structure
+- **Schema.org**: Person + WebSite JSON-LD
+- **Open Graph**: `og:image` 1200×630 PNG, `og:locale=ko_KR`, `og:site_name`
+- **canonical**: 페이지별 절대 URL
+- **theme-color**: `#0f172a`
 
-```php
-├── src/
-│   ├── components/
-│   │   ├── cv/
-│   │   │   ├── TimeLine
-│   │   ├── BaseHead.astro
-│   │   ├── Card.astro
-│   │   ├── Footer.astro
-│   │   ├── Header.astro
-│   │   └── HorizontalCard.astro
-│   │   └── SideBar.astro
-│   │   └── SideBarMenu.astro
-│   │   └── SideBarFooter.astro
-│   ├── content/
-│   │   ├── blog/
-│   │   │   ├── post1.md
-│   │   │   ├── post2.md
-│   │   │   └── post3.md
-│   │   ├── store/
-│   │   │   ├── item1.md
-│   │   │   ├── item2.md
-│   ├── layouts/
-│   │   └── BaseLayout.astro
-│   │   └── PostLayout.astro
-│   └── pages/
-│   │   ├── blog/
-│   │   │   ├── [...page].astro
-│   │   │   ├── [slug].astro
-│   │   └── cv.astro
-│   │   └── index.astro
-│   │   └── projects.astro
-│   │   └── rss.xml.js
-│   ├── styles/
-│   │   └── global.css
-│   └── config.ts
-├── public/
-│   ├── favicon.svg
-│   └── profile.webp
-│   └── social_img.webp
-├── astro.config.mjs
-├── tailwind.config.cjs
-├── package.json
-└── tsconfig.json
-```
+## 라이선스
 
-### Site config
+코드는 본 레포 소유. 콘텐츠(이력·프로젝트 설명·이미지)는 강민수 본인 자료입니다.
 
-You can change global site configuration on '/src/config.ts' file:
-
-- **SITE_TITLE**: Default pages title.
-- **SITE_DESCRIPTION**: Default pages title.
-- **GENERATE_SLUG_FROM_TITLE**: By default Astrofy will generate the blog slug pages base on the article name. Set this var to false if you want to use the Astro file base (Compatible with Astrofy older versions).
-- **TRANSITION_API**: Enable and disable transition API
-
-### Components usage
-
-#### Layout Components
-
-The `BaseHead`, `Footer`, `Header`, and `SideBar` components are already included in the layout system. To change the website content you can edit the content of these components.
-
-##### SideBar
-
-In the Sidebar you can change your profilePicture, links to all your website pages, and your social icons.
-
-You can change your avatar shape using [mask classes](https://daisyui.com/components/mask/).
-
-The used social-icons are SVG form [BoxIcons](https://boxicons.com/) pack. You can replace the icons in the `SideBarFooter` component
-
-To add a new page in the sidebar go to the `SideBarMenu` component.
-
-```
-<li><a class="py-3 text-base" id="home" href="/">Home</a></li>
-
-```
-
-**Note**: In order to change the sidebar menu's active item, you need to setup the prop `sideBarActiveItemID` in the `BaseLayout` component of your new page and add that id to the link in the `SideBarMenu`
-
-#### TimeLine
-
-The timeline components are used to confirm the CV.
-
-```html
-<div class="time-line-container">
-  <TimeLineElement title="Element Title" subtitle="Subtitle">
-    Content that can contain
-    <div>divs</div>
-    and <span>anything else you want</span>.
-  </TimeLineElement>
-  ...
-</div>
-```
-
-#### Card & HorizontalCard
-
-The cards are primarly used for the Project and the Blog components. They include a picture, a title, and a description. 
-
-```html
-<HorizontalCard title="Card Title" img="imge_url" desc="Description" url="Link
-URL" target="Optional link target (_blank default)" badge="Optional badge"
-tags={['Array','of','tags']} />
-```
-
-#### HorizontalCard Shop Item
-
-
-This component is already included in the Store layout of the template. In case you want to use it in another place these are the props.
-
-```html
-<HorizontalShopItem
-  title="Item Title"
-  img="imge_url"
-  desc="Item description"
-  pricing="current_price"
-  oldPricing="old_price"
-  checkoutUrl="external store checkout url"
-  badge="Optional badge"
-  url="item details url"
-  custom_link="Custom link url"
-  custom_link_label="Cutom link btn label"
-  target="Optional link target (_self default)"
-/>
-```
-
-#### Adding a Custom Component
-
-To add a custom component, you can create a .astro file in the components folder under the source folder. 
-
-Components must follow this template. The ```---``` represents the code fence and uses Javascript and can be used for imports. 
-
-The HTML component is the actual style of your new component. 
-
-```html
----
-// Component Script (JavaScript)
----
-<!-- Component Template (HTML + JS Expressions) -->
-```
-
-For more details, see the [astro components](https://docs.astro.build/en/core-concepts/astro-components/) documentation here. 
-
-### Layouts
-
-Include `BaseLayout` in each page you add and `PostLayout` to your post pages.
-
-The BaseLayout defines a general template for each new webpage you want to add. It imports constants SITE_TITLE and SITE_DESCRIPTION which can be modified in the ```../config``` folder. Data placed there can be imported anywhere using import. 
-
-### Content
-
-You can add a [content collection](https://docs.astro.build/en/guides/content-collections/) in `/content/' folder, you will need add it at config.ts.
-
-#### config.ts
-
-Where you need to define your content collections, we define our content schemas too.
-
-#### Blog
-
-Add your `md` blog post in the `/content/blog/` folder.
-
-##### Post format
-
-Add code with this format in the top of each post file.
-
-```
----
-title: "Post Title"
-description: "Description"
-pubDate: "Post date format(Sep 10 2022)"
-heroImage: "Post Hero Image URL"
----
-```
-
-### Pages
-
-#### Blog
-
-Blog uses Astro's content collection to query post's `md`.
-
-##### [page].astro
-
-The `[page].astro` is the route to work with the paginated post list. You can change there the number of items listed for each page and the pagination button labels.
-
-##### [slug].astro
-
-The `[slug].astro` is the base route for every blog post, you can customize the page layout or behaviour, by default uses `content/blog` for content collection and `PostLayout` as layout.
-
-#### Shop
-
-Add your `md` item in the `/pages/shop/` folder.
-
-##### [page].astro
-
-The `[page].astro` is the route to work with the paginated item list. You can change there the number of items listed for each page and the pagination button labels. The shop will render all `.md` files you include inside this folder.
-
-##### Item format
-
-Add code with this format at the top of each item file.
-
-```js
----
-title: "Demo Item 1"
-description: "Item description"
-heroImage: "Item img url"
-details: true // show or hide details btn
-custom_link_label: "Custom btn link label"
-custom_link: "Custom btn link"
-pubDate: "Sep 15 2022"
-pricing: "$15"
-oldPricing: "$25.5"
-badge: "Featured"
-checkoutUrl: "https://checkouturl.com/"
----
-```
-
-#### Static pages
-
-The other pages included in the template are static pages. The `index` page belongs to the root page. You can add your pages directly in the `/pages` folder and then add a link to those pages in the `sidebar` component.
-
-Feel free to modify the content included in the pages that the template contains or add the ones you need.
-
-### Theming
-
-To change the template theme change the `data-theme` attribute of the `<html>` tag in `BaseLayout.astro` file.
-
-You can choose among 30 themes available or create your custom theme. See themes available [here](https://daisyui.com/docs/themes/).
-
-## Sitemap
-
-The Sitemap is generated automatically when you build your website in the root of the domain. Please update the `robots.txt` file in the public folder with your site name URL for the Sitemap.
-
-## Deploy
-
-You can deploy your site on your favourite static hosting service such as Vercel, Netlify, GitHub Pages, etc.
-
-The configuration for the deployment varies depending on the platform where you are going to do it. See the [official Astro information](https://docs.astro.build/en/guides/deploy/) to deploy your website.
-
-> **⚠️ CAUTION** </br>
-> The Blog pagination of this template is implemented using dynamic route parameters in its filename and for now this format is incompatible with SSR deploy configs, so please use the default static deploy options for your deployments.
-
-## Contributing
-
-Suggestions and pull requests are welcomed! Feel free to open a discussion or an issue for a new feature request or bug.
-
-One of the best ways to contribute is to grab a [bug report or feature suggestion](https://github.com/manuelernestog/astrofy/issues) that has been marked `accepted` and dig in.
-
-Please be wary of working on issues _not_ marked as `accepted`. Just because someone has created an issue doesn't mean we'll accept a pull request for it.
-
-## License
-
-Astrofy is licensed under the MIT license — see the [LICENSE](https://github.com/manuelernestog/astrofy/blob/main/LICENSE) file for details.
-
-## Contributors
-
-<a href="https://github.com/manuelernestog/astrofy/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=manuelernestog/astrofy" />
-</a>
-
-Made with [contrib.rocks](https://contrib.rocks).
+원본 템플릿은 [Astrofy](https://github.com/manuelernestog/astrofy) (MIT)를 기반으로 시작했습니다.
