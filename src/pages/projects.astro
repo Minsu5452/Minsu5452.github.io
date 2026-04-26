@@ -1,159 +1,80 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HorizontalCard from "../components/HorizontalCard.astro";
+import { projects } from "../data/projects";
+
+const tabs = [
+  { id: "work", label: "Work" },
+  { id: "award", label: "Awards" },
+  { id: "comp", label: "Competitions" },
+  { id: "academic", label: "Academic" },
+] as const;
+
+const grouped = {
+  work: projects.filter((p) => p.category === "work"),
+  award: projects.filter((p) => p.category === "award"),
+  comp: projects.filter((p) => p.category === "comp"),
+  academic: projects.filter((p) => p.category === "academic"),
+};
 ---
 
-<BaseLayout title="Projects · 강민수" sideBarActiveItemID="projects">
+<BaseLayout
+  title="Projects · 강민수"
+  description="강민수의 프로젝트 모음 — 업무 프로젝트, 수상 대회, 기타 경진대회, 학부 프로젝트."
+  sideBarActiveItemID="projects"
+>
   <div>
     <div class="text-3xl w-full font-bold mb-2">Projects</div>
-    <p class="text-sm opacity-70 mb-5">카드를 누르면 GitHub 저장소로 이동합니다.</p>
+    <p class="text-sm opacity-70 mb-5">카드를 누르면 프로젝트 상세 페이지로 이동합니다.</p>
   </div>
 
-  <div class="text-2xl w-full font-bold mb-3 mt-6">💼 Work Projects</div>
+  <div role="tablist" class="tabs tabs-bordered tabs-lg mb-6 text-base md:text-lg font-semibold">
+    {
+      tabs.map((t, i) => (
+        <button
+          role="tab"
+          class={`tab${i === 0 ? " tab-active" : ""}`}
+          data-tab={t.id}
+        >
+          {t.label}
+        </button>
+      ))
+    }
+  </div>
 
-  <HorizontalCard
-    title="LLM 평가 시스템 (Council 2단계 채점)"
-    desc="여러 LLM 응답을 Council 방식으로 2단계 채점. FastAPI + Redis Queue + asyncio. 데이콘 평가 인프라."
-    url="https://github.com/Minsu5452/LLM_Evaluation_System"
-    badge="2026 · 데이콘"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="운수종사자 교통사고 위험 예측 모델·관리 웹"
-    desc="행안부·NIA·한국교통안전공단 위탁사업. 2025년 경진대회 솔루션(34등/437팀)을 모델 기반으로 삼아 ML 모델 + 관리자 웹 (React/Vite/Mantine) + AI 엔진 (FastAPI) + 배포 (Spring Boot/eGovFrame, Nginx, Docker)까지 단독 개발."
-    url="https://github.com/Minsu5452/Driver_Risk_Web_Platform"
-    badge="2026 · 데이콘"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="해양사고 위험 예측 시스템"
-    desc="LightGBM 5-fold CV (OOF AUC=0.946) + SHAP + FastAPI + Streamlit pydeck 격자 대시보드 + Docker. 슈어소프트테크 AI융복합 프로젝트 재현."
-    url="https://github.com/Minsu5452/Marine_Accident_Risk_Prediction"
-    badge="2025 · 슈어소프트테크"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="해양 법령 도메인 RAG (CDX)"
-    desc="국가법령정보 OPEN API → 12개 해양 법령·394 조문. KR-SBERT + FAISS + BM25 hybrid + GraphRAG (1.2K nodes / 91K edges) + LangGraph 6-node workflow + EXAONE-3.5-2.4B GGUF (CPU)."
-    url="https://github.com/Minsu5452/Marine_Domain_RAG"
-    badge="2025 · 슈어소프트테크"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="KT 에이전트 검증 데이터셋 구축"
-    desc="KT 에이전트 시스템 검증용 데이터셋 큐레이션. 슈어소프트테크 인턴 시 참여. (회사 자산이라 별도 공개 레포 없음)"
-    url="https://github.com/Minsu5452"
-    badge="2025 · 슈어소프트테크"
-  />
+  <div class="tab-stack">
+    {
+      tabs.map((t, i) => (
+        <section data-tab-content={t.id} class={i === 0 ? "active" : ""}>
+          <div class="grid gap-4">
+            {grouped[t.id as keyof typeof grouped].map((p) => (
+              <HorizontalCard
+                title={p.title}
+                desc={p.summary}
+                url={`/projects/${p.slug}/`}
+                badge={p.badge}
+                hero={p.hero}
+                color={p.color}
+              />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
 
-  <div class="text-2xl w-full font-bold mb-3 mt-10">🏆 Award-winning Competitions</div>
-
-  <HorizontalCard
-    title="법원 판결 예측 AI 경진대회 · 2등"
-    desc="2023.07 · 데이콘 주최/주관 · 5인팀(팀장) · 506팀 참가. NLP·법률 도메인 텍스트 분류."
-    url="https://github.com/Minsu5452/Court_Judgment_Prediction"
-    badge="🥈 2등"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="유전체 정보 품종 분류 AI 경진대회 · 1등"
-    desc="2023.02 · 충남대 바이오AI융합연구센터 주최 · 데이콘 주관 · 3인팀(팀장) · 716팀 참가. SNP 데이터 기반 품종 분류. 학술대회 논문 발표 연계."
-    url="https://github.com/Minsu5452/Genomic_Data_Breed_Classification"
-    badge="🥇 1등"
-  />
-
-  <div class="text-2xl w-full font-bold mb-3 mt-10">🏅 Other Competitions</div>
-
-  <HorizontalCard
-    title="제3회 국민대학교 AI빅데이터 분석 경진대회 · 50등"
-    desc="2025.11 · 국민대 경영대학원·기계산업진흥회 주최 · 2인팀(팀장) · 960팀 참가. 산업 지표 lead-lag 예측, LightGBM + graph PageRank + community detection."
-    url="https://github.com/Minsu5452/Industrial_Lead_Lag_Forecasting"
-    badge="2025"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="운수종사자 인지적 특성 활용 교통사고 위험 예측 · 34등"
-    desc="2025.10 – 11 · 행안부·NIA 주최 · 한국교통안전공단 주관 · 개인 · 437팀 참가 (Top 7.8%). LightGBM + CatBoost, StratifiedGroupKFold. 이후 Driver_Risk_Web_Platform의 모델 기반."
-    url="https://github.com/Minsu5452/Driver_Cognitive_Risk_Prediction"
-    badge="2025"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="HD현대 AI Challenge · 예선 2등 / 본선 6등"
-    desc="2023.09 – 10 · HD한국조선해양 AI Center 주최 · 데이콘 주관 · 3인팀(팀장) · 예선 330팀/본선 11팀. 선박 대기시간 예측, XGBoost·CatBoost ensemble (예선) → LightGBM (본선)."
-    url="https://github.com/Minsu5452/Ship_Waiting_Time_Prediction"
-    badge="2023"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="2023 전력사용량 예측 AI 경진대회"
-    desc="한국에너지공단 주최 · 데이콘 주관 · 3인팀(팀장) · 1233팀 중 107등."
-    url="https://github.com/Minsu5452/Power_Consumption_Forecasting"
-    badge="2023"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="LG 온라인 채널 제품 판매량 예측 해커톤"
-    desc="LG AI Research 주최 · 데이콘 주관 · 4인팀(팀원). 예선 12등 / 본선 24등 · LG Aimers 연계."
-    url="https://github.com/Minsu5452/LG_Online_Sales_Forecasting"
-    badge="2023"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="2023 스마트농업 AI 경진대회"
-    desc="농림축산식품부 주최 · 농림수산식품교육문화정보원 주관 · 4인팀(팀장) · BDA 연계."
-    url="https://github.com/Minsu5452/Smart_Farm_Yield_Energy_Prediction"
-    badge="2023"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="감귤 착과량 예측 AI 경진대회"
-    desc="제주테크노파크 주최 · 데이콘 주관 · 3인팀(팀장) · 257팀 중 17등."
-    url="https://github.com/Minsu5452/Citrus_Yield_Prediction"
-    badge="2022"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="2023 지역 치안 안전 데이터 분석 공모전"
-    desc="경찰대학 주최/주관 · 개인."
-    url="https://github.com/Minsu5452/Traffic_Accident_Prediction"
-    badge="2023"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="제7회 롯데멤버스 빅데이터 경진대회"
-    desc="롯데멤버스 주최/주관 · 3인팀(팀원)."
-    url="https://github.com/Minsu5452/Lotte_Members_Customer_Analytics"
-    badge="2022"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="제3회 소외계층을 위한 AI활용 아이디어 공모전"
-    desc="한국원격대학협의회 주최/주관 · 4인팀(팀원) · BDA 연계."
-    url="https://github.com/Minsu5452/Supporting_Marginalized_Communities"
-    badge="2023"
-  />
-
-  <div class="text-2xl w-full font-bold mb-3 mt-10">🎓 Academic Projects</div>
-
-  <HorizontalCard
-    title="국민대 / 정릉시장 주변 맛집 리뷰 토픽 모델링"
-    desc="2022.09 – 12 · 학부 텍스트 데이터 분석 수업 · 개인. 웹 크롤링 + LSA / LDA."
-    url="https://github.com/Minsu5452/Restaurant_Topic_Modeling"
-    badge="학부"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Colorization SOTA 모델 Fine-tuning"
-    desc="2022.09 – 12 · 학부 딥러닝 수업 · 팀원. ChromaGAN / DeOldify / InstColorization."
-    url="https://github.com/Minsu5452/DL_Team_Project"
-    badge="학부"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="머신러닝 팀프로젝트 (kml2022s)"
-    desc="2022.03 – 06 · 학부 머신러닝 수업 내 Kaggle 컴페티션 · 팀장."
-    url="https://github.com/Minsu5452/ML_Team_Project"
-    badge="학부"
-  />
+  <script is:inline>
+    document.querySelectorAll('[data-tab]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = btn.dataset.tab;
+        document.querySelectorAll('[data-tab]').forEach((b) => {
+          b.classList.toggle('tab-active', b === btn);
+        });
+        document.querySelectorAll('[data-tab-content]').forEach((c) => {
+          c.classList.toggle('active', c.dataset.tabContent === target);
+        });
+      });
+    });
+  </script>
 </BaseLayout>

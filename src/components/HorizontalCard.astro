@@ -1,33 +1,53 @@
 ---
-const { title, img, desc, url, badge, tags, target = "_blank" } = Astro.props;
-import { Image } from "astro:assets";
-const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
+const {
+  title,
+  hero,
+  desc,
+  url,
+  badge,
+  tags,
+  target = "_self",
+  color,
+} = Astro.props;
+const tag_url = url && url.startsWith("http")
+  ? url.split("/").slice(0, -1).join("/") + "/tag"
+  : "";
+const accent = color ?? "rgba(99, 102, 241, 0.4)";
 ---
 
 <div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+  class="group relative overflow-hidden rounded-xl border border-base-300 bg-base-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_10px_28px_-14px_rgba(0,0,0,0.2)] active:translate-y-0 active:scale-[0.995]"
+  style={`--accent:${accent};`}
 >
-  <a href={url} target={target}>
-    <div class="hero-content flex-col md:flex-row">
+  <span
+    class="pointer-events-none absolute inset-x-0 top-0 h-[3px] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+    style="background:var(--accent);"
+    aria-hidden="true"
+  ></span>
+  <a href={url} target={target} class="block">
+    <div class="flex flex-col md:flex-row md:items-stretch">
       {
-        img && (
-          <Image
-            src={img}
-            width={750}
-            height={422}
-            format="webp"
-            alt={title}
-            class="max-w-full md:max-w-[13rem] rounded-lg"
-          />
+        hero && (
+          <div class="md:w-[14rem] md:flex-shrink-0 p-4 md:pr-0">
+            <img
+              src={hero}
+              width="320"
+              height="200"
+              alt={title}
+              loading="lazy"
+              decoding="async"
+              class="h-32 w-full md:h-full md:max-h-[10rem] rounded-lg object-cover"
+            />
+          </div>
         )
       }
-      <div class="grow w-full">
-        <h1 class="text-xl font-bold">
+      <div class="grow w-full p-5 md:p-6">
+        <h3 class="text-lg md:text-xl font-bold leading-snug">
           {title}
-          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
-        </h1>
-        <p class="py-1 text-1xl">{desc}</p>
-        <div class="card-actions justify-end">
+          {badge && <span class="badge badge-secondary ml-2 align-middle font-mono text-xs">{badge}</span>}
+        </h3>
+        {desc && <p class="py-1 text-sm md:text-base opacity-80">{desc}</p>}
+        <div class="card-actions justify-end mt-2">
           {
             tags &&
               tags.map((tag) => (
@@ -39,5 +59,9 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
         </div>
       </div>
     </div>
+    <span
+      class="pointer-events-none absolute right-4 top-4 text-base-content/40 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+      aria-hidden="true"
+    >→</span>
   </a>
 </div>

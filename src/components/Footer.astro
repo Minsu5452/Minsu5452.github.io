@@ -2,15 +2,9 @@
 const today = new Date();
 ---
 
-<footer class="footer footer-center block mb-5 pt-10">
-  <div class="pb-2">
-    &copy; {today.getFullYear()} Minsu Kang
-  </div>
-  <div class="inline opacity-75">
-    Built with
-    <a href="https://astrofy-template.netlify.app/" target="_blank" class="font-bold">Astrofy</a>
-    &middot;
-    <a href="https://astro.build/" target="_blank" class="font-bold">Astro</a>
+<footer class="footer footer-center block mb-5 pt-10 print:hidden">
+  <div class="pb-2 opacity-75 text-sm">
+    &copy; {today.getFullYear()} Minsu Kang. All rights reserved.
   </div>
 </footer>
 <style></style>

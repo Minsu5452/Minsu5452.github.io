@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" role="img" aria-label="롯데멤버스 빅데이터">
+  <defs>
+    <linearGradient id="lm-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe4e6"/>
+      <stop offset="1" stop-color="#fecdd3"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" rx="14" fill="url(#lm-bg)"/>
+  <g transform="translate(60 60)">
+    <circle cx="40" cy="20" r="16" fill="#be123c"/>
+    <path d="M16 60 Q16 40 40 40 Q64 40 64 60 L64 80 L16 80 Z" fill="#be123c"/>
+    <circle cx="100" cy="20" r="14" fill="#e11d48" opacity="0.85"/>
+    <path d="M80 56 Q80 42 100 42 Q120 42 120 56 L120 78 L80 78 Z" fill="#e11d48" opacity="0.85"/>
+    <circle cx="160" cy="22" r="12" fill="#f43f5e" opacity="0.7"/>
+    <path d="M144 54 Q144 44 160 44 Q176 44 176 54 L176 76 L144 76 Z" fill="#f43f5e" opacity="0.7"/>
+  </g>
+  <g transform="translate(36 152)" font-family="ui-monospace, monospace" font-size="11" fill="#881337" opacity="0.7">
+    <text x="0" y="0">customer segments · RFM</text>
+  </g>
+</svg>

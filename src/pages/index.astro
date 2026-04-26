@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HorizontalCard from "../components/HorizontalCard.astro";
+import { featuredProjects } from "../data/projects";
 ---
 
 <BaseLayout sideBarActiveItemID="home">
   <div class="pb-12 mt-5">
-    <div class="text-xl py-1">안녕하세요 👋</div>
     <div class="text-5xl font-bold">강민수 · Minsu Kang</div>
     <div class="text-3xl py-3 font-bold">데이터로 문제를 풀고, 서비스로 만듭니다.</div>
     <div class="py-2">
@@ -15,45 +15,42 @@ import HorizontalCard from "../components/HorizontalCard.astro";
         최근에는 <b>대회·해커톤 기획·운영</b>과 <b>AI 시스템 개발</b>을 함께 다루고 있습니다.
       </p>
     </div>
-    <div class="mt-8">
-      <a class="btn" href="/cv">CV 보기</a>
-      <a class="btn btn-outline ml-3" href="/projects">Projects</a>
-      <a class="btn btn-outline ml-3" href="https://github.com/Minsu5452" target="_blank">GitHub</a>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a class="btn btn-outline" href="/projects">Projects</a>
+      <a class="btn btn-outline" href="/cv">CV</a>
+      <a
+        class="btn btn-outline gap-1"
+        href="https://github.com/Minsu5452"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+        </svg>
+      </a>
     </div>
   </div>
 
   <div>
     <div class="text-3xl w-full font-bold mb-2">대표 프로젝트</div>
-    <p class="text-sm opacity-70 mb-5">카드를 누르면 GitHub 저장소로 이동합니다.</p>
+    <p class="text-sm opacity-70 mb-5">카드를 누르면 프로젝트 상세 페이지로 이동합니다.</p>
   </div>
 
-  <HorizontalCard
-    title="해양사고 위험 예측 시스템"
-    desc="해양사고 위험을 사전에 식별하기 위한 예측 시스템.LightGBM 5-fold CV (OOF AUC=0.946) + SHAP + FastAPI + Streamlit 대시보드 + Docker. 슈어소프트테크 AI융복합 프로젝트 재현."
-    url="https://github.com/Minsu5452/Marine_Accident_Risk_Prediction"
-    badge="2025"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="해양 법령 도메인 RAG (CDX)"
-    desc="국가법령정보 OPEN API 기반 12개 해양 법령·394 조문. KR-SBERT + FAISS + BM25 hybrid + GraphRAG + LangGraph 6-node workflow + EXAONE-3.5-2.4B GGUF (CPU). 슈어소프트테크 CDX 재현."
-    url="https://github.com/Minsu5452/Marine_Domain_RAG"
-    badge="2025"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="LLM 평가 시스템 (Council 2단계)"
-    desc="여러 LLM의 응답을 Council 방식으로 2단계 채점. FastAPI + Redis Queue + asyncio. 데이콘 사내 평가 인프라."
-    url="https://github.com/Minsu5452/LLM_Evaluation_System"
-    badge="2026"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="운수종사자 교통사고 위험 예측 모델·관리 웹"
-    desc="행안부·NIA·한국교통안전공단 위탁사업. ML 모델 + 관리자 웹 + AI 엔진 + 배포까지 단독 개발."
-    url="https://github.com/Minsu5452/Driver_Risk_Web_Platform"
-    badge="2026"
-  />
+  <div class="grid gap-4">
+    {
+      featuredProjects.map((p) => (
+        <HorizontalCard
+          title={p.title}
+          desc={p.summary}
+          url={`/projects/${p.slug}/`}
+          badge={p.badge}
+          hero={p.hero}
+          color={p.color}
+        />
+      ))
+    }
+  </div>
 
   <div class="mt-10 text-center">
     <a class="btn btn-outline" href="/projects">전체 프로젝트 보기 →</a>

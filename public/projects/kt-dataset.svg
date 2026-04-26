@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" role="img" aria-label="KT 에이전트 검증 데이터셋">
+  <defs>
+    <linearGradient id="kt-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ede9fe"/>
+      <stop offset="1" stop-color="#fae8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" rx="14" fill="url(#kt-bg)"/>
+  <g transform="translate(40 40)" font-family="ui-monospace, monospace" font-size="13">
+    <rect x="0" y="0" width="240" height="28" rx="6" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="8" y="6" width="16" height="16" rx="3" fill="#8b5cf6"/>
+    <path d="M11 14 L15 18 L21 10" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="32" y="19" fill="#4c1d95">case_001 · pass</text>
+
+    <rect x="0" y="36" width="240" height="28" rx="6" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="8" y="42" width="16" height="16" rx="3" fill="#8b5cf6"/>
+    <path d="M11 50 L15 54 L21 46" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="32" y="55" fill="#4c1d95">case_002 · pass</text>
+
+    <rect x="0" y="72" width="240" height="28" rx="6" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="8" y="78" width="16" height="16" rx="3" fill="#fff" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="32" y="91" fill="#7c3aed">case_003 · review</text>
+
+    <rect x="0" y="108" width="240" height="28" rx="6" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="8" y="114" width="16" height="16" rx="3" fill="#8b5cf6"/>
+    <path d="M11 122 L15 126 L21 118" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="32" y="127" fill="#4c1d95">case_004 · pass</text>
+  </g>
+</svg>
