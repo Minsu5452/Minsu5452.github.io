@@ -106,7 +106,7 @@ export const projects: Project[] = [
     team: "",
     org: "슈어소프트테크",
     summary:
-      "LightGBM 5-fold CV (OOF AUC=0.946) + SHAP + FastAPI + Streamlit pydeck 격자 대시보드 + Docker. AI융복합 프로젝트 재현.",
+      "사고·격자·기상 데이터를 결합해 격자×시간 단위로 해양사고 위험을 사전 식별하는 흐름을 검증한 해양경찰청 AI융복합 과제의 공개 가능 재현. 도메인 데이터 결합과 설명가능성 관점의 모델 해석에 초점.",
     hero: "/projects/marine-accident.svg",
     color: "#0ea5e9",
     github: "https://github.com/Minsu5452/Marine_Accident_Risk_Prediction",
@@ -116,7 +116,7 @@ export const projects: Project[] = [
     body: [
       {
         heading: "배경",
-        text: "AIS·기상·해상 정보를 격자×시간 단위로 결합해 사고 위험을 사전 식별합니다. 슈어소프트테크 인턴십 중 AI융복합 프로젝트로 진행한 결과를 공개 가능한 형태로 재현·정리했습니다.",
+        text: "AIS·기상·해상 정보를 격자×시간 단위로 결합해 사고 위험을 사전 식별합니다. 슈어소프트테크 인턴십 중 해양경찰청 AI융복합 프로젝트로 진행한 결과를 공개 가능한 형태로 재현·정리했습니다.",
       },
       {
         heading: "접근",
@@ -124,7 +124,7 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "회사에서 진행한 AI융복합 프로젝트의 공개 가능 재현. 격자 대시보드는 운영자가 위험 격자를 직관적으로 확인할 수 있도록 했습니다.",
+        text: "회사에서 진행한 해양경찰청 AI융복합 프로젝트의 공개 가능 재현. 격자 대시보드는 운영자가 위험 격자를 직관적으로 확인할 수 있도록 했습니다.",
       },
     ],
   },
@@ -138,7 +138,7 @@ export const projects: Project[] = [
     team: "",
     org: "슈어소프트테크",
     summary:
-      "국가법령정보 OPEN API → 12개 해양 법령·394 조문. KR-SBERT + FAISS + BM25 hybrid + GraphRAG + LangGraph 6-node workflow + EXAONE-3.5-2.4B GGUF (CPU).",
+      "해양 법령 도메인의 검색·답변 흐름을 그래프 기반으로 구성한 RAG 데모. 조문 간 참조를 반영해 단순 키워드 검색보다 정확한 인용을 만드는 흐름에 초점.",
     hero: "/projects/marine-rag.svg",
     color: "#14b8a6",
     github: "https://github.com/Minsu5452/Marine_Domain_RAG",
