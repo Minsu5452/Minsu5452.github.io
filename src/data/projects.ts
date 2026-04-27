@@ -297,7 +297,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ship-waiting-time-prediction",
-    title: "HD현대 AI Challenge · 2nd",
+    title: "HD현대 AI Challenge · 2등",
     category: "comp",
     badge: "2023",
     period: "2023.09 – 2023.10",
