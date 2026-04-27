@@ -23,7 +23,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "llm-evaluation-system",
-    title: "LLM 평가 시스템 (Council 2단계 채점)",
+    title: "LLM 평가 시스템 개발",
     category: "work",
     badge: "2026 · 데이콘",
     period: "2026.01 – 진행 중",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
   },
   {
     slug: "driver-risk-web-platform",
-    title: "운수종사자 교통사고 위험 예측 모델·관리 웹",
+    title: "운수종사자 교통사고 위험 예측 모델·관리 웹 개발",
     category: "work",
     badge: "2026 · 데이콘",
     period: "2026.01 – 진행 중",
@@ -98,7 +98,7 @@ export const projects: Project[] = [
   },
   {
     slug: "marine-accident-risk-prediction",
-    title: "해양사고 위험 예측 시스템 (AI융복합)",
+    title: "해양사고 위험 예측 시스템 개발",
     category: "work",
     badge: "2025 · 슈어소프트테크",
     period: "2025.06 – 2025.11",
@@ -130,7 +130,7 @@ export const projects: Project[] = [
   },
   {
     slug: "marine-domain-rag",
-    title: "해양 법령 도메인 RAG (해양경찰청 CDX)",
+    title: "해양 법령 도메인 RAG 개발",
     category: "work",
     badge: "2025 · 슈어소프트테크",
     period: "2025.06 – 2025.11",
@@ -585,7 +585,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ml-team-project",
-    title: "머신러닝 팀프로젝트 (kml2022s)",
+    title: "머신러닝 팀프로젝트 개발",
     category: "academic",
     badge: "학부",
     period: "2022.03 – 2022.06",
