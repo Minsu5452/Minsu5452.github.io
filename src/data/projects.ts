@@ -209,19 +209,23 @@ export const projects: Project[] = [
     role: "팀장 (5인팀)",
     team: "5인팀",
     org: "데이콘 주최/주관 · 506팀 참가",
-    summary: "NLP·법률 도메인 텍스트 분류.",
+    summary: "장문 판결문 텍스트 기반 양 당사자 승소 예측. DeBERTa-v3 fine-tuning.",
     hero: "/projects/court-judgment.svg",
     color: "#f59e0b",
     github: "https://github.com/Minsu5452/Court_Judgment_Prediction",
-    stack: ["NLP", "Text Classification"],
+    stack: ["NLP", "DeBERTa-v3", "spaCy", "nlpaug"],
     body: [
       {
         heading: "배경",
-        text: "판결문 텍스트로부터 판결 결과를 예측하는 NLP 분류 과제. 506팀 참가.",
+        text: "장문 법률 판결문 텍스트를 입력으로 양 당사자 중 어느 쪽이 승소했는지 예측하는 NLP 이진 분류 과제. 506팀 참가.",
+      },
+      {
+        heading: "접근",
+        text: "약어·구두점·복합 명사 패턴을 정리해 토크나이저 노이즈를 줄이고, spaCy 기반 문장 분리와 길이 통계 비교로 train/test 분포를 점검. nlpaug 기반 augmentation으로 학습 데이터 다양성을 확보한 뒤 DeBERTa-v3를 fine-tuning해 최종 분류 모델을 구성.",
       },
       {
         heading: "결과",
-        text: "최종 2등 (🥈). 5인팀 팀장으로 참여.",
+        text: "최종 2등 / 506팀 (🥈). 5인팀 팀장.",
       },
     ],
   },
@@ -234,19 +238,23 @@ export const projects: Project[] = [
     role: "팀장 (3인팀)",
     team: "3인팀",
     org: "충남대 바이오AI융합연구센터 주최 · 데이콘 주관 · 716팀 참가",
-    summary: "SNP 데이터 기반 품종 분류. 학술대회 논문 발표 연계.",
+    summary: "SNP 기반 multi-class 품종 분류. CatBoost Encoder + 불균형 보정 + weighted hard-voting ensemble. 학술대회 논문 발표 연계.",
     hero: "/projects/genomic.svg",
     color: "#ec4899",
     github: "https://github.com/Minsu5452/Genomic_Data_Breed_Classification",
-    stack: ["scikit-learn", "Tabular ML"],
+    stack: ["CatBoost", "LightGBM", "XGBoost", "SMOTE", "Tabular ML"],
     body: [
       {
         heading: "배경",
-        text: "SNP(단일염기다형성) 데이터로 품종을 분류하는 과제. 716팀 참가.",
+        text: "SNP(단일염기다형성) 데이터로 품종을 분류하는 multi-class 과제. 716팀 참가, Macro F1 평가.",
+      },
+      {
+        heading: "접근",
+        text: "SNP 이름·염색체·위치·유전 거리·염기 조합에서 파생 변수를 만들고, 고차원 범주형 SNP를 CatBoost Encoder 등으로 변환. SMOTE·BorderlineSMOTE 등 불균형 보정 방법을 비교한 뒤 CatBoost·LightGBM·XGBoost·Random Forest·Extra Trees·SVC·MLP를 넓게 실험. 최종 제출은 강한 모델들의 weighted hard-voting ensemble.",
       },
       {
         heading: "결과",
-        text: "최종 1등 (🥇). 결과를 정리해 에이아이프렌즈학회 2023 제2차 실용 인공지능 학술대회 논문 발표로 연계.",
+        text: "최종 1등 / 716팀 (🥇). 결과를 정리해 에이아이프렌즈학회 2023 제2차 실용 인공지능 학술대회 논문 발표로 연계.",
       },
     ],
   },
@@ -267,10 +275,14 @@ export const projects: Project[] = [
     stack: ["LightGBM", "Graph", "PageRank", "Community Detection"],
     body: [
       {
-        heading: "접근",
-        text: "산업 지표 간 lead-lag 관계를 그래프로 모델링, PageRank와 커뮤니티 디텍션으로 영향 전파를 반영. LightGBM으로 예측.",
+        heading: "배경",
+        text: "산업 품목별 월간 시계열에서 선행·후행 관계(lead-lag)를 찾고, follower 품목의 다음 달 값을 예측하는 과제.",
       },
-      { heading: "결과", text: "최종 50등 / 960팀." },
+      {
+        heading: "접근",
+        text: "품목별 월간 pivot에서 lag 1–9 구간의 상관·p-value·방향성·안정성을 스캔하고, zero ratio·CV·spike·trend·autocorrelation 등 품질 점수로 우연한 상관을 제거. leader→follower directed graph를 만들고 PageRank와 community 정보를 활용해 pair score를 보정. follower 자체 lag/rolling 피처와 선택된 leader의 lag-shifted value를 결합해 LightGBM 회귀 모델 학습. 마지막 3개월을 hold-out으로 두고 NMAE·MAE를 검증.",
+      },
+      { heading: "결과", text: "최종 50등 / 960팀 (Top 5.2%). 2인팀 팀장." },
     ],
   },
   {
@@ -289,6 +301,14 @@ export const projects: Project[] = [
     github: "https://github.com/Minsu5452/Driver_Cognitive_Risk_Prediction",
     stack: ["LightGBM", "CatBoost", "StratifiedGroupKFold"],
     body: [
+      {
+        heading: "배경",
+        text: "운수종사자 신규검사(A)와 자격유지검사(B)의 인지·행동 시퀀스 데이터로 다음 검사 시점의 위험 확률을 예측하는 과제.",
+      },
+      {
+        heading: "접근",
+        text: "A/B 검사의 컬럼 체계가 달라 도메인별 feature builder를 분리. 콤마로 저장된 검사 시퀀스를 행렬로 변환하고 평균·표준편차·변동계수·조건부 평균 등을 생성. 동일 운수종사자의 과거 이력은 현재 시점 이전 데이터만 사용해 누설을 차단하고, StratifiedGroupKFold로 같은 PrimaryKey가 train/valid에 동시에 들어가지 않도록 구성. LightGBM·CatBoost OOF prediction을 weighted blend해 최종 제출.",
+      },
       {
         heading: "결과",
         text: "최종 34등 / 437팀 (Top 7.8%). 본 솔루션이 이후 데이콘 위탁사업 Driver_Risk_Web_Platform의 모델 기반이 됨.",
@@ -312,8 +332,16 @@ export const projects: Project[] = [
     stack: ["XGBoost", "CatBoost", "LightGBM", "Ensemble"],
     body: [
       {
+        heading: "배경",
+        text: "선박 입항 후 대기시간(`CI_HOUR`)을 예측하는 회귀 과제. 본선은 시계열 신호 기반 trial weight 회귀로 과제가 변경됨.",
+      },
+      {
+        heading: "접근",
+        text: "예선은 결측 처리·시간 파생 변수·target encoding을 적용하고 XGBoost·CatBoost ensemble로 학습, `DIST == 0` 등 특수 케이스는 후처리로 보정. 본선은 시계열 신호 파일을 trial 단위로 파싱하고 sliding window feature를 구성, LightGBM 예측을 ID 단위 percentile 집계와 rounding으로 제출 형식에 맞춤.",
+      },
+      {
         heading: "결과",
-        text: "예선 2등 / 330팀, 본선 6등 / 11팀. 예선 앙상블에서 본선 단일 모델로 전환해 일반화 성능 확보.",
+        text: "예선 2등 / 330팀, 본선 6등 / 11팀. 3인팀 팀장.",
       },
     ],
   },
@@ -326,28 +354,51 @@ export const projects: Project[] = [
     role: "팀장 (3인팀)",
     team: "3인팀",
     org: "한국에너지공단 주최 · 데이콘 주관 · 1,233팀 참가",
-    summary: "건물 전력사용량 시계열 예측.",
+    summary: "건물별 시간 단위 전력 소비량 예측. AutoML baseline + 건물별 Prophet 실험.",
     hero: "/projects/power-consumption.svg",
     color: "#eab308",
     github: "https://github.com/Minsu5452/Power_Consumption_Forecasting",
-    stack: ["Time Series", "LightGBM"],
-    body: [{ heading: "결과", text: "최종 107등 / 1,233팀." }],
+    stack: ["Time Series", "Prophet", "AutoML", "LightGBM"],
+    body: [
+      {
+        heading: "배경",
+        text: "건물별 시간 단위 전력 소비량을 예측하는 시계열 회귀 과제 (SMAPE 평가).",
+      },
+      {
+        heading: "접근",
+        text: "건물 정보·기상·캘린더·시간대별 소비 패턴을 EDA로 점검. mljar-supervised AutoML로 빠르게 baseline을 구성하고 모델 계열을 비교한 뒤, 건물별 운영 패턴 차이를 고려해 건물 단위 Prophet 모델을 실험. 불안정한 구간은 요일·시간대 중앙값 fallback으로 보정.",
+      },
+      { heading: "결과", text: "최종 107등 / 1,233팀 (Top 8.7%). 3인팀 팀장." },
+    ],
   },
   {
     slug: "lg-online-sales-forecasting",
-    title: "LG 온라인 채널 제품 판매량 예측 해커톤",
+    title: "LG 온라인 채널 제품 판매량 예측 해커톤 · Top 1.6%",
     category: "comp",
     badge: "2023 · LG Aimers",
     period: "2023.08",
     role: "팀원 (4인팀)",
     team: "4인팀",
     org: "LG AI Research 주최 · 데이콘 주관 · LG Aimers 연계",
-    summary: "예선 12등 / 본선 24등.",
+    summary: "제품별 온라인 채널 판매량 예측. wide→long 변환 + lag/rolling/calendar 피처 + recursive multi-step forecasting.",
     hero: "/projects/lg-sales.svg",
     color: "#dc2626",
     github: "https://github.com/Minsu5452/LG_Online_Sales_Forecasting",
-    stack: ["Time Series", "Tabular ML"],
-    body: [{ heading: "결과", text: "예선 12등 → 본선 24등." }],
+    stack: ["Time Series", "Tabular ML", "Feature Engineering"],
+    body: [
+      {
+        heading: "배경",
+        text: "LG Aimers 3기 연계 데이콘 온라인 해커톤. 제품별 온라인 채널 판매량을 예측하는 시계열 과제.",
+      },
+      {
+        heading: "접근",
+        text: "wide 형식 판매 이력을 제품별 long 시계열 학습 테이블로 변환. lag·rolling statistics·calendar cycle·product metadata 피처를 구성하고, log 변환 타겟에 대해 tabular regression 모델을 학습. 재귀적 multi-step forecasting으로 제출 구간을 채움.",
+      },
+      {
+        heading: "결과",
+        text: "예선 12등 / 747팀 (Top 1.6%) → 본선 24등 / 43팀. 4인팀 팀원.",
+      },
+    ],
   },
   {
     slug: "smart-farm-yield-energy-prediction",
@@ -358,12 +409,22 @@ export const projects: Project[] = [
     role: "팀장 (4인팀)",
     team: "4인팀",
     org: "농림축산식품부 주최 · 농림수산식품교육문화정보원 주관 · BDA 연계",
-    summary: "스마트팜 환경 데이터로 수확량/에너지 예측.",
+    summary: "수확량과 난방 에너지 누적값을 동시에 예측하는 multi-target 회귀. PowerTransformer + SHAP feature selection + Optuna 튜닝.",
     hero: "/projects/smart-farm.svg",
     color: "#22c55e",
     github: "https://github.com/Minsu5452/Smart_Farm_Yield_Energy_Prediction",
-    stack: ["Tabular ML"],
-    body: [{ heading: "참여", text: "BDA 연계 4인팀 팀장으로 참여." }],
+    stack: ["LightGBM", "CatBoost", "XGBoost", "Optuna", "SHAP"],
+    body: [
+      {
+        heading: "배경",
+        text: "스마트농업 데이터로 수확량과 난방 에너지 누적값을 동시에 예측하는 multi-target 회귀.",
+      },
+      {
+        heading: "접근",
+        text: "단일값·중복·식별자 컬럼을 정리하고 날짜 기반 피처 생성. 수치형 피처에 PowerTransformer 적용 후 SHAP 기반 중요도로 타겟별 feature set을 분리. LinearRegression·RandomForest·GradientBoosting·LightGBM·CatBoost·XGBoost를 5-fold로 비교한 뒤 최종 후보 모델을 Optuna로 튜닝해 타겟별 RMSE 확인.",
+      },
+      { heading: "결과", text: "예선 탈락. BDA 7기 데이터 분석 고급반 연계, 4인팀 팀장." },
+    ],
   },
   {
     slug: "citrus-yield-prediction",
@@ -374,12 +435,22 @@ export const projects: Project[] = [
     role: "팀장 (3인팀)",
     team: "3인팀",
     org: "제주테크노파크 주최 · 데이콘 주관 · 257팀 참가",
-    summary: "감귤 착과량 회귀 예측.",
+    summary: "제주 감귤 나무 생육 데이터 기반 착과량 회귀 예측. multi K-fold ensemble로 단기 대회에서 안정성 확보.",
     hero: "/projects/citrus.svg",
     color: "#fb923c",
     github: "https://github.com/Minsu5452/Citrus_Yield_Prediction",
-    stack: ["Regression", "Tabular ML"],
-    body: [{ heading: "결과", text: "최종 17등 / 257팀." }],
+    stack: ["XGBoost", "LightGBM", "CatBoost", "Multi K-fold Ensemble"],
+    body: [
+      {
+        heading: "배경",
+        text: "제주 감귤 나무 생육 데이터로 착과량을 예측하는 회귀 과제 (3일 단기 대회).",
+      },
+      {
+        heading: "접근",
+        text: "생육 정보에서 착과량 예측에 필요한 파생 변수를 구성. feature scaling과 selection 실험을 분리해 입력 피처 품질을 비교한 뒤 XGBoost·LightGBM·CatBoost 회귀 모델을 학습. seed와 fold를 달리한 multi K-fold ensemble로 예측 안정성을 높였습니다.",
+      },
+      { heading: "결과", text: "최종 17등 / 257팀 (Top 6.6%). 3인팀 팀장." },
+    ],
   },
   {
     slug: "traffic-accident-prediction",
@@ -390,12 +461,25 @@ export const projects: Project[] = [
     role: "개인",
     team: "개인",
     org: "경찰대학 주최/주관",
-    summary: "지역 치안 데이터를 활용한 안전 분석.",
+    summary: "충남·대전·세종 교통사고와 ASOS 기상 데이터를 결합해 1시간 이내 사고 발생 확률 예측. F1 0.86.",
     hero: "/projects/traffic-safety.svg",
     color: "#6366f1",
     github: "https://github.com/Minsu5452/Traffic_Accident_Prediction",
-    stack: ["EDA", "Geo Analytics"],
-    body: [{ heading: "참여", text: "경찰대학 주최/주관 공모전, 개인 참가." }],
+    stack: ["LightGBM", "CatBoost", "Voting Ensemble", "SHAP", "Geo Analytics"],
+    body: [
+      {
+        heading: "배경",
+        text: "충남·대전·세종 지역의 교통사고 데이터와 기상청 ASOS 관측 데이터를 결합해 1시간 이내 사고 발생 여부와 확률을 예측하는 공모전 과제.",
+      },
+      {
+        heading: "접근",
+        text: "사고 좌표를 가까운 기상 관측소 기준으로 매핑하고, 시간 단위 날씨 데이터에 사고 발생 여부를 라벨링해 이진 분류 문제로 구성. LightGBM·CatBoost voting ensemble을 사용하고 SHAP 기반 중요도 분석으로 기상 요소와 사고 발생 관계를 해석.",
+      },
+      {
+        heading: "결과",
+        text: "예선 탈락. 보고 지표 F1 0.8577 / Accuracy 0.7911. 개인 참가.",
+      },
+    ],
   },
   {
     slug: "lotte-members-customer-analytics",
@@ -406,12 +490,22 @@ export const projects: Project[] = [
     role: "팀원 (3인팀)",
     team: "3인팀",
     org: "롯데멤버스 주최/주관",
-    summary: "고객 분석 + 전략 도출.",
+    summary: "L.POINT 고객 데이터로 재방문 가능성 모델링과 마케팅 전략 도출.",
     hero: "/projects/lotte-members.svg",
     color: "#e11d48",
     github: "https://github.com/Minsu5452/Lotte_Members_Customer_Analytics",
-    stack: ["Customer Analytics", "EDA"],
-    body: [{ heading: "참여", text: "3인팀 팀원으로 참여." }],
+    stack: ["LightGBM", "CatBoost", "Random Forest", "DNN", "Customer Analytics"],
+    body: [
+      {
+        heading: "배경",
+        text: "L.POINT 고객 데이터를 활용해 고객 행동을 분석하고 재방문 가능성 모델링과 마케팅 전략 제안으로 연결한 과제.",
+      },
+      {
+        heading: "접근",
+        text: "고객 기본 정보·구매 이력·제휴사 이용·L.PAY 데이터를 결합. 구매 주기·채널·상품군·결제 행동 기반 피처를 구성하고 LightGBM·CatBoost·Random Forest·DNN 등 여러 모델로 재방문 가능성을 실험. 모델 예측과 고객군 분석을 바탕으로 마케팅 전략을 제안.",
+      },
+      { heading: "결과", text: "예선 탈락. 3인팀 팀원." },
+    ],
   },
   {
     slug: "supporting-marginalized-communities",
@@ -422,12 +516,22 @@ export const projects: Project[] = [
     role: "팀원 (4인팀)",
     team: "4인팀",
     org: "한국원격대학협의회 주최/주관 · BDA 연계",
-    summary: "AI 활용 사회 문제 해결 아이디어.",
+    summary: "청각장애인 일상 안전·정서 인지 보조 AI 앱 아이디어. Speech Emotion Recognition + 환경음 분류 prototype.",
     hero: "/projects/marginalized.svg",
     color: "#06b6d4",
     github: "https://github.com/Minsu5452/Supporting_Marginalized_Communities",
-    stack: ["Ideation", "AI for Good"],
-    body: [{ heading: "참여", text: "BDA 연계, 4인팀 팀원." }],
+    stack: ["1D-CNN", "Capsule Network", "Audio", "Prototyping"],
+    body: [
+      {
+        heading: "배경",
+        text: "청각장애인의 일상 안전과 정서 인지를 보조하는 AI 앱 아이디어를 제안한 공모전.",
+      },
+      {
+        heading: "접근",
+        text: "Speech Emotion Recognition은 1D-CNN 기반 발화 감정 분류 prototype, Nonverbal Sound Recognition은 Capsule Network 구조를 참고한 환경음 분류 prototype으로 설계. 노트북에는 더미 텐서 forward sanity check까지 정리하고 제안서·발표 자료·시연 영상을 함께 패키징.",
+      },
+      { heading: "결과", text: "예선 탈락. BDA 7기 데이터 분석 고급반 연계, 4인팀 팀원." },
+    ],
   },
   {
     slug: "restaurant-topic-modeling",
@@ -438,15 +542,19 @@ export const projects: Project[] = [
     role: "개인",
     team: "개인",
     org: "국민대 텍스트 데이터 분석 수업",
-    summary: "웹 크롤링 + LSA / LDA.",
+    summary: "국민대·정릉시장 주변 맛집 리뷰 크롤링 + 형태소 분석기 비교 + LSA/LDA 토픽 모델링.",
     hero: "/projects/restaurant-topic.svg",
     color: "#a855f7",
     github: "https://github.com/Minsu5452/Restaurant_Topic_Modeling",
-    stack: ["Web Crawling", "LSA", "LDA", "NLP"],
+    stack: ["Selenium", "KoNLPy", "LSA", "LDA", "NLP"],
     body: [
       {
-        heading: "참여",
-        text: "학부 텍스트 데이터 분석 수업 개인 프로젝트. 정릉시장 일대 맛집 리뷰 크롤링 → LSA/LDA 토픽 모델링.",
+        heading: "배경",
+        text: "국민대학교 텍스트 데이터 분석 수업의 개인 프로젝트. 국민대·정릉시장 주변 맛집 리뷰를 수집해 토픽 모델링으로 카테고리를 추출.",
+      },
+      {
+        heading: "접근",
+        text: "네이버 VIEW·다이닝코드·망고플레이트·서울시 성북구 음식점 공공데이터를 Selenium 기반 동적 크롤링으로 수집(BeautifulSoup 보조). Komoran·Hannanum·Kkma·Twitter·Mecab 형태소 분석 결과를 비교한 뒤 불용어·빈도 기준 필터링. LSA·LDA로 토픽을 추출하고 토픽별 키워드와 음식점 매핑을 시각화.",
       },
     ],
   },
@@ -459,15 +567,19 @@ export const projects: Project[] = [
     role: "팀원",
     team: "팀",
     org: "국민대 딥러닝 수업",
-    summary: "ChromaGAN / DeOldify / InstColorization 비교.",
+    summary: "한국 음식 이미지 도메인에서 ChromaGAN / DeOldify / InstColorization SOTA 컬러화 모델 비교·fine-tune.",
     hero: "/projects/dl-colorization.svg",
     color: "#3b82f6",
     github: "https://github.com/Minsu5452/DL_Team_Project",
     stack: ["PyTorch", "ChromaGAN", "DeOldify", "InstColorization"],
     body: [
       {
-        heading: "참여",
-        text: "학부 딥러닝 수업 팀 프로젝트. SOTA 흑백 → 컬러화 모델들을 비교/fine-tune.",
+        heading: "배경",
+        text: "국민대학교 딥러닝 수업의 팀 프로젝트. 한국 음식 이미지 도메인에서 흑백 → 컬러화 SOTA 모델을 비교.",
+      },
+      {
+        heading: "접근",
+        text: "AI Hub 한국 음식 이미지를 224×224 컬러/그레이 페어로 변환해 train/test split 구성. ChromaGAN PyTorch remake를 도메인에 맞게 fine-tuning, DeOldify는 pretrained inference로 비교, InstColorization은 weight 확보 실패 등 재현 한계를 노트북에 기록. PSNR·SSIM과 정성 결과를 함께 비교.",
       },
     ],
   },
@@ -480,16 +592,21 @@ export const projects: Project[] = [
     role: "팀장",
     team: "팀",
     org: "국민대 머신러닝 수업 내 Kaggle 컴페티션",
-    summary: "수업 내 Kaggle 컴페티션 참여.",
+    summary: "백화점 트랜잭션 기반 9-class 고객 분류. Word2Vec sequence embedding + CatBoost/LGBM/DNN blending. Kaggle kml2022s 클래스 경진대회 2등.",
     hero: "/projects/ml-team.svg",
     color: "#0ea5e9",
     github: "https://github.com/Minsu5452/ML_Team_Project",
-    stack: ["scikit-learn", "Kaggle"],
+    stack: ["CatBoost", "LightGBM", "Word2Vec", "DNN", "Kaggle"],
     body: [
       {
-        heading: "참여",
-        text: "학부 머신러닝 수업 내 Kaggle 컴페티션, 팀장으로 참여.",
+        heading: "배경",
+        text: "국민대학교 머신러닝 수업의 주차별 팀 과제와 학기 말 Kaggle 클래스 경진대회(kml2022s)를 정리한 프로젝트. 메인 과제는 백화점 트랜잭션 기반 9-class 고객 분류 (Multi-class log loss).",
       },
+      {
+        heading: "접근",
+        text: "주차별 과제로 baseline classification·categorical encoding·sklearn pipeline·customer-signature feature engineering을 수행. 메인 대회는 transaction feature engineering, 브랜드·코너·고객·상품군·상품코드 시퀀스 기반 Word2Vec sequence embedding을 만들고 CatBoost·LGBM·DNN 모델을 학습해 prediction blending.",
+      },
+      { heading: "결과", text: "Kaggle kml2022s 2등 (수업 내 클래스 경진대회). 3인팀 팀장." },
     ],
   },
 ];
