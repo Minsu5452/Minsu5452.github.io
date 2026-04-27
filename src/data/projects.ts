@@ -252,7 +252,7 @@ export const projects: Project[] = [
   },
   {
     slug: "industrial-lead-lag-forecasting",
-    title: "제3회 국민대 AI빅데이터 분석 경진대회 · 50등",
+    title: "제3회 국민대 AI빅데이터 분석 경진대회 · Top 5.2%",
     category: "comp",
     badge: "2025",
     period: "2025.11",
@@ -275,9 +275,9 @@ export const projects: Project[] = [
   },
   {
     slug: "driver-cognitive-risk-prediction",
-    title: "운수종사자 인지적 특성 활용 교통사고 위험 예측 · 34등",
+    title: "운수종사자 인지적 특성 활용 교통사고 위험 예측 · Top 7.8%",
     category: "comp",
-    badge: "2025 · Top 7.8%",
+    badge: "2025",
     period: "2025.10 – 2025.11",
     role: "개인",
     team: "개인",
@@ -297,7 +297,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ship-waiting-time-prediction",
-    title: "HD현대 AI Challenge · 예선 2등 / 본선 6등",
+    title: "HD현대 AI Challenge · 예선 2nd / 본선 6th",
     category: "comp",
     badge: "2023",
     period: "2023.09 – 2023.10",
