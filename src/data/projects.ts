@@ -319,7 +319,7 @@ export const projects: Project[] = [
   },
   {
     slug: "power-consumption-forecasting",
-    title: "2023 전력사용량 예측 AI 경진대회",
+    title: "2023 전력사용량 예측 AI 경진대회 · Top 8.7%",
     category: "comp",
     badge: "2023",
     period: "2023.07 – 2023.08",
@@ -367,7 +367,7 @@ export const projects: Project[] = [
   },
   {
     slug: "citrus-yield-prediction",
-    title: "감귤 착과량 예측 AI 경진대회",
+    title: "감귤 착과량 예측 AI 경진대회 · Top 6.6%",
     category: "comp",
     badge: "2022",
     period: "2022.12",
