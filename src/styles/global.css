@@ -1,0 +1,157 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+html, body {
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.time-line-container > div:last-child .education__time > .education__line {
+    display: none;
+}
+
+.tab-stack {
+    display: grid;
+    grid-template-areas: "stack";
+}
+.tab-stack > [data-tab-content] {
+    grid-area: stack;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+.tab-stack > [data-tab-content].active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* CV section heading accent */
+.cv-h {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid hsl(var(--bc) / 0.12);
+    position: relative;
+}
+.cv-h::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 2.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, #0ea5e9, #10b981, #8b5cf6);
+}
+
+/* Print friendly */
+@page {
+    size: A4;
+    margin: 14mm 14mm 14mm 14mm;
+}
+
+@media print {
+    html, body {
+        background: #ffffff !important;
+        color: #111111 !important;
+        font-size: 10.5pt;
+        line-height: 1.45;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .drawer-side,
+    header,
+    footer,
+    .print\:hidden {
+        display: none !important;
+    }
+    .drawer,
+    .drawer-content {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+    }
+    main {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+    a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+    .badge,
+    .badge-outline {
+        border: 1px solid #999 !important;
+        color: #111 !important;
+        background: transparent !important;
+        font-size: 8.5pt !important;
+        padding: 0 6px !important;
+    }
+    .link,
+    .link-hover {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+    .cv-header {
+        margin-bottom: 14pt !important;
+    }
+    .cv-header h1 {
+        font-size: 22pt !important;
+        margin-bottom: 0 !important;
+    }
+    .cv-header p {
+        font-size: 10pt !important;
+    }
+    .cv-meta {
+        border-top: 1px solid #999 !important;
+        border-bottom: 1px solid #999 !important;
+        padding: 6pt 0 !important;
+        gap: 4pt 14pt !important;
+    }
+    .cv-meta dt {
+        opacity: 0.6 !important;
+    }
+    .cv-section {
+        page-break-inside: avoid;
+        margin-bottom: 12pt !important;
+    }
+    .cv-h {
+        font-size: 13pt !important;
+        margin-top: 8pt !important;
+        margin-bottom: 6pt !important;
+        padding-bottom: 3pt !important;
+        border-bottom: 1px solid #444 !important;
+    }
+    .cv-h::before {
+        display: none !important;
+    }
+    .time-line-container {
+        margin-bottom: 6pt !important;
+    }
+    .time-line-container .education__time span:first-child {
+        background: #444 !important;
+        width: 8px !important;
+        height: 8px !important;
+    }
+    .time-line-container .education__line {
+        background: #888 !important;
+    }
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+    p, li {
+        page-break-inside: avoid;
+        orphans: 3;
+        widows: 3;
+    }
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+}
