@@ -112,6 +112,4 @@ npm run preview  # 빌드 결과 미리보기
 
 ## 라이선스
 
-코드는 본 레포 소유. 콘텐츠(이력·프로젝트 설명·이미지)는 강민수 본인 자료입니다.
-
-원본 템플릿은 [Astrofy](https://github.com/manuelernestog/astrofy) (MIT)를 기반으로 시작했습니다.
+코드는 [Astrofy](https://github.com/manuelernestog/astrofy) 템플릿(MIT)을 기반으로 수정했고, 원본 저작권 고지는 LICENSE에 함께 유지합니다. 콘텐츠(이력·프로젝트 설명·이미지)는 강민수 본인 자료입니다.
