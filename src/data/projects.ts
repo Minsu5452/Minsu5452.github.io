@@ -34,7 +34,6 @@ export const projects: Project[] = [
       "여러 LLM 응답을 Council 방식으로 2단계 채점하는 평가 시스템. FastAPI + Redis Queue + asyncio.",
     hero: "/projects/llm-eval.svg",
     color: "#10b981",
-    github: "https://github.com/Minsu5452/LLM_Evaluation_System",
     stack: ["Python", "FastAPI", "Redis", "asyncio", "LLM"],
     featured: true,
     featuredOrder: 1,
@@ -412,7 +411,6 @@ export const projects: Project[] = [
     summary: "수확량과 난방 에너지 누적값을 동시에 예측하는 multi-target 회귀. PowerTransformer + SHAP feature selection + Optuna 튜닝.",
     hero: "/projects/smart-farm.svg",
     color: "#22c55e",
-    github: "https://github.com/Minsu5452/Smart_Farm_Yield_Energy_Prediction",
     stack: ["LightGBM", "CatBoost", "XGBoost", "Optuna", "SHAP"],
     body: [
       {
@@ -464,7 +462,6 @@ export const projects: Project[] = [
     summary: "충남·대전·세종 교통사고와 ASOS 기상 데이터를 결합해 1시간 이내 사고 발생 확률 예측. F1 0.86.",
     hero: "/projects/traffic-safety.svg",
     color: "#6366f1",
-    github: "https://github.com/Minsu5452/Traffic_Accident_Prediction",
     stack: ["LightGBM", "CatBoost", "Voting Ensemble", "SHAP", "Geo Analytics"],
     body: [
       {
@@ -493,7 +490,6 @@ export const projects: Project[] = [
     summary: "L.POINT 고객 데이터로 재방문 가능성 모델링과 마케팅 전략 도출.",
     hero: "/projects/lotte-members.svg",
     color: "#e11d48",
-    github: "https://github.com/Minsu5452/Lotte_Members_Customer_Analytics",
     stack: ["LightGBM", "CatBoost", "Random Forest", "DNN", "Customer Analytics"],
     body: [
       {
@@ -519,7 +515,6 @@ export const projects: Project[] = [
     summary: "청각장애인 일상 안전·정서 인지 보조 AI 앱 아이디어. Speech Emotion Recognition + 환경음 분류 prototype.",
     hero: "/projects/marginalized.svg",
     color: "#06b6d4",
-    github: "https://github.com/Minsu5452/Supporting_Marginalized_Communities",
     stack: ["1D-CNN", "Capsule Network", "Audio", "Prototyping"],
     body: [
       {
