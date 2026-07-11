@@ -3,19 +3,19 @@ import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
 export async function GET(context) {
-  const notes = await getCollection("notes", ({ data }) => !data.draft);
+  const articles = await getCollection("articles", ({ data }) => !data.draft);
 
   return rss({
-    title: `${SITE_TITLE} · 노트`,
+    title: `${SITE_TITLE} · 글`,
     description: SITE_DESCRIPTION,
     site: context.site,
-    items: notes
+    items: articles
       .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-      .map((note) => ({
-        title: note.data.title,
-        description: note.data.description,
-        pubDate: note.data.pubDate,
-        link: `/notes/${note.id}/`,
+      .map((article) => ({
+        title: article.data.title,
+        description: article.data.description,
+        pubDate: article.data.pubDate,
+        link: `/articles/${article.id}/`,
       })),
     customData: "<language>ko-KR</language>",
   });

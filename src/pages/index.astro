@@ -2,11 +2,11 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import FormattedDate from "../components/FormattedDate.astro";
+import ArticleRow from "../components/ArticleRow.astro";
 import { featuredProjects } from "../data/projects";
 import { AUTHOR, AUTHOR_EN, EMAIL, GITHUB_URL, DACON_URL } from "../consts";
 
-const recentNotes = (await getCollection("notes", ({ data }) => !data.draft))
+const recentArticles = (await getCollection("articles", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 ---
@@ -61,26 +61,16 @@ const recentNotes = (await getCollection("notes", ({ data }) => !data.draft))
   </section>
 
   {
-    recentNotes.length > 0 && (
+    recentArticles.length > 0 && (
       <section class="pt-12">
         <div class="mb-2 flex items-baseline justify-between">
-          <h2 class="text-[19px] font-bold text-ink-strong">노트</h2>
-          <a class="text-[13px] text-ink-muted transition-colors hover:text-accent" href="/notes/">
+          <h2 class="text-[19px] font-bold text-ink-strong">글</h2>
+          <a class="text-[13px] text-ink-muted transition-colors hover:text-accent" href="/articles/">
             전체 보기 →
           </a>
         </div>
-        {recentNotes.map((note) => (
-          <a
-            href={`/notes/${note.id}/`}
-            class="group -mx-3 flex items-baseline gap-4 rounded-lg border-b border-line px-3 py-3.5 transition-colors last:border-b-0 hover:bg-bg-subtle"
-          >
-            <span class="flex-none text-[13px] text-ink-muted">
-              <FormattedDate date={note.data.pubDate} />
-            </span>
-            <span class="font-medium text-ink-strong transition-colors group-hover:text-accent">
-              {note.data.title}
-            </span>
-          </a>
+        {recentArticles.map((article) => (
+          <ArticleRow article={article} compact />
         ))}
       </section>
     )

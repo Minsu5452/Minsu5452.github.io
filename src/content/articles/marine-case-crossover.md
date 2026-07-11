@@ -2,6 +2,7 @@
 title: "바람이 셀수록 사고가 줄어든다? 시간층화 case-crossover 설계 기록"
 description: "풍속이 높을수록 해양사고 오즈가 낮아지는 직관과 반대인 결과가 나왔습니다. 시간층화 case-crossover 설계와 사고 유형 분해로 이 역설을 해석한 과정을 정리합니다."
 pubDate: 2026-07-12T10:00:00+09:00
+topic: "통계"
 tags: ["통계 검정", "case-crossover", "데이터 분석"]
 project: "marine-accident-risk-prediction"
 ---
