@@ -44,7 +44,7 @@ export const projects: Project[] = [
       },
       {
         heading: "접근",
-        text: "Council 방식 (여러 평가자 LLM의 합의)을 2단계로 구성. 1단계는 후보 응답 스크리닝, 2단계는 잔여 후보를 깊이 채점. FastAPI + Redis Queue + asyncio로 LLM 호출을 병렬화하고, 평가 작업을 큐에 분산해 처리량을 확보했습니다.",
+        text: "Council 방식 (여러 평가자 LLM의 합의)을 2단계로 구성. 1단계는 후보 응답 스크리닝, 2단계는 잔여 후보를 정밀하게 채점. FastAPI + Redis Queue + asyncio로 LLM 호출을 병렬화하고, 평가 작업을 큐에 분산해 처리량을 확보했습니다.",
       },
       {
         heading: "결과",
@@ -87,7 +87,7 @@ export const projects: Project[] = [
       },
       {
         heading: "접근",
-        text: "ML 모델은 LightGBM + CatBoost, StratifiedGroupKFold로 누수 방지. 관리자 웹은 React/Vite/Mantine, AI 엔진은 FastAPI, 백엔드는 Spring Boot (eGovFrame, 행정전자정부 표준 프레임워크). Nginx + Docker로 배포까지 전 구간 처리했습니다.",
+        text: "ML 모델은 LightGBM + CatBoost, StratifiedGroupKFold로 누수 방지. 관리자 웹은 React/Vite/Mantine, AI 엔진은 FastAPI, 백엔드는 Spring Boot (eGovFrame, 전자정부 표준프레임워크). Nginx + Docker로 배포까지 전 구간 처리했습니다.",
       },
       {
         heading: "결과",
@@ -105,7 +105,7 @@ export const projects: Project[] = [
     team: "",
     org: "슈어소프트테크",
     summary:
-      "사고·격자·기상 데이터를 결합해 격자×시간 단위로 해양사고 위험을 사전 식별하는 흐름을 검증한 해양수산부 AI융복합 과제의 공개 가능 재현. 도메인 데이터 결합과 설명가능성 관점의 모델 해석에 초점.",
+      "사고·격자·기상 데이터를 결합해 격자×시간 단위로 해양사고 위험을 사전 식별하는 흐름을 검증한 해양수산부 AI융복합 과제의 공개 가능한 재현. 도메인 데이터 결합과 설명가능성 관점의 모델 해석에 초점.",
     hero: "/projects/marine-accident.svg",
     color: "#0ea5e9",
     github: "https://github.com/Minsu5452/korean-marine-accident-risk",
@@ -123,7 +123,7 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "회사 보안상 사내 코드·데이터를 공개할 수 없어, 해양수산부 AI융복합 과제로 진행한 작업을 공개 데이터 기반으로 재현한 데모. 지도 대시보드는 실제 분석 실행 결과를 키 없이 재생하는 정적 데모로 공개했습니다.",
+        text: "격자×시간 위험도와 기상 근거를 지도 대시보드로 공개했습니다. 화면은 실제 분석 실행 결과를 키 없이 재생하는 정적 데모입니다.",
       },
     ],
   },
@@ -156,7 +156,7 @@ export const projects: Project[] = [
     body: [
       {
         heading: "배경",
-        text: "해양 법령은 조문 간 인용·예외·하위법 참조가 많아 단순 임베딩 검색만으로는 답이 부족합니다. 슈어소프트테크 인턴십 중 해양경찰청 CDX 과제로 진행한 도메인 특화 RAG 파이프라인을, 회사 보안상 사내 코드·데이터를 외부에 공개할 수 없어 공개 데이터 기반으로 재현한 데모입니다.",
+        text: "해양 법령은 조문 간 인용·예외·하위법 참조가 많아 단순 임베딩 검색만으로는 정확한 답을 얻기 어렵습니다. 슈어소프트테크 인턴십 중 해양경찰청 CDX 과제로 진행한 도메인 특화 RAG 파이프라인을, 회사 보안상 사내 코드·데이터를 외부에 공개할 수 없어 공개 데이터 기반으로 재현한 데모입니다.",
       },
       {
         heading: "접근",
@@ -177,7 +177,7 @@ export const projects: Project[] = [
     role: "",
     team: "",
     org: "슈어소프트테크 / KT",
-    summary: "KT 에이전트 시스템 검증용 데이터셋 큐레이션. 인턴 시 참여.",
+    summary: "KT 에이전트 시스템 검증용 데이터셋 큐레이션. 인턴십 중 참여.",
     hero: "/projects/kt-dataset.svg",
     color: "#8b5cf6",
     external: [{ label: "GitHub Profile", url: "https://github.com/Minsu5452" }],
