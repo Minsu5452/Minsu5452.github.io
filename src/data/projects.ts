@@ -4,14 +4,14 @@ export interface Project {
   slug: string;
   title: string;
   category: ProjectCategory;
+  /** 연도·소속 컨텍스트 라벨 (예: "2026 · 데이콘") */
   badge: string;
+  /** 성과 칩 (예: "1등", "상위 5.2%", "진행 중"). 없으면 미표시 */
+  result?: string;
   period: string;
-  role: string;
-  team: string;
   org: string;
   summary: string;
   hero?: string;
-  color?: string;
   github?: string;
   external?: { label: string; url: string }[];
   stack: string[];
@@ -22,21 +22,41 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "procurement-bid-monitoring",
+    title: "AI 기반 수요기관 자체입찰 모니터링 모델 개발",
+    category: "work",
+    badge: "2026 · 데이콘",
+    result: "진행 중",
+    period: "2026.06 – 현재",
+    org: "데이콘 / 행안부·NIA·조달청 위탁",
+    summary:
+      "불법사항 근절을 위한 수요기관 자체입찰 모니터링 모델 개발 과제. 행안부·NIA·조달청 위탁사업, PL로 수행 중.",
+    hero: "/projects/procurement-bid.svg",
+    stack: [],
+    body: [
+      {
+        heading: "배경",
+        text: "공공 조달에서 수요기관 자체입찰의 불법사항을 근절하기 위한 AI 기반 모니터링 모델 개발 과제입니다. 2026년 AI기반 현안해결형 데이터 분석모델 개발 사업으로, 총괄 행정안전부 · 전문 한국지능정보사회진흥원 · 주관 조달청 체계로 추진됩니다.",
+      },
+      {
+        heading: "진행 상태",
+        text: "2026년 6월부터 데이콘에서 PL로 수행하고 있습니다. 진행 중인 실무 과제로 세부 내용은 종료 후 공개 가능한 범위에서 정리할 예정입니다.",
+      },
+    ],
+  },
+  {
     slug: "llm-evaluation-system",
     title: "LLM 평가 시스템 개발",
     category: "work",
     badge: "2026 · 데이콘",
     period: "2025.12 – 2026.04",
-    role: "",
-    team: "",
     org: "데이콘",
     summary:
       "여러 LLM 응답을 Council 방식으로 2단계 채점하는 평가 시스템. FastAPI + Redis Queue + asyncio.",
     hero: "/projects/llm-eval.svg",
-    color: "#10b981",
     stack: ["Python", "FastAPI", "Redis", "asyncio", "LLM"],
     featured: true,
-    featuredOrder: 1,
+    featuredOrder: 3,
     body: [
       {
         heading: "배경",
@@ -58,13 +78,10 @@ export const projects: Project[] = [
     category: "work",
     badge: "2026 · 데이콘",
     period: "2025.12 – 2026.04",
-    role: "",
-    team: "",
     org: "데이콘 / 행안부·NIA·한국교통안전공단 위탁",
     summary:
-      "행안부·NIA·한국교통안전공단 위탁사업. ML 모델 + 관리자 웹 + AI 엔진 + 배포까지 전 구간 개발.",
+      "행안부·NIA·한국교통안전공단 위탁사업. ML 모델 + 관리자 웹 + AI 엔진 + 배포까지 전 구간을 PL로 수행.",
     hero: "/projects/driver-risk.svg",
-    color: "#f43f5e",
     github: "https://github.com/Minsu5452/driver-risk-prediction-platform",
     stack: [
       "Python",
@@ -83,7 +100,7 @@ export const projects: Project[] = [
     body: [
       {
         heading: "배경",
-        text: "운수종사자의 인지적 특성과 운전 데이터로 사고 위험을 사전 식별하는 시스템이 필요했습니다. 2025년 같은 주제 경진대회 솔루션(34등)을 모델 기반으로 삼아 실제 운영 가능한 형태로 확장했습니다.",
+        text: "운수종사자의 인지적 특성과 운전 데이터로 사고 위험을 사전 식별하는 시스템이 필요했습니다. 2025년 같은 주제 경진대회 솔루션(상위 7.8%)을 모델 기반으로 삼아 실제 운영 가능한 형태로 확장했습니다.",
       },
       {
         heading: "접근",
@@ -96,51 +113,17 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "marine-accident-risk-prediction",
-    title: "해양사고 위험 예측 시스템 개발",
-    category: "work",
-    badge: "2025 · 슈어소프트테크",
-    period: "2025.06 – 2025.11",
-    role: "",
-    team: "",
-    org: "슈어소프트테크",
-    summary:
-      "사고·격자·기상 데이터를 결합해 격자×시간 단위로 해양사고 위험을 사전 식별하는 흐름을 검증한 해양수산부 AI융복합 과제의 공개 가능한 재현. 도메인 데이터 결합과 설명가능성 관점의 모델 해석에 초점.",
-    hero: "/projects/marine-accident.svg",
-    color: "#0ea5e9",
-    github: "https://github.com/Minsu5452/marine-accident-risk-analysis",
-    stack: ["Python", "LightGBM", "statsmodels", "FastAPI", "Next.js", "MapLibre"],
-    featured: true,
-    featuredOrder: 3,
-    body: [
-      {
-        heading: "배경",
-        text: "해양사고 기록과 해양기상 관측을 격자×시간 단위로 결합해 사고 위험을 사전 식별합니다. 슈어소프트테크 인턴십 중 해양수산부 AI융복합 과제로 진행한 작업을, 회사 보안상 사내 코드·데이터를 외부에 공개할 수 없어 공개 데이터 기반으로 재현한 데모입니다.",
-      },
-      {
-        heading: "접근",
-        text: "MTIS 해양사고 좌표를 정제해 NMPNT 해양기상과 최근접 매칭. 시간층화 case-crossover와 조건부 로지스틱으로 기상-사고 연관을 통계 검증. 로지스틱(AUC 0.653)과 LightGBM(AUC 0.834)을 연도 기준 OOF로 비교하고 표준화 오즈비로 해석. FastAPI 서빙 + Next.js·MapLibre 지도 대시보드로 위험도 시각화.",
-      },
-      {
-        heading: "결과",
-        text: "격자×시간 위험도와 기상 근거를 지도 대시보드로 공개했습니다. 화면은 실제 분석 실행 결과를 키 없이 재생하는 정적 데모입니다.",
-      },
-    ],
-  },
-  {
     slug: "marine-domain-rag",
     title: "해양 법령 도메인 RAG 개발",
     category: "work",
     badge: "2025 · 슈어소프트테크",
     period: "2025.06 – 2025.11",
-    role: "",
-    team: "",
     org: "슈어소프트테크",
     summary:
       "해양 법령을 조문 단위로 검색하고 답변마다 근거 조문을 인용하는 RAG 데모. BM25·벡터·조문 관계 그래프 검색을 병합해 단순 키워드 검색보다 정확한 인용을 만드는 흐름에 초점.",
     hero: "/projects/marine-rag.svg",
-    color: "#14b8a6",
     github: "https://github.com/Minsu5452/maritime-law-rag-agent",
+    external: [{ label: "라이브 데모", url: "https://korean-maritime-law-rag.vercel.app" }],
     stack: [
       "Python",
       "LangGraph",
@@ -152,7 +135,7 @@ export const projects: Project[] = [
       "FastAPI",
     ],
     featured: true,
-    featuredOrder: 4,
+    featuredOrder: 1,
     body: [
       {
         heading: "배경",
@@ -169,21 +152,45 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "marine-accident-risk-prediction",
+    title: "해양사고 위험 예측 시스템 개발",
+    category: "work",
+    badge: "2025 · 슈어소프트테크",
+    period: "2025.06 – 2025.11",
+    org: "슈어소프트테크",
+    summary:
+      "사고·격자·기상 데이터를 결합해 격자×시간 단위로 해양사고 위험을 사전 식별하는 흐름을 검증한 해양수산부 AI융복합 과제의 공개 가능한 재현. 도메인 데이터 결합과 설명가능성 관점의 모델 해석에 초점.",
+    hero: "/projects/marine-accident.svg",
+    github: "https://github.com/Minsu5452/marine-accident-risk-analysis",
+    external: [{ label: "라이브 데모", url: "https://korean-marine-accident-risk.vercel.app" }],
+    stack: ["Python", "LightGBM", "statsmodels", "FastAPI", "Next.js", "MapLibre"],
+    featured: true,
+    featuredOrder: 4,
+    body: [
+      {
+        heading: "배경",
+        text: "해양사고 기록과 해양기상 관측을 격자×시간 단위로 결합해 사고 위험을 사전 식별합니다. 슈어소프트테크 인턴십 중 해양수산부 AI융복합 과제로 진행한 작업을, 회사 보안상 사내 코드·데이터를 외부에 공개할 수 없어 공개 데이터 기반으로 재현한 데모입니다.",
+      },
+      {
+        heading: "접근",
+        text: "MTIS 해양사고 좌표를 정제해 NMPNT 해양기상과 최근접 매칭. 시간층화 case-crossover와 조건부 로지스틱으로 기상-사고 연관을 통계 검증. 로지스틱(AUC 0.653)과 LightGBM(AUC 0.834)을 연도 기준 OOF로 비교하고 표준화 오즈비로 해석. FastAPI 서빙 + Next.js·MapLibre 지도 대시보드로 위험도 시각화.",
+      },
+      {
+        heading: "결과",
+        text: "격자×시간 위험도와 기상 근거를 지도 대시보드로 공개했습니다. 화면은 실제 분석 실행 결과를 키 없이 재생하는 정적 데모입니다.",
+      },
+    ],
+  },
+  {
     slug: "kt-agent-validation-dataset",
     title: "KT 에이전트 검증 데이터셋 구축",
     category: "work",
     badge: "2025 · 슈어소프트테크",
     period: "2025.06 – 2025.11",
-    role: "",
-    team: "",
     org: "슈어소프트테크 / KT",
     summary: "KT 에이전트 시스템 검증용 데이터셋 큐레이션. 인턴십 중 참여.",
     hero: "/projects/kt-dataset.svg",
-    color: "#8b5cf6",
-    external: [{ label: "GitHub Profile", url: "https://github.com/Minsu5452" }],
     stack: ["데이터 큐레이션", "검증 셋 설계"],
-    featured: true,
-    featuredOrder: 5,
     body: [
       {
         heading: "배경",
@@ -201,16 +208,14 @@ export const projects: Project[] = [
   },
   {
     slug: "court-judgment-prediction",
-    title: "법원 판결 예측 AI 경진대회 · 2등",
+    title: "법원 판결 예측 AI 경진대회",
     category: "award",
-    badge: "🥈 2등",
+    badge: "2023 · 데이콘",
+    result: "2등",
     period: "2023.07",
-    role: "",
-    team: "",
     org: "데이콘 주최/주관",
     summary: "장문 판결문 텍스트 기반 양 당사자 승소 예측. DeBERTa-v3 fine-tuning.",
     hero: "/projects/court-judgment.svg",
-    color: "#f59e0b",
     github: "https://github.com/Minsu5452/court-judgment-prediction",
     stack: ["NLP", "DeBERTa-v3", "spaCy", "nlpaug"],
     body: [
@@ -224,22 +229,20 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "최종 2등 (🥈).",
+        text: "최종 2등 (506팀 중, 리더보드 기준).",
       },
     ],
   },
   {
     slug: "genomic-data-breed-classification",
-    title: "유전체 정보 품종 분류 AI 경진대회 · 1등",
+    title: "유전체 정보 품종 분류 AI 경진대회",
     category: "award",
-    badge: "🥇 1등",
+    badge: "2023 · 데이콘",
+    result: "1등",
     period: "2023.02",
-    role: "",
-    team: "",
     org: "충남대 바이오AI융합연구센터 주최 · 데이콘 주관",
     summary: "SNP 기반 multi-class 품종 분류. CatBoost Encoder + 불균형 보정 + weighted hard-voting ensemble. 학술대회 논문 발표 연계.",
     hero: "/projects/genomic.svg",
-    color: "#ec4899",
     github: "https://github.com/Minsu5452/genomic-breed-classification",
     stack: ["CatBoost", "LightGBM", "XGBoost", "SMOTE", "Tabular ML"],
     body: [
@@ -253,23 +256,21 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "최종 1등 (🥇). 결과를 정리해 에이아이프렌즈학회 2023 제2차 실용 인공지능 학술대회 논문 발표로 연계.",
+        text: "최종 1등 (716팀 중, 리더보드 기준). 결과를 정리해 에이아이프렌즈학회 2023 제2차 실용 인공지능 학술대회 논문 발표로 연계.",
       },
     ],
   },
   {
     slug: "industrial-lead-lag-forecasting",
-    title: "제3회 국민대 AI빅데이터 분석 경진대회 · Top 5.2%",
+    title: "제3회 국민대 AI빅데이터 분석 경진대회",
     category: "comp",
     badge: "2025",
+    result: "상위 5.2%",
     period: "2025.11",
-    role: "",
-    team: "",
     org: "국민대 경영대학원·기계산업진흥회 주최",
     summary:
       "산업 지표 lead-lag 예측, LightGBM + graph PageRank + community detection.",
     hero: "/projects/industrial-leadlag.svg",
-    color: "#fb923c",
     github: "https://github.com/Minsu5452/industrial-lead-lag-forecasting",
     stack: ["LightGBM", "Graph", "PageRank", "Community Detection"],
     body: [
@@ -281,22 +282,20 @@ export const projects: Project[] = [
         heading: "접근",
         text: "품목별 월간 pivot에서 lag 1–9 구간의 상관·p-value·방향성·안정성을 스캔하고, zero ratio·CV·spike·trend·autocorrelation 등 품질 점수로 우연한 상관을 제거. leader→follower directed graph를 만들고 PageRank와 community 정보를 활용해 pair score를 보정. follower 자체 lag/rolling 피처와 선택된 leader의 lag-shifted value를 결합해 LightGBM 회귀 모델 학습. 마지막 3개월을 hold-out으로 두고 NMAE·MAE를 검증.",
       },
-      { heading: "결과", text: "최종 50등 (Top 5.2%)." },
+      { heading: "결과", text: "예선 50등 (960팀 중, 상위 5.2%)." },
     ],
   },
   {
     slug: "driver-cognitive-risk-prediction",
-    title: "운수종사자 인지적 특성 활용 교통사고 위험 예측 · Top 7.8%",
+    title: "운수종사자 인지적 특성 활용 교통사고 위험 예측 AI 경진대회",
     category: "comp",
     badge: "2025",
+    result: "상위 7.8%",
     period: "2025.10 – 2025.11",
-    role: "",
-    team: "",
     org: "행안부·NIA 주최 · 한국교통안전공단 주관",
     summary:
       "LightGBM + CatBoost, StratifiedGroupKFold. 이후 driver-risk-prediction-platform의 모델 기반.",
     hero: "/projects/driver-cognitive.svg",
-    color: "#f97316",
     github: "https://github.com/Minsu5452/driver-cognitive-risk-prediction",
     stack: ["LightGBM", "CatBoost", "StratifiedGroupKFold"],
     body: [
@@ -310,23 +309,21 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "최종 34등 (Top 7.8%). 본 솔루션이 이후 데이콘 위탁사업 driver-risk-prediction-platform의 모델 기반이 됨.",
+        text: "최종 34등 (437팀 중, 상위 7.8%). 본 솔루션이 이후 데이콘 위탁사업 driver-risk-prediction-platform의 모델 기반이 됨.",
       },
     ],
   },
   {
     slug: "ship-waiting-time-prediction",
-    title: "HD현대 AI Challenge · 2등",
+    title: "HD현대 AI Challenge",
     category: "comp",
     badge: "2023",
+    result: "2등",
     period: "2023.09 – 2023.10",
-    role: "",
-    team: "",
     org: "HD한국조선해양 AI Center 주최 · 데이콘 주관",
     summary:
       "선박 대기시간 예측, XGBoost·CatBoost ensemble (예선) → LightGBM (본선).",
     hero: "/projects/ship-waiting.svg",
-    color: "#1e40af",
     github: "https://github.com/Minsu5452/ship-waiting-time-prediction",
     stack: ["XGBoost", "CatBoost", "LightGBM", "Ensemble"],
     body: [
@@ -340,48 +337,20 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "예선 2등, 본선 6등.",
+        text: "예선 2등 (330팀 중, 상위 0.6%) · 본선 6등.",
       },
-    ],
-  },
-  {
-    slug: "power-consumption-forecasting",
-    title: "2023 전력사용량 예측 AI 경진대회 · Top 8.7%",
-    category: "comp",
-    badge: "2023",
-    period: "2023.07 – 2023.08",
-    role: "",
-    team: "",
-    org: "한국에너지공단 주최 · 데이콘 주관",
-    summary: "건물별 시간 단위 전력 소비량 예측. AutoML baseline + 건물별 Prophet 실험.",
-    hero: "/projects/power-consumption.svg",
-    color: "#eab308",
-    github: "https://github.com/Minsu5452/power-consumption-forecasting",
-    stack: ["Time Series", "Prophet", "AutoML", "LightGBM"],
-    body: [
-      {
-        heading: "배경",
-        text: "건물별 시간 단위 전력 소비량을 예측하는 시계열 회귀 과제 (SMAPE 평가).",
-      },
-      {
-        heading: "접근",
-        text: "건물 정보·기상·캘린더·시간대별 소비 패턴을 EDA로 점검. mljar-supervised AutoML로 빠르게 baseline을 구성하고 모델 계열을 비교한 뒤, 건물별 운영 패턴 차이를 고려해 건물 단위 Prophet 모델을 실험. 불안정한 구간은 요일·시간대 중앙값 fallback으로 보정.",
-      },
-      { heading: "결과", text: "최종 107등 (Top 8.7%)." },
     ],
   },
   {
     slug: "lg-online-sales-forecasting",
-    title: "LG 온라인 채널 제품 판매량 예측 해커톤 · Top 1.6%",
+    title: "LG 온라인 채널 제품 판매량 예측 해커톤",
     category: "comp",
     badge: "2023 · LG Aimers",
+    result: "상위 1.6%",
     period: "2023.08",
-    role: "",
-    team: "",
     org: "LG AI Research 주최 · 데이콘 주관 · LG Aimers 연계",
     summary: "제품별 온라인 채널 판매량 예측. wide→long 변환 + lag/rolling/calendar 피처 + recursive multi-step forecasting.",
     hero: "/projects/lg-sales.svg",
-    color: "#dc2626",
     github: "https://github.com/Minsu5452/online-sales-forecasting",
     stack: ["Time Series", "Tabular ML", "Feature Engineering"],
     body: [
@@ -395,47 +364,44 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "예선 12등 (Top 1.6%) → 본선 24등.",
+        text: "예선 12등 (747팀 중, 상위 1.6%) → 본선 24등.",
       },
     ],
   },
   {
-    slug: "smart-farm-yield-energy-prediction",
-    title: "2023 스마트농업 AI 경진대회",
+    slug: "power-consumption-forecasting",
+    title: "2023 전력사용량 예측 AI 경진대회",
     category: "comp",
-    badge: "2023 · BDA",
-    period: "2023",
-    role: "",
-    team: "",
-    org: "농림축산식품부 주최 · 농림수산식품교육문화정보원 주관 · BDA 연계",
-    summary: "수확량과 난방 에너지 누적값을 동시에 예측하는 multi-target 회귀. PowerTransformer + SHAP feature selection + Optuna 튜닝.",
-    hero: "/projects/smart-farm.svg",
-    color: "#22c55e",
-    stack: ["LightGBM", "CatBoost", "XGBoost", "Optuna", "SHAP"],
+    badge: "2023",
+    result: "상위 8.7%",
+    period: "2023.07 – 2023.08",
+    org: "한국에너지공단 주최 · 데이콘 주관",
+    summary: "건물별 시간 단위 전력 소비량 예측. AutoML baseline + 건물별 Prophet 실험.",
+    hero: "/projects/power-consumption.svg",
+    github: "https://github.com/Minsu5452/power-consumption-forecasting",
+    stack: ["Time Series", "Prophet", "AutoML", "LightGBM"],
     body: [
       {
         heading: "배경",
-        text: "스마트농업 데이터로 수확량과 난방 에너지 누적값을 동시에 예측하는 multi-target 회귀.",
+        text: "건물별 시간 단위 전력 소비량을 예측하는 시계열 회귀 과제 (SMAPE 평가).",
       },
       {
         heading: "접근",
-        text: "단일값·중복·식별자 컬럼을 정리하고 날짜 기반 피처 생성. 수치형 피처에 PowerTransformer 적용 후 SHAP 기반 중요도로 타겟별 feature set을 분리. LinearRegression·RandomForest·GradientBoosting·LightGBM·CatBoost·XGBoost를 5-fold로 비교한 뒤 최종 후보 모델을 Optuna로 튜닝해 타겟별 RMSE 확인.",
+        text: "건물 정보·기상·캘린더·시간대별 소비 패턴을 EDA로 점검. mljar-supervised AutoML로 빠르게 baseline을 구성하고 모델 계열을 비교한 뒤, 건물별 운영 패턴 차이를 고려해 건물 단위 Prophet 모델을 실험. 불안정한 구간은 요일·시간대 중앙값 fallback으로 보정.",
       },
-      { heading: "결과", text: "예선 탈락. BDA 7기 데이터 분석 고급반 연계." },
+      { heading: "결과", text: "최종 107등 (1,233팀 중, 상위 8.7%)." },
     ],
   },
   {
     slug: "citrus-yield-prediction",
-    title: "감귤 착과량 예측 AI 경진대회 · Top 6.6%",
+    title: "감귤 착과량 예측 AI 경진대회",
     category: "comp",
     badge: "2022",
+    result: "상위 6.6%",
     period: "2022.12",
-    role: "",
-    team: "",
     org: "제주테크노파크 주최 · 데이콘 주관",
     summary: "제주 감귤 나무 생육 데이터 기반 착과량 회귀 예측. multi K-fold ensemble로 단기 대회에서 안정성 확보.",
     hero: "/projects/citrus.svg",
-    color: "#fb923c",
     github: "https://github.com/Minsu5452/citrus-yield-prediction",
     stack: ["XGBoost", "LightGBM", "CatBoost", "Multi K-fold Ensemble"],
     body: [
@@ -447,99 +413,18 @@ export const projects: Project[] = [
         heading: "접근",
         text: "생육 정보에서 착과량 예측에 필요한 파생 변수를 구성. feature scaling과 selection 실험을 분리해 입력 피처 품질을 비교한 뒤 XGBoost·LightGBM·CatBoost 회귀 모델을 학습. seed와 fold를 달리한 multi K-fold ensemble로 예측 안정성을 높였습니다.",
       },
-      { heading: "결과", text: "최종 17등 (Top 6.6%)." },
-    ],
-  },
-  {
-    slug: "traffic-accident-prediction",
-    title: "2023 지역 치안 안전 데이터 분석 공모전",
-    category: "comp",
-    badge: "2023",
-    period: "2023",
-    role: "",
-    team: "",
-    org: "경찰대학 주최/주관",
-    summary: "충남·대전·세종 교통사고와 ASOS 기상 데이터를 결합해 1시간 이내 사고 발생 확률 예측. F1 0.86.",
-    hero: "/projects/traffic-safety.svg",
-    color: "#6366f1",
-    stack: ["LightGBM", "CatBoost", "Voting Ensemble", "SHAP", "Geo Analytics"],
-    body: [
-      {
-        heading: "배경",
-        text: "충남·대전·세종 지역의 교통사고 데이터와 기상청 ASOS 관측 데이터를 결합해 1시간 이내 사고 발생 여부와 확률을 예측하는 공모전 과제.",
-      },
-      {
-        heading: "접근",
-        text: "사고 좌표를 가까운 기상 관측소 기준으로 매핑하고, 시간 단위 날씨 데이터에 사고 발생 여부를 라벨링해 이진 분류 문제로 구성. LightGBM·CatBoost voting ensemble을 사용하고 SHAP 기반 중요도 분석으로 기상 요소와 사고 발생 관계를 해석.",
-      },
-      {
-        heading: "결과",
-        text: "예선 탈락. 보고 지표 F1 0.8577 / Accuracy 0.7911.",
-      },
-    ],
-  },
-  {
-    slug: "lotte-members-customer-analytics",
-    title: "제7회 롯데멤버스 빅데이터 경진대회",
-    category: "comp",
-    badge: "2022",
-    period: "2022",
-    role: "",
-    team: "",
-    org: "롯데멤버스 주최/주관",
-    summary: "L.POINT 고객 데이터로 재방문 가능성 모델링과 마케팅 전략 도출.",
-    hero: "/projects/lotte-members.svg",
-    color: "#e11d48",
-    stack: ["LightGBM", "CatBoost", "Random Forest", "DNN", "Customer Analytics"],
-    body: [
-      {
-        heading: "배경",
-        text: "L.POINT 고객 데이터를 활용해 고객 행동을 분석하고 재방문 가능성 모델링과 마케팅 전략 제안으로 연결한 과제.",
-      },
-      {
-        heading: "접근",
-        text: "고객 기본 정보·구매 이력·제휴사 이용·L.PAY 데이터를 결합. 구매 주기·채널·상품군·결제 행동 기반 피처를 구성하고 LightGBM·CatBoost·Random Forest·DNN 등 여러 모델로 재방문 가능성을 실험. 모델 예측과 고객군 분석을 바탕으로 마케팅 전략을 제안.",
-      },
-      { heading: "결과", text: "예선 탈락." },
-    ],
-  },
-  {
-    slug: "supporting-marginalized-communities",
-    title: "제3회 소외계층을 위한 AI활용 아이디어 공모전",
-    category: "comp",
-    badge: "2023 · BDA",
-    period: "2023",
-    role: "",
-    team: "",
-    org: "한국원격대학협의회 주최/주관 · BDA 연계",
-    summary: "청각장애인 일상 안전·정서 인지 보조 AI 앱 아이디어. Speech Emotion Recognition + 환경음 분류 prototype.",
-    hero: "/projects/marginalized.svg",
-    color: "#06b6d4",
-    stack: ["1D-CNN", "Capsule Network", "Audio", "Prototyping"],
-    body: [
-      {
-        heading: "배경",
-        text: "청각장애인의 일상 안전과 정서 인지를 보조하는 AI 앱 아이디어를 제안한 공모전.",
-      },
-      {
-        heading: "접근",
-        text: "Speech Emotion Recognition은 1D-CNN 기반 발화 감정 분류 prototype, Nonverbal Sound Recognition은 Capsule Network 구조를 참고한 환경음 분류 prototype으로 설계. 노트북에는 더미 텐서 forward sanity check까지 정리하고 제안서·발표 자료·시연 영상을 함께 패키징.",
-      },
-      { heading: "결과", text: "예선 탈락. BDA 7기 데이터 분석 고급반 연계." },
+      { heading: "결과", text: "최종 17등 (257팀 중, 상위 6.6%)." },
     ],
   },
   {
     slug: "restaurant-topic-modeling",
     title: "정릉시장 주변 맛집 리뷰 토픽 모델링",
     category: "academic",
-    badge: "학부",
+    badge: "2022 · 국민대",
     period: "2022.09 – 2022.12",
-    role: "",
-    team: "",
     org: "국민대 텍스트 데이터 분석 수업",
     summary: "국민대·정릉시장 주변 맛집 리뷰 크롤링 + 형태소 분석기 비교 + LSA/LDA 토픽 모델링.",
     hero: "/projects/restaurant-topic.svg",
-    color: "#a855f7",
     github: "https://github.com/Minsu5452/text-mining-review-topics",
     stack: ["Selenium", "KoNLPy", "LSA", "LDA", "NLP"],
     body: [
@@ -557,14 +442,11 @@ export const projects: Project[] = [
     slug: "dl-team-project-colorization",
     title: "Colorization SOTA 모델 Fine-tuning",
     category: "academic",
-    badge: "학부",
+    badge: "2022 · 국민대",
     period: "2022.09 – 2022.12",
-    role: "",
-    team: "",
     org: "국민대 딥러닝 수업",
     summary: "한국 음식 이미지 도메인에서 ChromaGAN / DeOldify / InstColorization SOTA 컬러화 모델 비교·fine-tune.",
     hero: "/projects/dl-colorization.svg",
-    color: "#3b82f6",
     github: "https://github.com/Minsu5452/dl-image-colorization",
     stack: ["PyTorch", "ChromaGAN", "DeOldify", "InstColorization"],
     body: [
@@ -582,14 +464,11 @@ export const projects: Project[] = [
     slug: "ml-team-project",
     title: "백화점 고객 구매 이력 분류",
     category: "academic",
-    badge: "학부",
+    badge: "2022 · 국민대",
     period: "2022.03 – 2022.06",
-    role: "",
-    team: "",
     org: "국민대 머신러닝 수업 내 Kaggle 컴페티션",
     summary: "백화점 트랜잭션 기반 8-class 고객 분류. Word2Vec sequence embedding + CatBoost/LGBM/DNN blending. Kaggle kml2022s 클래스 경진대회 2등.",
     hero: "/projects/ml-team.svg",
-    color: "#0ea5e9",
     github: "https://github.com/Minsu5452/ml-department-store-classification",
     stack: ["CatBoost", "LightGBM", "Word2Vec", "DNN", "Kaggle"],
     body: [
