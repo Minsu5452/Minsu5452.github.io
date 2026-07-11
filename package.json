@@ -1,8 +1,8 @@
 {
-  "name": "astrofy",
-  "description": "Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS. Create in minutes a website with Blog, CV, Project Section, Store and RSS Feed.",
+  "name": "minsu5452.github.io",
+  "description": "강민수 개인 포트폴리오 사이트 (Astro + Tailwind + DaisyUI, GitHub Pages 배포)",
   "type": "module",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
