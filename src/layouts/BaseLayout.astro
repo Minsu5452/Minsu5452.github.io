@@ -1,41 +1,59 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import SideBar from "../components/SideBar.astro";
-import { ViewTransitions } from "astro:transitions";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
-import { SITE_TITLE, SITE_DESCRIPTION, TRANSITION_API } from "../config";
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  ogType?: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+}
 
 const {
-  image,
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
-  includeSidebar = true,
-  sideBarActiveItemID,
+  image,
   ogType,
+  pubDate,
+  updatedDate,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ko" data-theme="lofi">
+<html lang="ko">
   <head>
-    <BaseHead title={title} description={description} image={image} , ogType={ogType} />
-    {TRANSITION_API && <ViewTransitions />}
+    <!-- 테마 결정은 스타일시트보다 먼저 실행해 FOUC를 막는다. ?theme=은 렌더 점검용 강제 값 -->
+    <script is:inline>
+      (() => {
+        const forced = new URLSearchParams(location.search).get("theme");
+        const saved = forced ?? localStorage.getItem("theme");
+        const theme =
+          saved === "light" || saved === "dark"
+            ? saved
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      ogType={ogType}
+      pubDate={pubDate}
+      updatedDate={updatedDate}
+    />
   </head>
-  <body>
-    <div class="bg-base-100 drawer lg:drawer-open">
-      <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content bg-base-100">
-        <Header title={SITE_TITLE} />
-        <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[900px] max-w-[100vw]">
-            <slot />
-          </main>
-        </div>
-        <Footer />
-      </div>
-      {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
-    </div>
+  <body class="flex min-h-screen flex-col">
+    <SiteHeader />
+    <main class="mx-auto w-full max-w-[720px] grow px-6 pb-20">
+      <slot />
+    </main>
+    <SiteFooter />
   </body>
 </html>

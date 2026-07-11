@@ -1,0 +1,21 @@
+---
+import { AUTHOR_EN, EMAIL, GITHUB_URL, DACON_URL } from "../consts";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer border-t border-line">
+  <div
+    class="mx-auto flex max-w-[720px] flex-wrap items-center gap-x-2 gap-y-1 px-6 py-7 pb-14 text-[13px] text-ink-muted"
+  >
+    <span>© {year} {AUTHOR_EN}</span>
+    <span aria-hidden="true">·</span>
+    <a class="transition-colors hover:text-accent" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+    <span aria-hidden="true">·</span>
+    <a class="transition-colors hover:text-accent" href={DACON_URL} target="_blank" rel="noopener noreferrer">DACON</a>
+    <span aria-hidden="true">·</span>
+    <a class="transition-colors hover:text-accent" href={`mailto:${EMAIL}`}>Email</a>
+    <span aria-hidden="true">·</span>
+    <a class="transition-colors hover:text-accent" href="/rss.xml">RSS</a>
+  </div>
+</footer>
