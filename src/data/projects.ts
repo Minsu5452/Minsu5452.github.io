@@ -65,7 +65,7 @@ export const projects: Project[] = [
       "행안부·NIA·한국교통안전공단 위탁사업. ML 모델 + 관리자 웹 + AI 엔진 + 배포까지 전 구간 개발.",
     hero: "/projects/driver-risk.svg",
     color: "#f43f5e",
-    github: "https://github.com/Minsu5452/driver-risk-web-platform",
+    github: "https://github.com/Minsu5452/driver-risk-prediction-platform",
     stack: [
       "Python",
       "LightGBM",
@@ -108,7 +108,7 @@ export const projects: Project[] = [
       "사고·격자·기상 데이터를 결합해 격자×시간 단위로 해양사고 위험을 사전 식별하는 흐름을 검증한 해양수산부 AI융복합 과제의 공개 가능한 재현. 도메인 데이터 결합과 설명가능성 관점의 모델 해석에 초점.",
     hero: "/projects/marine-accident.svg",
     color: "#0ea5e9",
-    github: "https://github.com/Minsu5452/korean-marine-accident-risk",
+    github: "https://github.com/Minsu5452/marine-accident-risk-analysis",
     stack: ["Python", "LightGBM", "statsmodels", "FastAPI", "Next.js", "MapLibre"],
     featured: true,
     featuredOrder: 3,
@@ -140,7 +140,7 @@ export const projects: Project[] = [
       "해양 법령을 조문 단위로 검색하고 답변마다 근거 조문을 인용하는 RAG 데모. BM25·벡터·조문 관계 그래프 검색을 병합해 단순 키워드 검색보다 정확한 인용을 만드는 흐름에 초점.",
     hero: "/projects/marine-rag.svg",
     color: "#14b8a6",
-    github: "https://github.com/Minsu5452/korean-maritime-law-rag",
+    github: "https://github.com/Minsu5452/maritime-law-rag-agent",
     stack: [
       "Python",
       "LangGraph",
@@ -294,7 +294,7 @@ export const projects: Project[] = [
     team: "",
     org: "행안부·NIA 주최 · 한국교통안전공단 주관",
     summary:
-      "LightGBM + CatBoost, StratifiedGroupKFold. 이후 driver-risk-web-platform의 모델 기반.",
+      "LightGBM + CatBoost, StratifiedGroupKFold. 이후 driver-risk-prediction-platform의 모델 기반.",
     hero: "/projects/driver-cognitive.svg",
     color: "#f97316",
     github: "https://github.com/Minsu5452/driver-cognitive-risk-prediction",
@@ -310,7 +310,7 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "최종 34등 (Top 7.8%). 본 솔루션이 이후 데이콘 위탁사업 driver-risk-web-platform의 모델 기반이 됨.",
+        text: "최종 34등 (Top 7.8%). 본 솔루션이 이후 데이콘 위탁사업 driver-risk-prediction-platform의 모델 기반이 됨.",
       },
     ],
   },
