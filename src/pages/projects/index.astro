@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { projects, type ProjectCategory } from "../../data/projects";
+import { AUTHOR } from "../../consts";
+
+const sections: { id: string; label: string; category: ProjectCategory }[] = [
+  { id: "work", label: "실무", category: "work" },
+  { id: "awards", label: "수상", category: "award" },
+  { id: "competitions", label: "공모전", category: "comp" },
+  { id: "academic", label: "학부", category: "academic" },
+];
+
+const byCategory = (category: ProjectCategory) =>
+  projects.filter((p) => p.category === category);
+---
+
+<BaseLayout
+  title={`프로젝트 · ${AUTHOR}`}
+  description="실무 R&D 과제, 수상 경진대회, 공모전, 학부 프로젝트 기록."
+>
+  <header class="pb-2 pt-14">
+    <h1 class="text-2xl font-bold text-ink-strong">프로젝트</h1>
+    <p class="mt-2 text-[15px] text-ink-muted">
+      실무 R&D 과제부터 경진대회, 학부 프로젝트까지의 기록입니다.
+    </p>
+    <nav class="mt-6 flex flex-wrap gap-2" aria-label="프로젝트 분류">
+      {
+        sections.map((s) => (
+          <a
+            href={`#${s.id}`}
+            class="rounded-md border border-line px-3 py-1.5 text-[13px] font-medium text-ink-muted transition-colors hover:border-line-strong hover:text-ink-strong"
+          >
+            {s.label} <span class="text-ink-muted">{byCategory(s.category).length}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </header>
+
+  {
+    sections.map((s) => (
+      <section id={s.id} class="scroll-mt-20 pt-10">
+        <h2 class="mb-2 flex items-baseline gap-2 text-[19px] font-bold text-ink-strong">
+          {s.label}
+          <span class="text-sm font-medium text-ink-muted">{byCategory(s.category).length}</span>
+        </h2>
+        {byCategory(s.category).map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </section>
+    ))
+  }
+</BaseLayout>
