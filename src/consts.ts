@@ -9,3 +9,7 @@ export const EMAIL = "daro980722@gmail.com";
 
 export const GITHUB_URL = "https://github.com/Minsu5452";
 export const DACON_URL = "https://dacon.io/myprofile/457768/home";
+
+// 기술 아티클 분류. 목록 칩과 frontmatter 스키마가 함께 참조한다.
+export const ARTICLE_TOPICS = ["RAG·Agent", "서빙·인프라", "평가", "통계"] as const;
+export type ArticleTopic = (typeof ARTICLE_TOPICS)[number];
