@@ -1,6 +1,6 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import SiteHeader from "../components/SiteHeader.astro";
+import SiteRail from "../components/SiteRail.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
@@ -11,6 +11,8 @@ interface Props {
   ogType?: string;
   pubDate?: Date;
   updatedDate?: Date;
+  /** 우측 목차 등 넓은 레이아웃이 필요한 페이지의 main 폭 확장용 */
+  mainClass?: string;
 }
 
 const {
@@ -20,6 +22,7 @@ const {
   ogType,
   pubDate,
   updatedDate,
+  mainClass = "max-w-[760px]",
 } = Astro.props;
 ---
 
@@ -49,11 +52,13 @@ const {
       updatedDate={updatedDate}
     />
   </head>
-  <body class="flex min-h-screen flex-col">
-    <SiteHeader />
-    <main class="mx-auto w-full max-w-[720px] grow px-6 pb-20">
-      <slot />
-    </main>
-    <SiteFooter />
+  <body class="min-h-screen lg:flex">
+    <SiteRail />
+    <div class="flex min-h-screen w-full min-w-0 flex-1 flex-col">
+      <main class:list={["mx-auto w-full grow px-6 pb-20", mainClass]}>
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
   </body>
 </html>

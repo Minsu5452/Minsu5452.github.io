@@ -5,7 +5,7 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* ── 디자인 토큰 (시안 A · 에디토리얼) ─────────────────────────── */
+/* ── 디자인 토큰 (사이드바 레일 시안 확정값) ───────────────────── */
 :root {
   --bg: #ffffff;
   --bg-subtle: #f7f8fa;
@@ -14,7 +14,7 @@
   --ink-strong: #191f28;
   --ink: #333d4b;
   --ink-muted: #6b7684;
-  --accent: #3b5bdb;
+  --accent: #4263eb;
   --on-accent: #ffffff;
 }
 
@@ -67,6 +67,11 @@ body {
   outline-offset: 2px;
 }
 
+/* 앵커 점프 시 모바일 상단 바에 가리지 않도록 여유를 둔다 */
+[id] {
+  scroll-margin-top: 76px;
+}
+
 /* 크로스 도큐먼트 뷰 트랜지션 (지원 브라우저 한정, JS 불필요) */
 @view-transition {
   navigation: auto;
@@ -117,7 +122,7 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
-/* ── 노트 본문 (typography 플러그인 토큰 연결) ─────────────────── */
+/* ── 아티클·케이스 스터디 본문 (typography 플러그인 토큰 연결) ──── */
 .prose {
   --tw-prose-body: var(--ink);
   --tw-prose-headings: var(--ink-strong);
@@ -153,10 +158,51 @@ body {
   font-size: 14.5px;
 }
 
+/* 넓은 표는 본문 밖으로 넘치지 않게 자체 스크롤 */
+.prose :where(.table-scroll) {
+  overflow-x: auto;
+}
+
+/* Shiki 듀얼 테마: defaultColor:false라 라이트/다크 변수를 여기서 직접 적용한다 */
 .astro-code {
   border: 1px solid var(--line);
   border-radius: 8px;
   font-size: 14px;
+}
+
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+/* 코드 복사 버튼 (CodeCopy.astro가 래퍼와 버튼을 주입) */
+.code-block {
+  position: relative;
+}
+
+.code-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+.code-block:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
 }
 
 [data-theme="dark"] .astro-code,
@@ -166,6 +212,23 @@ body {
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* ── 목차 ─────────────────────────────────────────────────── */
+.toc a {
+  display: block;
+  padding: 3px 0;
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.toc a:hover {
+  color: var(--accent);
+}
+
+.toc a[data-depth="3"] {
+  padding-left: 14px;
 }
 
 /* ── 인쇄 (CV A4) ─────────────────────────────────────────── */
@@ -199,7 +262,8 @@ body {
     print-color-adjust: exact;
   }
 
-  .site-header,
+  .site-rail,
+  .mobile-bar,
   .site-footer,
   .print-hidden {
     display: none !important;
