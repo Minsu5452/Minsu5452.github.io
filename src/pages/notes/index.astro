@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { projects } from "../../data/projects";
+import { AUTHOR } from "../../consts";
+
+const notes = (await getCollection("notes", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const projectTitle = (slug?: string) => projects.find((p) => p.slug === slug)?.title;
+---
+
+<BaseLayout
+  title={`노트 · ${AUTHOR}`}
+  description="프로젝트에서 검증하고 배운 것을 기록합니다."
+>
+  <header class="pb-2 pt-14">
+    <h1 class="text-2xl font-bold text-ink-strong">노트</h1>
+    <p class="mt-2 text-[15px] text-ink-muted">프로젝트에서 검증하고 배운 것을 기록합니다.</p>
+  </header>
+
+  <div class="pt-6">
+    {
+      notes.map((note) => (
+        <a
+          href={`/notes/${note.id}/`}
+          class="group -mx-3 block rounded-lg border-b border-line px-3 py-5 transition-colors last:border-b-0 hover:bg-bg-subtle"
+        >
+          <div class="flex items-baseline gap-4">
+            <span class="flex-none text-[13px] text-ink-muted">
+              <FormattedDate date={note.data.pubDate} />
+            </span>
+            <div class="min-w-0">
+              <div class="text-[17px] font-semibold leading-[1.45] text-ink-strong transition-colors group-hover:text-accent">
+                {note.data.title}
+              </div>
+              <p class="mt-1 text-sm leading-relaxed text-ink-muted">{note.data.description}</p>
+              {note.data.project && (
+                <div class="mt-2.5">
+                  <span class="chip">{projectTitle(note.data.project)}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

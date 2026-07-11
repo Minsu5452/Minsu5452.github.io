@@ -1,0 +1,16 @@
+---
+interface Props {
+  date: Date;
+}
+
+const { date } = Astro.props;
+
+const iso = date.toISOString().split("T")[0];
+const label = [
+  date.getFullYear(),
+  String(date.getMonth() + 1).padStart(2, "0"),
+  String(date.getDate()).padStart(2, "0"),
+].join(".");
+---
+
+<time datetime={iso} class="font-mono">{label}</time>
