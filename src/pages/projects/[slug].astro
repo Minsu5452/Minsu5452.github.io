@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 import { projects } from "../../data/projects";
 
 export async function getStaticPaths() {
@@ -7,6 +8,9 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const relatedNotes = (await getCollection("notes"))
+  .filter((n) => n.data.project === project.slug)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const accent = project.color ?? "#6366f1";
 const categoryLabel: Record<string, string> = {
   work: "Work",
@@ -142,6 +146,35 @@ const categoryLabel: Record<string, string> = {
             <span class="badge badge-outline font-mono text-xs">{s}</span>
           ))}
         </div>
+      </div>
+    )
+  }
+
+  {
+    relatedNotes.length > 0 && (
+      <div class="mb-8">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2">
+          <span class="inline-block w-1 h-5 rounded" style={`background:${accent};`}></span>
+          기술 노트
+        </h2>
+        <div class="grid gap-3">
+          {relatedNotes.map((n) => (
+            <a
+              href={`/notes/${n.slug}/`}
+              class="group relative block overflow-hidden rounded-lg border border-base-300 bg-base-100 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_10px_28px_-14px_rgba(0,0,0,0.2)]"
+            >
+              <div class="text-xs font-mono opacity-60 mb-1 uppercase tracking-wide">{n.data.topic}</div>
+              <div class="font-semibold leading-snug">{n.data.title}</div>
+              <span
+                class="pointer-events-none absolute right-4 top-4 text-base-content/40 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+                aria-hidden="true"
+              >
+                →
+              </span>
+            </a>
+          ))}
+        </div>
+        <p class="text-sm opacity-70 mt-2">이 프로젝트에서 나온 설계 판단과 배운 점을 정리한 글입니다.</p>
       </div>
     )
   }
