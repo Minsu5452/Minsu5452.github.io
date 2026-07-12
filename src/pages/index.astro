@@ -1,78 +1,58 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ProjectCard from "../components/ProjectCard.astro";
-import ArticleRow from "../components/ArticleRow.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
 import { featuredProjects } from "../data/projects";
-import { AUTHOR, AUTHOR_EN, EMAIL, GITHUB_URL, DACON_URL } from "../consts";
-
-const recentArticles = (await getCollection("articles", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
 ---
 
-<BaseLayout>
-  <section class="border-b border-line py-16 pb-14">
-    <p class="mb-3.5 text-xs font-medium tracking-[0.04em] text-ink-muted">
-      {AUTHOR} · {AUTHOR_EN}
-    </p>
-    <h1 class="mb-5 text-[26px] font-bold leading-[1.4] tracking-[-0.01em] text-ink-strong sm:text-[28px]">
-      LLM 에이전트와 ML 시스템을 만들고,<br class="hidden sm:block" />
-      실제로 돌아가는 서비스로 배포합니다.
-    </h1>
-    <p class="max-w-[620px]">
-      데이콘 Data Science팀에서 공공 데이터 분석 과제를 PL로 수행하고, 대회를 기획·운영합니다.
-      슈어소프트테크 인턴 기간에는 해양수산부·해양경찰청 R&D 과제에서 법령 RAG와 해양사고 위험
-      예측을 개발했습니다. 검색 전략과 모델 성능은 골드셋과 통계 검정으로 직접 평가해 근거와 함께
-      공개합니다.
-    </p>
-    <div class="mt-6 flex flex-wrap items-center gap-2 text-[13px] text-ink-muted">
-      <span>Seoul</span>
-      <span aria-hidden="true">·</span>
-      <a
-        class="border-b border-line-strong transition-colors hover:border-accent hover:text-accent"
-        href={GITHUB_URL}
-        target="_blank"
-        rel="noopener noreferrer">GitHub</a
-      >
-      <span aria-hidden="true">·</span>
-      <a
-        class="border-b border-line-strong transition-colors hover:border-accent hover:text-accent"
-        href={DACON_URL}
-        target="_blank"
-        rel="noopener noreferrer">DACON</a
-      >
-      <span aria-hidden="true">·</span>
-      <a
-        class="border-b border-line-strong transition-colors hover:border-accent hover:text-accent"
-        href={`mailto:${EMAIL}`}>{EMAIL}</a
-      >
+<BaseLayout sideBarActiveItemID="home">
+  <div class="pb-12 mt-5">
+    <div class="text-5xl font-bold">강민수 · Minsu Kang</div>
+    <div class="text-3xl py-3 font-bold break-keep">LLM 에이전트와 ML 시스템을 만들고, 실제로 돌아가는 서비스로 배포합니다.</div>
+    <div class="py-2">
+      <p class="text-lg">
+        데이콘 Data Science팀 매니저로 <b>공공 데이터 분석 과제 2건을 PL</b>로 맡고 있습니다.<br />
+        법령 RAG 에이전트부터 사고 위험 통계 검증, <b>망분리 환경 오프라인 배포</b>까지<br />
+        모델이 실제 서비스로 이어지는 구간을 만들어 왔습니다.
+      </p>
     </div>
-  </section>
-
-  <section class="pt-12">
-    <div class="mb-2 flex items-baseline justify-between">
-      <h2 class="text-[19px] font-bold text-ink-strong">대표 프로젝트</h2>
-      <a class="text-[13px] text-ink-muted transition-colors hover:text-accent" href="/projects/">
-        전체 보기 →
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a class="btn btn-outline" href="/projects">Projects</a>
+      <a class="btn btn-outline" href="/cv">CV</a>
+      <a
+        class="btn btn-outline gap-1"
+        href="https://github.com/Minsu5452"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+        </svg>
       </a>
     </div>
-    {featuredProjects.map((project) => <ProjectCard project={project} />)}
-  </section>
+  </div>
 
-  {
-    recentArticles.length > 0 && (
-      <section class="pt-12">
-        <div class="mb-2 flex items-baseline justify-between">
-          <h2 class="text-[19px] font-bold text-ink-strong">글</h2>
-          <a class="text-[13px] text-ink-muted transition-colors hover:text-accent" href="/articles/">
-            전체 보기 →
-          </a>
-        </div>
-        {recentArticles.map((article) => (
-          <ArticleRow article={article} compact />
-        ))}
-      </section>
-    )
-  }
+  <div>
+    <div class="text-3xl w-full font-bold mb-2">대표 프로젝트</div>
+    <p class="text-sm opacity-70 mb-5">카드를 누르면 프로젝트 상세 페이지로 이동합니다.</p>
+  </div>
+
+  <div class="grid gap-4">
+    {
+      featuredProjects.map((p) => (
+        <HorizontalCard
+          title={p.title}
+          desc={p.summary}
+          url={`/projects/${p.slug}/`}
+          badge={p.badge}
+          hero={p.hero}
+          color={p.color}
+        />
+      ))
+    }
+  </div>
+
+  <div class="mt-10 text-center">
+    <a class="btn btn-outline" href="/projects">전체 프로젝트 보기 →</a>
+  </div>
 </BaseLayout>

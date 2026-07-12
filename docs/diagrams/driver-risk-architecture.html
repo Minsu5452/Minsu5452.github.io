@@ -1,0 +1,87 @@
+<!doctype html>
+<!-- public/projects/arch/driver-risk-architecture.png 생성 템플릿.
+     수정하면 아래 명령으로 재생성한다 (marine/maritime 레포 다이어그램과 같은 방식).
+     chrome --headless=new --window-size=1180,830 --force-device-scale-factor=2 \
+       --virtual-time-budget=6000 --screenshot=public/projects/arch/driver-risk-architecture.png \
+       docs/diagrams/driver-risk-architecture.html
+     이후 하단 여백 크롭:
+     sips -c 1460 2360 --cropOffset 0 0 public/projects/arch/driver-risk-architecture.png -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { overflow: hidden; }
+  body {
+    width: 1180px;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+    background: #fff; color: #1f2437;
+    padding: 44px 48px 36px;
+    word-break: keep-all;
+  }
+  h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+  .sub { margin-top: 8px; font-size: 15.5px; color: #5b6377; }
+  .flow { margin-top: 26px; display: grid; gap: 0; }
+  .box {
+    border: 1px solid #dfe3ec; border-radius: 12px; background: #f8f9fc;
+    padding: 14px 18px;
+  }
+  .box .t { font-size: 15.5px; font-weight: 700; color: #26417c; }
+  .box .d { margin-top: 3px; font-size: 13px; color: #5b6377; line-height: 1.55; }
+  .arrow { text-align: center; color: #9aa2b5; font-size: 15px; padding: 5px 0; }
+  .tier { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 14px; }
+  .accent { background: #4655e6; border-color: #4655e6; }
+  .accent .t { color: #fff; }
+  .accent .d { color: #d9ddfa; }
+  .dark { background: #23262f; border-color: #23262f; }
+  .dark .t { color: #fff; }
+  .dark .d { color: #c4c9d4; }
+  .deploy { background: #fdf7f1; border-color: #f3dfc9; }
+  .deploy .t { color: #b4550a; }
+  .foot { margin-top: 26px; padding-top: 14px; border-top: 1px solid #e8ebf1; font-size: 12.5px; color: #8a92a6; }
+</style>
+</head>
+<body>
+  <h1>교통사고 위험도 예측 플랫폼 — 시스템 구성</h1>
+  <p class="sub">인터넷이 없는 현장 PC에서 설치와 운영이 끝까지 되어야 해서, 런타임과 의존성 전부를 배포 zip 하나에 담은 3-티어 구조입니다.</p>
+
+  <div class="flow">
+    <div class="box" style="max-width:460px; margin:0 auto; text-align:center;">
+      <div class="t">브라우저 · http://localhost:3000</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="box accent" style="max-width:640px; margin:0 auto; text-align:center;">
+      <div class="t">Nginx (:3000) — 경로 기반 프록시</div>
+      <div class="d">구체적인 경로 우선 매칭 · 개발용 Vite 프록시와 동일 규칙</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="tier">
+      <div class="box">
+        <div class="t">React SPA</div>
+        <div class="d">Vite · Mantine<br>대시보드 · 운전자 목록 · 개인 진단 · 비교 분석 · 관리자 화면</div>
+      </div>
+      <div class="box">
+        <div class="t">FastAPI AI 엔진 (:8000)</div>
+        <div class="d">Excel 업로드 → 학습 스키마 변환 · 예측 · 재학습 · SHAP 해석<br>모델은 DB에 버전 단위 저장, 활성 버전 전환·중단 학습 복구</div>
+      </div>
+      <div class="box">
+        <div class="t">Spring Boot eGovFrame (:8080)</div>
+        <div class="d">Java 8 · 전자정부 표준프레임워크<br>공공 요건에 맞춘 백엔드</div>
+      </div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="box dark" style="max-width:760px; margin:0 auto; text-align:center;">
+      <div class="t">예측 파이프라인 — 위험 점수 0–1</div>
+      <div class="d">도메인별 스태킹 앙상블(HistGB·XGBoost·CatBoost, Dirichlet 가중 탐색) + 시퀀스 LightGBM → 가중 블렌딩<br>시점 누수 방지 prior · 시퀀스 실패 시 스태킹 단독 폴백</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="box deploy" style="text-align:center;">
+      <div class="t">오프라인 배포 zip (약 400MB)</div>
+      <div class="d">Python·JRE·Nginx 런타임 + 오프라인 wheel 동봉 · install.bat이 방화벽 등록 → 자동시작 태스크 → 기동 헬스체크까지 처리 · 빌드 시 개발 잔여물 검사</div>
+    </div>
+  </div>
+
+  <p class="foot">실무 납품 플랫폼의 익명화 재구성 공개본 · 검사 데이터와 학습된 모델은 저장소에 포함하지 않음</p>
+</body>
+</html>
