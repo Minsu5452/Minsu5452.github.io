@@ -68,7 +68,7 @@ export const projects: Project[] = [
     org: "데이콘 / 행안부·NIA·한국교통안전공단 위탁",
     role: "PL",
     summary:
-      "행안부·NIA·한국교통안전공단 위탁사업. 검사 결과와 사고 이력을 학습한 앙상블 모델로 위험도를 예측하는 관리 웹을 개발하고, 발주기관 폐쇄망 클라우드 환경에 실제 배포까지 전 구간을 PL로 수행.",
+      "행안부·NIA·한국교통안전공단 위탁사업. 검사 결과와 사고 이력을 학습한 앙상블 모델로 위험도를 예측하는 관리 웹을 개발하고, 발주기관의 쿠버네티스 기반 폐쇄망 클라우드 환경에 실제 배포까지 전 구간을 PL로 수행.",
     hero: "/projects/driver-risk-demo.png",
     github: "https://github.com/Minsu5452/driver-risk-prediction-platform",
     color: "#ef4444",
@@ -99,7 +99,7 @@ export const projects: Project[] = [
       },
       {
         heading: "결과",
-        text: "실제 시스템은 발주기관의 폐쇄망 클라우드 환경에 배포까지 수행했습니다. 공개 저장소는 실무 구현을 익명화해 재구성한 것으로, 클라우드 없이 단일 PC에서도 인터넷 없이 전 구간이 재현되도록 Python·JRE·Nginx 런타임과 오프라인 wheel을 전부 담은 zip 설치 체계를 담았습니다.",
+        text: "실제 시스템은 발주기관의 쿠버네티스 기반 폐쇄망 클라우드 환경에 배포까지 수행했습니다. 공개 저장소는 실무 구현을 익명화해 재구성한 것으로, 클라우드 없이 단일 PC에서도 인터넷 없이 전 구간이 재현되도록 Python·JRE·Nginx 런타임과 오프라인 wheel을 전부 담은 zip 설치 체계를 담았습니다.",
       },
     ],
     metrics: [
