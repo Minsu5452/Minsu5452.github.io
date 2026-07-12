@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { projects } from "../../data/projects";
+
+export async function getStaticPaths() {
+  const notes = await getCollection("notes");
+  return notes.map((note) => ({ params: { slug: note.slug }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+
+const related = projects.find((p) => p.slug === note.data.project);
+const accent = related?.color ?? "#6366f1";
+const fmt = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+---
+
+<BaseLayout
+  title={`${note.data.title} · 강민수`}
+  description={note.data.description}
+  sideBarActiveItemID="notes"
+>
+  <div class="mb-4">
+    <a href="/notes" class="text-sm opacity-70 hover:opacity-100 hover:underline">← Notes</a>
+  </div>
+
+  <header
+    class="relative overflow-hidden rounded-2xl border border-base-300 bg-base-100 mb-8"
+    style={`--accent:${accent};`}
+  >
+    <span class="absolute inset-x-0 top-0 h-[4px]" style="background:var(--accent);" aria-hidden="true"></span>
+    <div class="p-6 md:p-8">
+      <div class="flex items-center gap-2 text-xs font-mono opacity-70 mb-2 tracking-wide uppercase">
+        <span>{note.data.topic}</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={note.data.pubDate.toISOString()}>{fmt(note.data.pubDate)}</time>
+      </div>
+      <h1 class="text-2xl md:text-4xl font-bold leading-tight mb-3 break-keep">{note.data.title}</h1>
+      <p class="text-base md:text-lg opacity-80 leading-relaxed">{note.data.description}</p>
+    </div>
+  </header>
+
+  <article class="prose max-w-none note-prose mb-10" style={`--accent:${accent};`}>
+    <Content />
+  </article>
+
+  {
+    note.data.tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-8">
+        {note.data.tags.map((tag) => (
+          <span class="badge badge-outline font-mono text-xs">{tag}</span>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    related && (
+      <a
+        href={`/projects/${related.slug}/`}
+        class="group relative block overflow-hidden rounded-xl border border-base-300 bg-base-100 p-5 mb-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_10px_28px_-14px_rgba(0,0,0,0.2)]"
+        style={`--accent:${accent};`}
+      >
+        <span
+          class="pointer-events-none absolute inset-y-0 left-0 w-[3px]"
+          style="background:var(--accent);"
+          aria-hidden="true"
+        />
+        <div class="text-xs font-mono opacity-60 mb-1 uppercase tracking-wide">관련 프로젝트</div>
+        <div class="font-bold">{related.title}</div>
+        <p class="mt-1 text-sm opacity-70 leading-relaxed">{related.summary}</p>
+        <span
+          class="pointer-events-none absolute right-4 top-4 text-base-content/40 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+          aria-hidden="true"
+        >
+          →
+        </span>
+      </a>
+    )
+  }
+
+  <div class="flex flex-wrap gap-3 mb-4">
+    <a href="/notes" class="btn btn-sm md:btn-md btn-ghost">← All Notes</a>
+  </div>
+</BaseLayout>

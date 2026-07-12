@@ -28,6 +28,46 @@ html, body {
     opacity: 1;
 }
 
+/* Notes article typography */
+.note-prose {
+    line-height: 1.85;
+}
+.note-prose h2 {
+    position: relative;
+    padding-left: 0.85rem;
+    margin-top: 2.4em;
+    font-size: 1.35rem;
+    line-height: 1.4;
+}
+.note-prose h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.18em;
+    width: 4px;
+    height: 1.1em;
+    border-radius: 2px;
+    background: var(--accent, #6366f1);
+}
+.note-prose table {
+    display: block;
+    overflow-x: auto;
+    font-size: 0.9em;
+}
+.note-prose pre {
+    border-radius: 0.75rem;
+    font-size: 0.85em;
+}
+.note-prose code {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.note-prose a {
+    text-underline-offset: 3px;
+}
+.note-prose blockquote {
+    border-left-color: var(--accent, #6366f1);
+}
+
 /* CV section heading accent */
 .cv-h {
     font-size: 1.5rem;
