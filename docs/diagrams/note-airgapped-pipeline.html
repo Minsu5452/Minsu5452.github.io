@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- public/notes/airgapped-pipeline.png 생성 템플릿.
+     chrome --headless=new --window-size=1180,940 --force-device-scale-factor=2 \
+       --virtual-time-budget=6000 --screenshot=public/notes/airgapped-pipeline.png \
+       docs/diagrams/note-airgapped-pipeline.html -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { overflow: hidden; }
+  body {
+    width: 1180px;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+    background: #fff; color: #1f2437;
+    padding: 44px 48px 36px;
+    word-break: keep-all;
+  }
+  h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+  .sub { margin-top: 8px; font-size: 15.5px; color: #5b6377; }
+  .zone { margin-top: 22px; border: 1.5px dashed #c9d0de; border-radius: 14px; padding: 16px 18px 18px; }
+  .zone.closed { border-color: #e3c9c9; background: #fffbfa; }
+  .zl { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; color: #8a92a6; text-transform: uppercase; margin-bottom: 10px; }
+  .zone.closed .zl { color: #b0605e; }
+  .box {
+    border: 1px solid #dfe3ec; border-radius: 12px; background: #f8f9fc;
+    padding: 13px 17px;
+  }
+  .box .t { font-size: 15px; font-weight: 700; color: #26417c; }
+  .box .d { margin-top: 3px; font-size: 12.5px; color: #5b6377; line-height: 1.55; }
+  .arrow { text-align: center; color: #9aa2b5; font-size: 15px; padding: 5px 0; }
+  .arrow small { font-size: 12px; color: #8a92a6; margin-left: 6px; }
+  .tier { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .accent { background: #4655e6; border-color: #4655e6; }
+  .accent .t { color: #fff; }
+  .accent .d { color: #d9ddfa; }
+  .dark { background: #23262f; border-color: #23262f; }
+  .dark .t { color: #fff; }
+  .dark .d { color: #c4c9d4; }
+  .foot { margin-top: 24px; padding-top: 14px; border-top: 1px solid #e8ebf1; font-size: 12.5px; color: #8a92a6; }
+</style>
+</head>
+<body>
+  <h1>폐쇄망 클라우드 ML 배포 — 반입 파이프라인</h1>
+  <p class="sub">밖에서 완성해 통째로 들여보내고, 안에서는 자급한다. 폐쇄망 반입 배포의 공통 구조를 일반화한 도식입니다.</p>
+
+  <div class="zone">
+    <div class="zl">외부망 — 빌드 존</div>
+    <div class="tier">
+      <div class="box">
+        <div class="t">프론트엔드 이미지</div>
+        <div class="d">React 정적 빌드 → Nginx 이미지에 포함</div>
+      </div>
+      <div class="box">
+        <div class="t">AI 엔진 이미지</div>
+        <div class="d">FastAPI + ML 의존성 wheel을 빌드 시점에 전부 설치</div>
+      </div>
+      <div class="box">
+        <div class="t">백엔드 이미지</div>
+        <div class="d">Spring Boot(eGovFrame) jar + JRE</div>
+      </div>
+    </div>
+    <div class="arrow">↓ <small>베이스 이미지·의존 차트까지 전수 목록화</small></div>
+    <div class="box" style="max-width:720px; margin:0 auto; text-align:center;">
+      <div class="t">이미지 tar 아카이브 + 매니페스트 + 운영 문서</div>
+      <div class="d">docker save로 이미지를 파일로 고정 · 태그 대신 다이제스트로 버전 식별</div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+  <div class="box accent" style="max-width:640px; margin:0 auto; text-align:center;">
+    <div class="t">보안 반입 절차</div>
+    <div class="d">기관이 정한 매체·심의 절차로만 반입 · 반입 후에는 외부망과 접점 없음</div>
+  </div>
+  <div class="arrow">↓</div>
+
+  <div class="zone closed">
+    <div class="zl">폐쇄망 — 발주기관 클라우드</div>
+    <div class="box" style="max-width:720px; margin:0 auto; text-align:center;">
+      <div class="t">내부 사설 레지스트리</div>
+      <div class="d">docker load → 내부 레지스트리에 적재 · 클러스터는 이 레지스트리만 바라봄</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="box" style="text-align:center;">
+      <div class="t">쿠버네티스 클러스터 — 3-티어 워크로드</div>
+      <div class="d">이미지 경로를 내부 레지스트리로 재지정 · readiness/liveness 프로브로 "떴다"와 "준비됐다"를 구분</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="box dark" style="max-width:760px; margin:0 auto; text-align:center;">
+      <div class="t">자급 운영</div>
+      <div class="d">모델 버전 관리·롤백·로그까지 외부 서비스 없이 시스템 안에서 해결 · 갱신도 같은 반입 파이프라인 반복</div>
+    </div>
+  </div>
+
+  <p class="foot">발주기관 환경의 세부 구성은 담지 않은 일반화 도식 · 공개 저장소에는 클라우드 없이 재현되는 오프라인 설치형 트랙을 수록</p>
+</body>
+</html>
