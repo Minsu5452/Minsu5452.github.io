@@ -1,14 +1,119 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import TimeLineElement from "../components/cv/TimeLine.astro";
+import { featuredProjects } from "../data/projects";
+
+const skills = [
+  {
+    area: "LLM · Agent",
+    items: ["LangGraph", "LangChain", "OpenAI API", "Hugging Face", "Qdrant", "Neo4j"],
+  },
+  {
+    area: "ML · 데이터",
+    items: ["PyTorch", "scikit-learn", "LightGBM", "XGBoost", "CatBoost", "pandas"],
+  },
+  {
+    area: "서빙 · 인프라",
+    items: ["FastAPI", "Redis", "PostgreSQL", "Docker", "Nginx", "GitHub Actions"],
+  },
+  {
+    area: "웹",
+    items: ["React", "Next.js", "TypeScript"],
+  },
+];
+
+const experience = [
+  {
+    company: "데이콘",
+    role: "Data Science팀 매니저",
+    period: "2025.12 – 현재",
+    summary: "공공 데이터 분석 과제 2건의 PL과 데이터 사이언스 경진대회 기획·운영을 맡고 있습니다.",
+    bullets: [
+      "운수종사자 교통사고 위험 예측 모델·관리 웹 개발 PL (2025.12 – 2026.04 · 행안부·NIA·한국교통안전공단 위탁) — 검사 결과와 사고 이력을 학습한 앙상블 예측 모델, 관리 웹, 망분리 운영 환경용 오프라인 배포 체계까지 전 구간을 수행하고 실제 배포까지 완료",
+      "AI 기반 수요기관 자체입찰 모니터링 모델 개발 PL (2026.06 – 현재 · 행안부·NIA·조달청 위탁) — 진행 중",
+      "AI 경진대회·해커톤의 과제 설계, 대회용 데이터 구성, 참가자·리더보드 운영",
+    ],
+  },
+  {
+    company: "슈어소프트테크",
+    role: "AX응용기술팀 AI 개발자 (인턴)",
+    period: "2025.06 – 2025.11",
+    summary: "해양수산부·해양경찰청 R&D 과제의 개발 실무를 맡고, KT와 에이전트 신뢰성 검증을 함께 수행했습니다.",
+    bullets: [
+      "해양 법령 도메인 RAG 개발 (해양경찰청 CDX 과제) — 법령 도메인 RAG DB 구축과 LangGraph 기반 검색·답변 흐름 구성",
+      "해양사고 위험 분석 (해양수산부 AI융복합 과제) — 격자×시간 단위 데이터 결합, 통계 검증, 모델 해석",
+      "KT 자율 에이전트 신뢰성 검증 — 검증 데이터셋 구축, 실성능 테스트, 화이트리스트 작성 (KT와 공동 수행)",
+    ],
+  },
+];
+
+const awards = [
+  {
+    title: "유전체 정보 품종 분류 AI 경진대회 · 1등",
+    detail: "716팀 중 1위 (상위 0.1%) · 충남대학교 바이오AI융합연구센터 외 주최 · 데이콘 주관",
+    date: "2023.02",
+  },
+  {
+    title: "법원 판결 예측 AI 경진대회 · 2등",
+    detail: "506팀 중 2위 (상위 0.4%) · 데이콘 주최/주관",
+    date: "2023.07",
+  },
+];
+
+const competitions = [
+  {
+    title: "제3회 국민대학교 AI빅데이터 분석 경진대회",
+    result: "50등 / 960팀 (상위 5.2%)",
+    detail: "국민대 경영대학원·기계산업진흥회 주최",
+    date: "2025.11",
+  },
+  {
+    title: "운수종사자 인지적 특성 데이터 활용 교통사고 위험 예측 AI 경진대회",
+    result: "34등 / 437팀 (상위 7.8%)",
+    detail: "행정안전부·NIA 주최 · 한국교통안전공단 주관",
+    date: "2025.10 – 2025.11",
+  },
+  {
+    title: "HD현대 AI Challenge",
+    result: "예선 2등 / 330팀 (상위 0.6%) · 본선 6등",
+    detail: "HD한국조선해양 AI Center 주최 · 데이콘 주관",
+    date: "2023.09 – 2023.10",
+  },
+  {
+    title: "온라인 채널 제품 판매량 예측 AI 온라인 해커톤",
+    result: "예선 12등 / 747팀 (상위 1.6%) · 본선 24등",
+    detail: "LG AI Research 주최 · 데이콘 주관 · LG Aimers 연계",
+    date: "2023.08",
+  },
+  {
+    title: "2023 전력사용량 예측 AI 경진대회",
+    result: "107등 / 1,233팀 (상위 8.7%)",
+    detail: "한국에너지공단 주최 · 데이콘 주관",
+    date: "2023.07 – 2023.08",
+  },
+  {
+    title: "감귤 착과량 예측 AI 경진대회",
+    result: "17등 / 257팀 (상위 6.6%)",
+    detail: "제주테크노파크 주최 · 데이콘 주관",
+    date: "2022.12",
+  },
+];
+
+const activities = [
+  { title: "국민대학교 경영대학 · 연결고리 14기 멘티 (현업 동문 진로 멘토링)", date: "2023.10 – 2023.11" },
+  { title: "BDA (현 BDAI, 대학생 연합 빅데이터 학회) · 7기 데이터 분석 고급반 수료", date: "2023.09 – 2024.03" },
+  { title: "LG AI Research · LG Aimers 3기 교육생 (LG 청년 AI 인재 양성 프로그램)", date: "2023.07 – 2023.09" },
+  { title: "D&A (국민대학교 빅데이터 분석 학회) · 딥러닝 세션", date: "2023.03 – 2023.12" },
+  { title: "D&A · 머신러닝 세션", date: "2022.03 – 2022.12" },
+  { title: "D&A · Python 기초 스터디", date: "2021.12 – 2022.01" },
+];
 ---
 
 <BaseLayout
   title="CV · 강민수"
-  description="강민수 | Minsu Kang의 이력 — Work Experience, Education, Awards, Competitions, Publications, Activities."
+  description="강민수 | Minsu Kang의 이력 — 기술 스택, 경력, 대표 프로젝트, 학력, 수상·대회, 논문, 자격증."
   sideBarActiveItemID="cv"
 >
-  <!-- Minimal CV header -->
+  <!-- Header -->
   <header class="cv-header mb-10">
     <p class="text-xs font-mono opacity-60 tracking-widest uppercase mb-2">Curriculum Vitae</p>
     <div class="flex items-start justify-between gap-4 flex-wrap">
@@ -16,11 +121,6 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
         <h1 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight">강민수</h1>
         <p class="text-xl md:text-2xl mt-1 opacity-80 font-light">Minsu Kang</p>
         <p class="mt-4 text-base md:text-lg font-semibold break-keep">LLM 에이전트와 ML 시스템을 만들고, 실제로 돌아가는 서비스로 배포합니다.</p>
-        <p class="mt-2 text-sm md:text-base opacity-80 leading-relaxed">
-          데이콘 Data Science팀 매니저로 공공 데이터 분석 과제 2건을 PL로 맡고 있습니다.<br />
-          법령 RAG 에이전트부터 사고 위험 통계 검증, 망분리 환경 오프라인 배포까지<br />
-          모델이 실제 서비스로 이어지는 구간을 만들어 왔습니다.
-        </p>
       </div>
       <button
         type="button"
@@ -42,7 +142,7 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
       <div class="flex gap-2">
         <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">GitHub</dt>
         <dd>
-          <a href="https://github.com/Minsu5452" target="_blank" rel="noopener" class="link link-hover">Minsu5452</a>
+          <a href="https://github.com/Minsu5452" target="_blank" rel="noopener" class="link link-hover">github.com/Minsu5452</a>
         </dd>
       </div>
       <div class="flex gap-2">
@@ -66,155 +166,174 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
     </dl>
   </header>
 
-  <!-- Profile -->
+  <!-- Summary -->
   <section class="cv-section mb-10">
-    <h2 class="cv-h">Profile</h2>
-    <p class="text-justify opacity-90 leading-relaxed">
+    <h2 class="cv-h">Summary</h2>
+    <p class="opacity-90 leading-relaxed">
       LLM 에이전트와 ML 시스템을 만들고 실제 서비스로 배포하는 AI 엔지니어입니다.
-      교통·해양·법률 등 여러 도메인에서 ML 모델·LLM/RAG 시스템·웹 서비스를 설계·개발했고,
+      교통·해양·법률 등 여러 도메인에서 ML 모델과 LLM/RAG 시스템, 웹 서비스를 설계·개발했고,
       현재 데이콘에서 공공 데이터 분석 과제 2건을 PL로 수행하며 데이터 사이언스 경진대회 기획·운영을 함께 하고 있습니다.
+      데이콘 플랫폼 대회에서 1위·2위를 포함해 8개 대회 상위권을 기록했습니다.
     </p>
+  </section>
+
+  <!-- Skills -->
+  <section class="cv-section mb-10">
+    <h2 class="cv-h">Skills</h2>
+    <div class="grid gap-2.5">
+      {
+        skills.map((row) => (
+          <div class="grid grid-cols-1 md:grid-cols-[8rem_1fr] gap-1 md:gap-3 items-baseline">
+            <div class="text-sm font-semibold opacity-70">{row.area}</div>
+            <div class="flex flex-wrap gap-1.5">
+              {row.items.map((s) => (
+                <span class="badge badge-outline font-mono text-xs">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <p class="text-xs opacity-60 mt-3">실제 프로젝트에서 사용한 기술만 적었습니다. 사용 맥락은 각 프로젝트 상세에 있습니다.</p>
   </section>
 
   <!-- Work Experience -->
   <section class="cv-section mb-10">
     <h2 class="cv-h">Work Experience</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="데이콘 · Data Science팀 매니저"
-        subtitle="2025.12.29 – 현재"
-      >
-        공공 데이터 분석 과제 2건을 PL로 수행. 조달청 자체입찰 모니터링 AI 모델 개발(행안부·NIA 사업, 진행 중),
-        운수종사자 교통사고 위험 예측 모델·관리 웹 개발(한국교통안전공단, 모델부터 망분리 운영 환경 오프라인 배포까지).
-        데이터 사이언스 경진대회 기획·운영.
-      </TimeLineElement>
-      <TimeLineElement
-        title="슈어소프트테크 · AX응용기술팀 AI 개발자 (인턴)"
-        subtitle="2025.06.02 – 2025.11.30"
-      >
-        해양수산부 AI융복합 과제와 해양경찰청 CDX 과제의 개발 실무를 수행.
-        해양사고 위험 분석(격자×시간 데이터 결합·통계 검증·모델 해석)과 해양 법령 RAG(LangGraph 기반 검색·답변 흐름)를 개발.
-        KT 자율 에이전트 신뢰성 검증(검증 데이터셋 구축·실성능 테스트·화이트리스트 작성)을 KT와 공동 수행.
-      </TimeLineElement>
+    <div class="grid gap-6">
+      {
+        experience.map((job) => (
+          <div class="cv-entry">
+            <div class="flex items-baseline justify-between gap-4 flex-wrap">
+              <h3 class="text-lg font-bold">
+                {job.company} <span class="font-normal opacity-80">· {job.role}</span>
+              </h3>
+              <span class="font-mono text-sm opacity-60 shrink-0">{job.period}</span>
+            </div>
+            <p class="text-sm opacity-75 mt-1">{job.summary}</p>
+            <ul class="cv-bullets">
+              {job.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
     </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="cv-section mb-10">
+    <h2 class="cv-h">Featured Projects</h2>
+    <div class="grid gap-4">
+      {
+        featuredProjects.map((p) => (
+          <div class="cv-entry">
+            <div class="flex items-baseline justify-between gap-4 flex-wrap">
+              <h3 class="font-bold">
+                <a href={`/projects/${p.slug}/`} class="link link-hover">{p.title}</a>
+              </h3>
+              <span class="font-mono text-sm opacity-60 shrink-0">{p.period}</span>
+            </div>
+            <p class="text-sm opacity-75 mt-1 leading-relaxed">{p.summary}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="text-xs opacity-60 mt-3 print:hidden">
+      전체 16개 프로젝트의 배경·접근·결과는 <a href="/projects" class="link">Projects</a>에 있습니다.
+    </p>
   </section>
 
   <!-- Education -->
   <section class="cv-section mb-10">
     <h2 class="cv-h">Education</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="국민대학교 · AI빅데이터융합경영학과 심화전공 · 학사"
-        subtitle="2018.03 – 2024.08 졸업 · 관련 과목: 머신러닝, 딥러닝, 데이터마이닝, 텍스트 데이터 분석, 확률통계, 데이터베이스, 빅데이터 분석"
-      />
+    <div class="cv-entry">
+      <div class="flex items-baseline justify-between gap-4 flex-wrap">
+        <h3 class="font-bold">국민대학교 · AI빅데이터융합경영학과 심화전공 · 학사</h3>
+        <span class="font-mono text-sm opacity-60 shrink-0">2018.03 – 2024.08</span>
+      </div>
+      <p class="text-sm opacity-75 mt-1">
+        관련 과목: 머신러닝, 딥러닝, 데이터마이닝, 텍스트 데이터 분석, 확률통계, 데이터베이스, 빅데이터 분석
+      </p>
     </div>
   </section>
 
   <!-- Awards -->
   <section class="cv-section mb-10">
     <h2 class="cv-h">Awards</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="법원 판결 예측 AI 경진대회 · 2등 🥈"
-        subtitle="2023.07.26 · 데이콘 주최/주관"
-      />
-      <TimeLineElement
-        title="유전체 정보 품종 분류 AI 경진대회 · 1등 🥇"
-        subtitle="2023.02.14 · 충남대학교 바이오AI융합연구센터 주최 · 데이콘 주관"
-      />
+    <div class="grid gap-4">
+      {
+        awards.map((a) => (
+          <div class="cv-entry">
+            <div class="flex items-baseline justify-between gap-4 flex-wrap">
+              <h3 class="font-bold">{a.title}</h3>
+              <span class="font-mono text-sm opacity-60 shrink-0">{a.date}</span>
+            </div>
+            <p class="text-sm opacity-75 mt-1">{a.detail}</p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <!-- Competitions -->
   <section class="cv-section mb-10">
     <h2 class="cv-h">Competitions</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="제3회 국민대학교 AI빅데이터 분석 경진대회 · 50등"
-        subtitle="2025.11.10 – 2025.11.28"
-      />
-      <TimeLineElement
-        title="운수종사자 인지적 특성 데이터 활용 교통사고 위험 예측 AI 경진대회 · 34등"
-        subtitle="2025.10.13 – 2025.11.14 · 행정안전부·NIA 주최 · 한국교통안전공단 주관"
-      />
-      <TimeLineElement
-        title="HD현대 AI Challenge · 예선 2등 / 본선 6등"
-        subtitle="2023.09.25 – 2023.10.30 · HD한국조선해양 AI Center 주최 · 데이콘 주관"
-      />
-      <TimeLineElement
-        title="2023 전력사용량 예측 AI 경진대회 · 107등"
-        subtitle="2023.07.17 – 2023.08.28 · 한국에너지공단 주최 · 데이콘 주관"
-      />
-      <TimeLineElement
-        title="온라인 채널 제품 판매량 예측 AI 온라인 해커톤 · 예선 12등 / 본선 24등"
-        subtitle="2023.08.01 – 2023.08.28 · LG AI Research 주최 · 데이콘 주관 · LG Aimers 연계"
-      />
-      <TimeLineElement
-        title="감귤 착과량 예측 AI 경진대회 · 17등"
-        subtitle="2022.12.12 – 2022.12.14 · 제주테크노파크 주최 · 데이콘 주관"
-      />
+    <div class="grid gap-4">
+      {
+        competitions.map((c) => (
+          <div class="cv-entry">
+            <div class="flex items-baseline justify-between gap-4 flex-wrap">
+              <h3 class="font-bold">{c.title}</h3>
+              <span class="font-mono text-sm opacity-60 shrink-0">{c.date}</span>
+            </div>
+            <p class="text-sm opacity-75 mt-1">
+              <span class="font-semibold">{c.result}</span> · {c.detail}
+            </p>
+          </div>
+        ))
+      }
     </div>
+    <p class="text-xs opacity-60 mt-3">순위는 각 대회의 공개 리더보드 기준입니다.</p>
   </section>
 
   <!-- Publications -->
   <section class="cv-section mb-10">
     <h2 class="cv-h">Publications</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="SNP 정보를 활용한 유전체 품종 분류 모델링에 대한 연구"
-        subtitle="2023.02.09 – 2023.02.10 · 에이아이프렌즈학회 · 2023년 제2차 실용 인공지능 학술대회"
-      >
-        연구 논문 제출 및 학술대회 발표.
-      </TimeLineElement>
+    <div class="cv-entry">
+      <div class="flex items-baseline justify-between gap-4 flex-wrap">
+        <h3 class="font-bold">SNP 정보를 활용한 유전체 품종 분류 모델링에 대한 연구</h3>
+        <span class="font-mono text-sm opacity-60 shrink-0">2023.02</span>
+      </div>
+      <p class="text-sm opacity-75 mt-1">
+        에이아이프렌즈학회 · 2023년 제2차 실용 인공지능 학술대회 · 연구 논문 제출 및 학술대회 발표
+      </p>
     </div>
+  </section>
+
+  <!-- Certifications & Languages -->
+  <section class="cv-section mb-10">
+    <h2 class="cv-h">Certifications &amp; Languages</h2>
+    <ul class="cv-bullets">
+      <li>제12회 빅데이터분석기사 (필기) · 한국데이터산업진흥원 · 2026.04</li>
+      <li>제60회 SQL 개발자 (SQLD) · 한국데이터산업진흥원 · 2026.03</li>
+      <li>TOEIC Speaking Test · Intermediate Mid 3 (130점) · 2025.02</li>
+    </ul>
   </section>
 
   <!-- Activities -->
   <section class="cv-section mb-10">
     <h2 class="cv-h">Activities</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="국민대학교 경영대학 · 연결고리 14기 멘티"
-        subtitle="2023.10.06 – 2023.11.23 · 현업 동문 선배 진로 멘토링 프로그램"
-      />
-      <TimeLineElement
-        title="BDA (현 BDAI, 대학생 연합 빅데이터 학회) · 7기 데이터 분석 고급반 수료"
-        subtitle="2023.09.01 – 2024.03.31"
-      />
-      <TimeLineElement
-        title="LG AI Research · LG Aimers 3기 교육생"
-        subtitle="2023.07.01 – 2023.09.27 · LG 청년 AI 인재 양성 프로그램"
-      />
-      <TimeLineElement
-        title="D&A (국민대학교 빅데이터 분석 학회) · 딥러닝 세션"
-        subtitle="2023.03.01 – 2023.12.31"
-      />
-      <TimeLineElement
-        title="D&A · 머신러닝 세션"
-        subtitle="2022.03.01 – 2022.12.31"
-      />
-      <TimeLineElement
-        title="D&A · Python 기초 스터디"
-        subtitle="2021.12.01 – 2022.01.31"
-      />
+    <div class="grid gap-2">
+      {
+        activities.map((a) => (
+          <div class="flex items-baseline justify-between gap-4 flex-wrap">
+            <span class="text-sm opacity-85">{a.title}</span>
+            <span class="font-mono text-xs opacity-60 shrink-0">{a.date}</span>
+          </div>
+        ))
+      }
     </div>
   </section>
-
-  <!-- Certifications -->
-  <section class="cv-section mb-10">
-    <h2 class="cv-h">Certifications</h2>
-    <ul class="grid gap-2 list-disc mx-6">
-      <li>제12회 빅데이터분석기사 (필기) · 한국데이터산업진흥원 · 2026.04.24</li>
-      <li>제60회 SQL 개발자 (SQLD) · 한국데이터산업진흥원 · 2026.03.27</li>
-    </ul>
-  </section>
-
-  <!-- Languages -->
-  <section class="cv-section mb-10">
-    <h2 class="cv-h">Languages</h2>
-    <ul class="grid gap-2 list-disc mx-6">
-      <li>TOEIC Speaking Test · Intermediate Mid 3 (130점) · 2025.02.22</li>
-    </ul>
-  </section>
-
 </BaseLayout>

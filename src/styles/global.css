@@ -88,6 +88,21 @@ html, body {
     background: linear-gradient(90deg, #0ea5e9, #10b981, #8b5cf6);
 }
 
+/* CV entry (standard resume rows) */
+.cv-bullets {
+    margin-top: 0.4rem;
+    padding-left: 1.15rem;
+    list-style: disc;
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.925rem;
+    line-height: 1.65;
+    opacity: 0.85;
+}
+.cv-bullets li::marker {
+    color: hsl(var(--bc) / 0.4);
+}
+
 /* Print friendly */
 @page {
     size: A4;
@@ -104,8 +119,9 @@ html, body {
         print-color-adjust: exact;
     }
     .drawer-side,
-    header,
+    header:not(.cv-header),
     footer,
+    .sticky.lg\:hidden,
     .print\:hidden {
         display: none !important;
     }
@@ -158,8 +174,10 @@ html, body {
         opacity: 0.6 !important;
     }
     .cv-section {
-        page-break-inside: avoid;
         margin-bottom: 12pt !important;
+    }
+    .cv-entry {
+        page-break-inside: avoid;
     }
     .cv-h {
         font-size: 13pt !important;
