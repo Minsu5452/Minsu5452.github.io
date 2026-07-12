@@ -1,35 +1,30 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
-import { AUTHOR, AUTHOR_EN, EMAIL, GITHUB_URL, DACON_URL } from "../consts";
-
-const skills = [
-  { group: "LLM · Agent", items: ["LangGraph", "LangChain", "OpenAI API", "Hugging Face", "Qdrant", "Neo4j"] },
-  { group: "ML · 데이터", items: ["PyTorch", "scikit-learn", "LightGBM", "XGBoost", "CatBoost", "pandas"] },
-  { group: "서빙 · 인프라", items: ["FastAPI", "Redis", "PostgreSQL", "Docker", "Nginx", "GitHub Actions"] },
-  { group: "웹", items: ["React", "Next.js", "TypeScript"] },
-];
 ---
 
 <BaseLayout
-  title={`CV · ${AUTHOR}`}
-  description={`${AUTHOR} | ${AUTHOR_EN}의 이력 — Work Experience, Skills, Awards, Competitions, Publications, Education, Certifications, Activities, Languages.`}
+  title="CV · 강민수"
+  description="강민수 | Minsu Kang의 이력 — Work Experience, Education, Awards, Competitions, Publications, Activities."
+  sideBarActiveItemID="cv"
 >
-  <header class="cv-header pt-14">
-    <p class="mb-2 font-mono text-xs uppercase tracking-widest text-ink-muted">Curriculum Vitae</p>
-    <div class="flex flex-wrap items-start justify-between gap-4">
+  <!-- Minimal CV header -->
+  <header class="cv-header mb-10">
+    <p class="text-xs font-mono opacity-60 tracking-widest uppercase mb-2">Curriculum Vitae</p>
+    <div class="flex items-start justify-between gap-4 flex-wrap">
       <div class="grow">
-        <h1 class="text-3xl font-bold leading-tight tracking-tight text-ink-strong sm:text-4xl">
-          {AUTHOR}
-        </h1>
-        <p class="mt-1 text-lg text-ink-muted">{AUTHOR_EN}</p>
-        <p class="mt-4 font-semibold text-ink-strong">
-          LLM 에이전트와 ML 시스템을 만들고, 실제로 돌아가는 서비스로 배포합니다.
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight">강민수</h1>
+        <p class="text-xl md:text-2xl mt-1 opacity-80 font-light">Minsu Kang</p>
+        <p class="mt-4 text-base md:text-lg font-semibold break-keep">LLM 에이전트와 ML 시스템을 만들고, 실제로 돌아가는 서비스로 배포합니다.</p>
+        <p class="mt-2 text-sm md:text-base opacity-80 leading-relaxed">
+          데이콘 Data Science팀 매니저로 공공 데이터 분석 과제 2건을 PL로 맡고 있습니다.<br />
+          법령 RAG 에이전트부터 사고 위험 통계 검증, 망분리 환경 오프라인 배포까지<br />
+          모델이 실제 서비스로 이어지는 구간을 만들어 왔습니다.
         </p>
       </div>
       <button
         type="button"
-        class="print-hidden rounded-md border border-line-strong px-3.5 py-1.5 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+        class="btn btn-sm btn-outline print:hidden"
         onclick="window.print()"
         aria-label="이력서 인쇄"
       >
@@ -37,116 +32,109 @@ const skills = [
       </button>
     </div>
 
-    <dl
-      id="contact"
-      class="cv-meta mt-6 grid grid-cols-1 gap-x-6 gap-y-2 border-b border-t border-line py-4 text-sm md:grid-cols-3"
-    >
+    <dl class="cv-meta mt-6 grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2 text-sm border-t border-b border-base-300 py-4">
       <div class="flex gap-2">
-        <dt class="w-16 shrink-0 font-mono uppercase tracking-wide text-ink-muted">Email</dt>
-        <dd><a href={`mailto:${EMAIL}`} class="hover:text-accent">{EMAIL}</a></dd>
-      </div>
-      <div class="flex gap-2">
-        <dt class="w-16 shrink-0 font-mono uppercase tracking-wide text-ink-muted">GitHub</dt>
+        <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">Email</dt>
         <dd>
-          <a href={GITHUB_URL} target="_blank" rel="noopener" class="hover:text-accent">Minsu5452</a>
+          <a href="mailto:daro980722@gmail.com" class="link link-hover">daro980722@gmail.com</a>
         </dd>
       </div>
       <div class="flex gap-2">
-        <dt class="w-16 shrink-0 font-mono uppercase tracking-wide text-ink-muted">DACON</dt>
+        <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">GitHub</dt>
         <dd>
-          <a href={DACON_URL} target="_blank" rel="noopener" class="hover:text-accent">View profile</a>
+          <a href="https://github.com/Minsu5452" target="_blank" rel="noopener" class="link link-hover">Minsu5452</a>
         </dd>
       </div>
       <div class="flex gap-2">
-        <dt class="w-16 shrink-0 font-mono uppercase tracking-wide text-ink-muted">Based</dt>
+        <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">DACON</dt>
+        <dd>
+          <a href="https://dacon.io/myprofile/457768/home" target="_blank" rel="noopener" class="link link-hover">View profile</a>
+        </dd>
+      </div>
+      <div class="flex gap-2">
+        <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">Based</dt>
         <dd>Seoul, South Korea</dd>
       </div>
       <div class="flex gap-2">
-        <dt class="w-16 shrink-0 font-mono uppercase tracking-wide text-ink-muted">Now</dt>
+        <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">Now</dt>
         <dd>데이콘 · Data Science팀 매니저</dd>
       </div>
       <div class="flex gap-2">
-        <dt class="w-16 shrink-0 font-mono uppercase tracking-wide text-ink-muted">Edu</dt>
+        <dt class="opacity-50 font-mono uppercase tracking-wide w-16 shrink-0">Edu</dt>
         <dd>국민대 · AI빅데이터융합경영학과</dd>
       </div>
     </dl>
   </header>
 
   <!-- Profile -->
-  <section class="cv-section pt-10">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Profile</h2>
-    <p class="leading-relaxed">
-      교통·해양·법률 등 여러 도메인에서 ML 모델·LLM/RAG 시스템·웹 서비스를 설계·개발한 경험이
-      있습니다. 현재 데이콘에서 공공 데이터 분석 과제 PL과 대회 기획·운영, AI 시스템 개발을 함께
-      다루고 있습니다. 검색 전략과 모델 성능은 골드셋과 통계 검정으로 직접 평가해 근거와 함께
-      공개합니다.
+    <p class="text-justify opacity-90 leading-relaxed">
+      LLM 에이전트와 ML 시스템을 만들고 실제 서비스로 배포하는 AI 엔지니어입니다.
+      교통·해양·법률 등 여러 도메인에서 ML 모델·LLM/RAG 시스템·웹 서비스를 설계·개발했고,
+      현재 데이콘에서 공공 데이터 분석 과제 2건을 PL로 수행하며 데이터 사이언스 경진대회 기획·운영을 함께 하고 있습니다.
     </p>
   </section>
 
   <!-- Work Experience -->
-  <section class="cv-section pt-10">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Work Experience</h2>
     <div class="time-line-container">
-      <TimeLineElement title="데이콘 · Data Science팀 매니저" subtitle="2025.12.29 – 현재">
-        공공 데이터 분석 과제 2건을 PL로 수행. 행안부·NIA·한국교통안전공단 위탁 운수종사자 교통사고
-        위험 예측 모델·관리 웹 개발, 조달청 수요기관 자체입찰 모니터링 모델 개발(진행 중). 데이터
-        분석 경진대회 기획·운영.
+      <TimeLineElement
+        title="데이콘 · Data Science팀 매니저"
+        subtitle="2025.12.29 – 현재"
+      >
+        공공 데이터 분석 과제 2건을 PL로 수행. 조달청 자체입찰 모니터링 AI 모델 개발(행안부·NIA 사업, 진행 중),
+        운수종사자 교통사고 위험 예측 모델·관리 웹 개발(한국교통안전공단, 모델부터 망분리 운영 환경 오프라인 배포까지).
+        데이터 사이언스 경진대회 기획·운영.
       </TimeLineElement>
       <TimeLineElement
         title="슈어소프트테크 · AX응용기술팀 AI 개발자 (인턴)"
         subtitle="2025.06.02 – 2025.11.30"
       >
-        해양수산부 AI융복합 과제로 해양사고 위험 예측 시스템 개발(격자×시간 단위 데이터 설계 ·
-        위험 예측 모델 · SHAP). 해양경찰청 CDX 과제로 해양 법령 도메인 RAG DB 구축(GraphRAG ·
-        LangGraph 기반 검색·답변 흐름 구성에 참여). KT 자율 에이전트 검증 데이터셋 큐레이션.
+        해양수산부 AI융복합 과제와 해양경찰청 CDX 과제의 개발 실무를 수행.
+        해양사고 위험 분석(격자×시간 데이터 결합·통계 검증·모델 해석)과 해양 법령 RAG(LangGraph 기반 검색·답변 흐름)를 개발.
+        KT 자율 에이전트 신뢰성 검증(검증 데이터셋 구축·실성능 테스트·화이트리스트 작성)을 KT와 공동 수행.
       </TimeLineElement>
     </div>
   </section>
 
-  <!-- Skills -->
-  <section class="cv-section pt-4">
-    <h2 class="cv-h">Skills</h2>
-    <dl class="grid gap-3">
-      {
-        skills.map((row) => (
-          <div class="flex flex-col gap-1.5 sm:flex-row sm:items-baseline">
-            <dt class="w-32 shrink-0 text-sm font-medium text-ink-muted">{row.group}</dt>
-            <dd class="flex flex-wrap gap-1.5">
-              {row.items.map((item) => (
-                <span class="chip chip-outline">{item}</span>
-              ))}
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
+  <!-- Education -->
+  <section class="cv-section mb-10">
+    <h2 class="cv-h">Education</h2>
+    <div class="time-line-container">
+      <TimeLineElement
+        title="국민대학교 · AI빅데이터융합경영학과 심화전공 · 학사"
+        subtitle="2018.03 – 2024.08 졸업 · 관련 과목: 머신러닝, 딥러닝, 데이터마이닝, 텍스트 데이터 분석, 확률통계, 데이터베이스, 빅데이터 분석"
+      />
+    </div>
   </section>
 
   <!-- Awards -->
-  <section class="cv-section pt-10">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Awards</h2>
     <div class="time-line-container">
       <TimeLineElement
-        title="법원 판결 예측 AI 경진대회 · 2등"
+        title="법원 판결 예측 AI 경진대회 · 2등 🥈"
         subtitle="2023.07.26 · 데이콘 주최/주관"
       />
       <TimeLineElement
-        title="유전체 정보 품종 분류 AI 경진대회 · 1등"
+        title="유전체 정보 품종 분류 AI 경진대회 · 1등 🥇"
         subtitle="2023.02.14 · 충남대학교 바이오AI융합연구센터 주최 · 데이콘 주관"
       />
     </div>
   </section>
 
   <!-- Competitions -->
-  <section class="cv-section pt-4">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Competitions</h2>
     <div class="time-line-container">
       <TimeLineElement
-        title="제3회 국민대학교 AI빅데이터 분석 경진대회 · 상위 5.2% (50등/960팀)"
+        title="제3회 국민대학교 AI빅데이터 분석 경진대회 · 50등"
         subtitle="2025.11.10 – 2025.11.28"
       />
       <TimeLineElement
-        title="운수종사자 인지적 특성 데이터 활용 교통사고 위험 예측 AI 경진대회 · 상위 7.8% (34등/437팀)"
+        title="운수종사자 인지적 특성 데이터 활용 교통사고 위험 예측 AI 경진대회 · 34등"
         subtitle="2025.10.13 – 2025.11.14 · 행정안전부·NIA 주최 · 한국교통안전공단 주관"
       />
       <TimeLineElement
@@ -154,7 +142,7 @@ const skills = [
         subtitle="2023.09.25 – 2023.10.30 · HD한국조선해양 AI Center 주최 · 데이콘 주관"
       />
       <TimeLineElement
-        title="2023 전력사용량 예측 AI 경진대회 · 상위 8.7% (107등/1,233팀)"
+        title="2023 전력사용량 예측 AI 경진대회 · 107등"
         subtitle="2023.07.17 – 2023.08.28 · 한국에너지공단 주최 · 데이콘 주관"
       />
       <TimeLineElement
@@ -162,14 +150,14 @@ const skills = [
         subtitle="2023.08.01 – 2023.08.28 · LG AI Research 주최 · 데이콘 주관 · LG Aimers 연계"
       />
       <TimeLineElement
-        title="감귤 착과량 예측 AI 경진대회 · 상위 6.6% (17등/257팀)"
+        title="감귤 착과량 예측 AI 경진대회 · 17등"
         subtitle="2022.12.12 – 2022.12.14 · 제주테크노파크 주최 · 데이콘 주관"
       />
     </div>
   </section>
 
   <!-- Publications -->
-  <section class="cv-section pt-4">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Publications</h2>
     <div class="time-line-container">
       <TimeLineElement
@@ -181,28 +169,8 @@ const skills = [
     </div>
   </section>
 
-  <!-- Education -->
-  <section class="cv-section pt-4">
-    <h2 class="cv-h">Education</h2>
-    <div class="time-line-container">
-      <TimeLineElement
-        title="국민대학교 · AI빅데이터융합경영학과 심화전공 · 학사"
-        subtitle="2018.03 – 2024.08 졸업 · 관련 과목: 머신러닝, 딥러닝, 텍스트 데이터 분석"
-      />
-    </div>
-  </section>
-
-  <!-- Certifications -->
-  <section class="cv-section pt-4">
-    <h2 class="cv-h">Certifications</h2>
-    <ul class="mx-5 grid list-disc gap-2 text-[15px]">
-      <li>제12회 빅데이터분석기사 (필기) · 한국데이터산업진흥원 · 2026.04.24</li>
-      <li>제60회 SQL 개발자 (SQLD) · 한국데이터산업진흥원 · 2026.03.27</li>
-    </ul>
-  </section>
-
   <!-- Activities -->
-  <section class="cv-section pt-10">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Activities</h2>
     <div class="time-line-container">
       <TimeLineElement
@@ -217,17 +185,36 @@ const skills = [
         title="LG AI Research · LG Aimers 3기 교육생"
         subtitle="2023.07.01 – 2023.09.27 · LG 청년 AI 인재 양성 프로그램"
       />
-      <TimeLineElement title="D&A (국민대학교 빅데이터 분석 학회) · 딥러닝 세션" subtitle="2023.03.01 – 2023.12.31" />
-      <TimeLineElement title="D&A · 머신러닝 세션" subtitle="2022.03.01 – 2022.12.31" />
-      <TimeLineElement title="D&A · Python 기초 스터디" subtitle="2021.12.01 – 2022.01.31" />
+      <TimeLineElement
+        title="D&A (국민대학교 빅데이터 분석 학회) · 딥러닝 세션"
+        subtitle="2023.03.01 – 2023.12.31"
+      />
+      <TimeLineElement
+        title="D&A · 머신러닝 세션"
+        subtitle="2022.03.01 – 2022.12.31"
+      />
+      <TimeLineElement
+        title="D&A · Python 기초 스터디"
+        subtitle="2021.12.01 – 2022.01.31"
+      />
     </div>
   </section>
 
+  <!-- Certifications -->
+  <section class="cv-section mb-10">
+    <h2 class="cv-h">Certifications</h2>
+    <ul class="grid gap-2 list-disc mx-6">
+      <li>제12회 빅데이터분석기사 (필기) · 한국데이터산업진흥원 · 2026.04.24</li>
+      <li>제60회 SQL 개발자 (SQLD) · 한국데이터산업진흥원 · 2026.03.27</li>
+    </ul>
+  </section>
+
   <!-- Languages -->
-  <section class="cv-section pt-4 pb-6">
+  <section class="cv-section mb-10">
     <h2 class="cv-h">Languages</h2>
-    <ul class="mx-5 grid list-disc gap-2 text-[15px]">
+    <ul class="grid gap-2 list-disc mx-6">
       <li>TOEIC Speaking Test · Intermediate Mid 3 (130점) · 2025.02.22</li>
     </ul>
   </section>
+
 </BaseLayout>
