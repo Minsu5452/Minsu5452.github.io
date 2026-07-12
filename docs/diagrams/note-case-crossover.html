@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- public/notes/case-crossover-design.png 생성 템플릿.
+     chrome --headless=new --window-size=1180,780 --force-device-scale-factor=2 \
+       --virtual-time-budget=6000 --screenshot=public/notes/case-crossover-design.png \
+       docs/diagrams/note-case-crossover.html -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { overflow: hidden; }
+  body {
+    width: 1180px;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+    background: #fff; color: #1f2437;
+    padding: 44px 48px 36px;
+    word-break: keep-all;
+  }
+  h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+  .sub { margin-top: 8px; font-size: 15.5px; color: #5b6377; }
+  .strata { margin-top: 24px; border: 1.5px dashed #c9d0de; border-radius: 14px; padding: 16px 18px 18px; }
+  .zl { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; color: #8a92a6; text-transform: uppercase; margin-bottom: 10px; }
+  .cal { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+  .box {
+    border: 1px solid #dfe3ec; border-radius: 12px; background: #f8f9fc;
+    padding: 13px 17px; text-align: center;
+  }
+  .box .t { font-size: 15px; font-weight: 700; color: #26417c; }
+  .box .d { margin-top: 3px; font-size: 12.5px; color: #5b6377; line-height: 1.55; }
+  .case { background: #4655e6; border-color: #4655e6; }
+  .case .t { color: #fff; }
+  .case .d { color: #d9ddfa; }
+  .arrow { text-align: center; color: #9aa2b5; font-size: 15px; padding: 5px 0; }
+  .arrow small { font-size: 12px; color: #8a92a6; margin-left: 6px; }
+  .tier2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dark { background: #23262f; border-color: #23262f; }
+  .dark .t { color: #fff; }
+  .dark .d { color: #c4c9d4; }
+  .foot { margin-top: 24px; padding-top: 14px; border-top: 1px solid #e8ebf1; font-size: 12.5px; color: #8a92a6; }
+</style>
+</head>
+<body>
+  <h1>시간층화 case-crossover — 사고가 자기 자신의 대조가 된다</h1>
+  <p class="sub">사고가 난 시각을 같은 달 · 같은 요일 · 같은 시각의 다른 날들과 한 묶음으로 만들면, 위치·계절·요일·시각이 묶음 안에서 저절로 통제됩니다.</p>
+
+  <div class="strata">
+    <div class="zl">묶음(stratum) 하나 — 예: 7월 둘째 화요일 14시에 난 사고</div>
+    <div class="cal">
+      <div class="box case">
+        <div class="t">사고 시각 (case)</div>
+        <div class="d">7/14 (화) 14:00<br>사고 당시 기상</div>
+      </div>
+      <div class="box">
+        <div class="t">대조 1</div>
+        <div class="d">7/7 (화) 14:00<br>같은 지점 기상</div>
+      </div>
+      <div class="box">
+        <div class="t">대조 2</div>
+        <div class="d">7/21 (화) 14:00<br>같은 지점 기상</div>
+      </div>
+      <div class="box">
+        <div class="t">대조 3</div>
+        <div class="d">7/28 (화) 14:00<br>같은 지점 기상</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">↓ <small>이런 묶음이 9,687개 · 사고당 평균 대조 3.1건</small></div>
+
+  <div class="tier2">
+    <div class="box" style="text-align:left;">
+      <div class="t">조건부 로지스틱 회귀</div>
+      <div class="d">묶음 안의 비교만 사용 → 묶음마다 다른 고정 특성(장소·계절·요일·시각·그 배의 습관)이 소거 · 기상 변수는 1표준편차 단위로 표준화해 오즈비로 해석</div>
+    </div>
+    <div class="box" style="text-align:left;">
+      <div class="t">다중검정 보정 — Benjamini–Hochberg</div>
+      <div class="d">풍속·기온·기압·습도를 함께 검정 → p값을 FDR 기준으로 보정해 우연한 유의를 걸러냄</div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+  <div class="box dark" style="max-width:760px; margin:0 auto;">
+    <div class="t">해석은 유형 분해 후에</div>
+    <div class="d">전체 평균 오즈비만 보면 반대로 읽는다 → 기상 민감형 / 기계·비기상형으로 나눠 같은 분석을 반복</div>
+  </div>
+
+  <p class="foot">설계 근거: Lumley &amp; Levy (2000) · Janes et al. (2005) — 단방향 대조는 시간 추세에 편향될 수 있어 시간층화 방식을 채택 · 재현: scripts/run_stats.py</p>
+</body>
+</html>
