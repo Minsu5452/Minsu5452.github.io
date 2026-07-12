@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="강민수 · Minsu Kang Portfolio">
+  <defs>
+    <linearGradient id="og-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <linearGradient id="og-bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0ea5e9"/>
+      <stop offset="0.5" stop-color="#10b981"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#og-bg)"/>
+  <rect x="0" y="0" width="1200" height="14" fill="url(#og-bar)"/>
+
+  <!-- Decorative grid -->
+  <g stroke="#cbd5e1" stroke-width="1" opacity="0.35">
+    <path d="M0 130 H1200 M0 220 H1200 M0 310 H1200 M0 400 H1200 M0 490 H1200"/>
+  </g>
+
+  <!-- MK badge -->
+  <g transform="translate(80 80)">
+    <rect width="76" height="76" rx="18" fill="#0f172a"/>
+    <text x="38" y="52" font-family="-apple-system, system-ui, sans-serif" font-size="34" font-weight="700" text-anchor="middle" fill="#f8fafc">MK</text>
+  </g>
+
+  <!-- Name -->
+  <text x="80" y="280" font-family="-apple-system, 'Pretendard Variable', system-ui, sans-serif" font-size="86" font-weight="800" fill="#0f172a">강민수 · Minsu Kang</text>
+  <text x="80" y="350" font-family="-apple-system, 'Pretendard Variable', system-ui, sans-serif" font-size="38" font-weight="700" fill="#0369a1">LLM 에이전트와 ML 시스템을 만들고, 서비스로 배포합니다.</text>
+
+  <!-- Tags -->
+  <g transform="translate(80 420)" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="19">
+    <rect x="0" y="0" width="180" height="40" rx="20" fill="#ffffff" stroke="#0ea5e9" stroke-width="2"/>
+    <text x="90" y="27" text-anchor="middle" fill="#0369a1">Data Analytics</text>
+
+    <rect x="200" y="0" width="180" height="40" rx="20" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+    <text x="290" y="27" text-anchor="middle" fill="#047857">LLM / RAG</text>
+
+    <rect x="400" y="0" width="240" height="40" rx="20" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="520" y="27" text-anchor="middle" fill="#6d28d9">Predictive Modeling</text>
+  </g>
+
+  <!-- Footer URL -->
+  <text x="80" y="560" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="22" fill="#475569">minsu5452.github.io</text>
+
+  <!-- Right-side decorative element -->
+  <g transform="translate(880 200)" stroke="#0ea5e9" stroke-width="3" fill="none" opacity="0.5">
+    <circle cx="100" cy="100" r="100"/>
+    <circle cx="100" cy="100" r="70"/>
+    <circle cx="100" cy="100" r="40"/>
+  </g>
+  <g transform="translate(980 300)" fill="#10b981" opacity="0.85">
+    <circle cx="0" cy="0" r="14"/>
+  </g>
+  <g transform="translate(940 240)" fill="#8b5cf6" opacity="0.85">
+    <circle cx="0" cy="0" r="10"/>
+  </g>
+</svg>

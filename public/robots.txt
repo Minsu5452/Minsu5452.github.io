@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://minsu5452.github.io/sitemap-index.xml
