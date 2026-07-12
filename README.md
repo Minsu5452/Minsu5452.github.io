@@ -13,8 +13,10 @@
 | --- | --- |
 | `/` | Home — 인사말, 대표 프로젝트 4장 |
 | `/projects/` | Projects — Work / Awards / Competitions / Academic 4개 탭, 총 16개 프로젝트 |
-| `/projects/<slug>/` | 프로젝트 상세 — 기간·역할·소속, 배경/접근/결과, 아키텍처 다이어그램, 핵심 수치, 기술 스택, GitHub·데모 링크 |
-| `/cv/` | CV — Profile, Work Experience, Education, Awards, Competitions, Publications, Activities, Certifications, Languages (인쇄 친화 CSS 포함) |
+| `/projects/<slug>/` | 프로젝트 상세 — 기간·역할·소속, 배경/접근/결과, 아키텍처 다이어그램, 핵심 수치, 기술 스택, 관련 기술 노트, GitHub·데모 링크 |
+| `/notes/` | Notes — 프로젝트에서 나온 기술 정리·회고 (설계 판단의 이유, 실측 기록, 현장에서 배운 점) |
+| `/notes/<slug>/` | 노트 본문 — 마크다운 아티클, 태그, 관련 프로젝트 링크 |
+| `/cv/` | CV — Summary, Skills, Work Experience, Featured Projects, Education, Awards, Competitions, Publications, Certifications & Languages, Activities (인쇄 친화 CSS 포함) |
 
 ## 기술 스택
 
@@ -54,6 +56,8 @@ export interface Project {
 
 `featured: true` 표시된 프로젝트가 홈의 "대표 프로젝트" 4장으로 노출됩니다. `metrics`에는 각 저장소 리포트의 실측값만 적고, `architecture`는 저장소의 다이어그램 원본을 그대로 씁니다.
 
+기술 노트는 `src/content/notes/`의 마크다운 콘텐츠 컬렉션으로 관리합니다. frontmatter의 `project` 필드가 `projects.ts`의 slug를 가리키면 노트 상세와 프로젝트 상세가 서로 링크됩니다.
+
 ## 디렉터리 구조
 
 ```
@@ -67,6 +71,8 @@ src/
 │   ├── SideBar.astro
 │   ├── SideBarFooter.astro
 │   └── SideBarMenu.astro
+├── content/
+│   └── notes/               # 기술 노트 (마크다운 콘텐츠 컬렉션)
 ├── data/
 │   └── projects.ts          # 모든 프로젝트의 단일 소스
 ├── layouts/
@@ -75,6 +81,8 @@ src/
 │   ├── 404.astro
 │   ├── cv.astro
 │   ├── index.astro
+│   ├── notes/index.astro     # 노트 목록
+│   ├── notes/[slug].astro    # 노트 본문
 │   ├── projects.astro
 │   └── projects/[slug].astro # 동적 디테일 페이지
 ├── styles/
