@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- public/notes/citation-graph-pipeline.png 생성 템플릿.
+     chrome --headless=new --window-size=1180,860 --force-device-scale-factor=2 \
+       --virtual-time-budget=6000 --screenshot=public/notes/citation-graph-pipeline.png \
+       docs/diagrams/note-citation-graph.html -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { overflow: hidden; }
+  body {
+    width: 1180px;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+    background: #fff; color: #1f2437;
+    padding: 44px 48px 36px;
+    word-break: keep-all;
+  }
+  h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+  .sub { margin-top: 8px; font-size: 15.5px; color: #5b6377; }
+  .flow { margin-top: 24px; display: grid; gap: 0; }
+  .box {
+    border: 1px solid #dfe3ec; border-radius: 12px; background: #f8f9fc;
+    padding: 13px 17px;
+  }
+  .box .t { font-size: 15px; font-weight: 700; color: #26417c; }
+  .box .t code, .box .d code { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 12px; background: #e9edf6; padding: 1px 6px; border-radius: 5px; color: #26417c; }
+  .box .d { margin-top: 3px; font-size: 12.5px; color: #5b6377; line-height: 1.6; }
+  .arrow { text-align: center; color: #9aa2b5; font-size: 15px; padding: 5px 0; }
+  .arrow small { font-size: 12px; color: #8a92a6; margin-left: 6px; }
+  .tier { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .accent { background: #4655e6; border-color: #4655e6; }
+  .accent .t { color: #fff; }
+  .accent .d { color: #d9ddfa; }
+  .accent .d code { background: rgba(255,255,255,0.16); color: #fff; }
+  .dark { background: #23262f; border-color: #23262f; }
+  .dark .t { color: #fff; }
+  .dark .d { color: #c4c9d4; }
+  .foot { margin-top: 24px; padding-top: 14px; border-top: 1px solid #e8ebf1; font-size: 12.5px; color: #8a92a6; }
+</style>
+</head>
+<body>
+  <h1>법령 인용 그래프 — LLM 없는 구축 파이프라인</h1>
+  <p class="sub">관계가 텍스트에 형식화된 도메인에서는 정규식 3개가 추출기의 전부입니다. 결정적이고, 재현 가능하고, 비용이 0원입니다.</p>
+
+  <div class="flow">
+    <div class="box" style="max-width:560px; margin:0 auto; text-align:center;">
+      <div class="t">해양 법령 105개 · 조문 7,506개</div>
+      <div class="d">국가법령정보 OPEN API 수집 → 조문 단위 파싱</div>
+    </div>
+    <div class="arrow">↓ <small>조문 본문을 정규식 3종으로 스캔</small></div>
+    <div class="tier">
+      <div class="box">
+        <div class="t">외부 참조</div>
+        <div class="d"><code>「법령명」 제N조[의M][제K항]</code><br>다른 법령의 조문을 지목</div>
+      </div>
+      <div class="box">
+        <div class="t">내부 참조</div>
+        <div class="d"><code>제N조[의M][제K항]</code><br>같은 법령 안의 조문 (외부 참조 매치 범위는 건너뜀)</div>
+      </div>
+      <div class="box">
+        <div class="t">상위법 위임</div>
+        <div class="d"><code>법 제N조</code><br>시행령·시행규칙 → 모법 조문</div>
+      </div>
+    </div>
+    <div class="arrow">↓ <small>참조 표기 뒤 30자 안에 "준용"이 있으면 APPLIES, 없으면 CITES</small></div>
+    <div class="box accent" style="max-width:760px; margin:0 auto; text-align:center;">
+      <div class="t">Neo4j 조문 관계 그래프 — 16,281 엣지</div>
+      <div class="d">CITES 11,025 · APPLIES 394 · IMPLEMENTS 4,862 · 코퍼스 밖 참조 1,902건은 미해결로 별도 집계<br>조문 ID <code>법령ID::조문번호</code> 결정적 생성 → 개정 시 멱등 업서트</div>
+    </div>
+    <div class="arrow">↓ <small>검색 시점</small></div>
+    <div class="box" style="max-width:760px; margin:0 auto; text-align:center;">
+      <div class="t">벡터·BM25 상위 후보를 시드로 1홉 확장</div>
+      <div class="d">확장 결과를 (홉수 오름차순, 시드 점수 내림차순) 정렬해 별도 랭킹으로 구성</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="box dark" style="max-width:760px; margin:0 auto; text-align:center;">
+      <div class="t">RRF의 세 번째 랭킹으로 가산</div>
+      <div class="d">graph = RRF(벡터 랭킹, BM25 랭킹, 그래프 확장 랭킹) · 그래프가 틀려도 검색이 무너지지 않는 가산 구조</div>
+    </div>
+  </div>
+
+  <p class="foot">구현: maritime-law-rag-agent · parsing/crossref.py(정규식) · indexing/graph.py(구축) · retrieval/fusion.py(RRF)</p>
+</body>
+</html>

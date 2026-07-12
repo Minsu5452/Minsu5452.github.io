@@ -1,0 +1,112 @@
+<!doctype html>
+<!-- public/notes/langgraph-flow.png 생성 템플릿.
+     chrome --headless=new --window-size=1180,900 --force-device-scale-factor=2 \
+       --virtual-time-budget=6000 --screenshot=public/notes/langgraph-flow.png \
+       docs/diagrams/note-langgraph-flow.html -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { overflow: hidden; }
+  body {
+    width: 1180px;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+    background: #fff; color: #1f2437;
+    padding: 44px 48px 36px;
+    word-break: keep-all;
+  }
+  h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; }
+  .sub { margin-top: 8px; font-size: 15.5px; color: #5b6377; }
+  .grid { margin-top: 24px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px 18px; align-items: start; }
+  .box {
+    border: 1px solid #dfe3ec; border-radius: 12px; background: #f8f9fc;
+    padding: 13px 17px;
+  }
+  .box .t { font-size: 15px; font-weight: 700; color: #26417c; }
+  .box .t code { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 13.5px; background: #e9edf6; padding: 1px 6px; border-radius: 5px; }
+  .box .d { margin-top: 3px; font-size: 12.5px; color: #5b6377; line-height: 1.55; }
+  .arrow { text-align: center; color: #9aa2b5; font-size: 15px; padding: 4px 0; }
+  .arrow small { font-size: 12px; color: #8a92a6; margin-left: 6px; }
+  .accent { background: #4655e6; border-color: #4655e6; }
+  .accent .t, .accent .t code { color: #fff; background: transparent; padding: 0; }
+  .accent .d { color: #d9ddfa; }
+  .refuse { background: #fdf3f2; border-color: #efd3d0; }
+  .refuse .t { color: #a83a32; }
+  .refuse .t code { background: #f6e0de; color: #a83a32; }
+  .loop { border-style: dashed; background: #fffdf5; border-color: #e8ddb8; }
+  .loop .t { color: #8a6d1a; }
+  .dark { background: #23262f; border-color: #23262f; }
+  .dark .t { color: #fff; }
+  .dark .d { color: #c4c9d4; }
+  .side-note { font-size: 12px; color: #8a92a6; padding: 2px 4px 0; }
+  .foot { margin-top: 24px; padding-top: 14px; border-top: 1px solid #e8ebf1; font-size: 12.5px; color: #8a92a6; }
+</style>
+</head>
+<body>
+  <h1>법령 RAG 에이전트 — StateGraph 흐름</h1>
+  <p class="sub">노드 7개, 거절 경로 2개, 재시도 루프 2개. LLM 호출은 분류·근거 판정·생성 세 지점뿐이고 라우팅은 결정적 매핑이 합니다.</p>
+
+  <div class="grid">
+    <div>
+      <div class="box">
+        <div class="t"><code>classify</code> — 질문 유형 분류 (LLM ①)</div>
+        <div class="d">단일 조문 · 정의 · 멀티홉 · 답변 불가 → 조문 직접 지목 시 분류 생략, 정규식 파싱으로 해당 조문 고정</div>
+      </div>
+      <div class="arrow">↓ <small>유형 → 전략은 dict 매핑 (single→hybrid · definition→vector · multihop→graph)</small></div>
+      <div class="box">
+        <div class="t"><code>retrieve</code> — 검색</div>
+        <div class="d">BM25 · 벡터(Qdrant) · 그래프(Neo4j)를 RRF로 병합 · cross-encoder 리랭킹</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="box">
+        <div class="t"><code>grade_evidence</code> — 근거 충분성 판정 (LLM ②)</div>
+        <div class="d">부족하면 질의 재작성 · 재작성 질의가 실제로 달라졌을 때만 재검색</div>
+      </div>
+      <div class="arrow">↓ <small>충분</small></div>
+      <div class="box">
+        <div class="t"><code>generate</code> — 답변 생성 (LLM ③)</div>
+        <div class="d">검색 결과 밖 조문 인용 금지 · structured output으로 파싱 실패 제거</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="box">
+        <div class="t"><code>verify</code> — 인용 검증</div>
+        <div class="d">답변의 인용이 실제 검색 결과와 일치하는지 확인</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="box dark">
+        <div class="t">답변 + 근거 조문 인용</div>
+        <div class="d">각 노드의 상태 변경분을 SSE로 스트리밍 → 화면에 진행 과정 노출</div>
+      </div>
+    </div>
+    <div>
+      <div class="box refuse">
+        <div class="t"><code>refuse</code> — 즉시 거절</div>
+        <div class="d">분류가 답변 불가로 판정하면 검색 없이 거절 (비용 절약)</div>
+      </div>
+      <div class="side-note">↖ classify에서 분기</div>
+      <div style="height:14px"></div>
+      <div class="box loop">
+        <div class="t">재검색 루프 (최대 2회)</div>
+        <div class="d">grade_evidence 부족 판정 → 재작성 질의로 retrieve 재진입</div>
+      </div>
+      <div class="side-note">↖ grade_evidence ⇄ retrieve</div>
+      <div style="height:14px"></div>
+      <div class="box refuse">
+        <div class="t"><code>refuse_low_confidence</code></div>
+        <div class="d">재검색을 다 써도 근거가 부족하면 "확신이 낮다"로 거절</div>
+      </div>
+      <div class="side-note">↖ grade_evidence에서 분기</div>
+      <div style="height:14px"></div>
+      <div class="box loop">
+        <div class="t">재생성 루프 (최대 2회)</div>
+        <div class="d">verify 실패 → generate 재진입</div>
+      </div>
+      <div class="side-note">↖ verify ⇄ generate</div>
+    </div>
+  </div>
+
+  <p class="foot">구현: maritime-law-rag-agent · agent/graph.py — 재시도 한도는 상태 필드(retrieval_attempts · generation_attempts)로 그래프 정의에서 바로 읽힘</p>
+</body>
+</html>
