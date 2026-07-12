@@ -93,13 +93,14 @@ public/
 ├── favicon.svg              # MK 이니셜
 ├── og-default.svg / .png    # 1200x630 공유 이미지 (SVG가 생성 원본)
 ├── profile.png / .webp
+├── notes/<name>.png         # 기술 노트 본문의 개념 도식
 └── projects/
     ├── <slug>.svg           # 프로젝트 히어로 일러스트
     ├── <slug>.png           # 실제 데모 캡처 히어로 (해양 법령 RAG·해양사고 지도·교통사고 플랫폼)
     └── arch/<slug>.png      # 프로젝트 상세의 아키텍처 다이어그램
 
 docs/
-└── diagrams/                # 아키텍처 다이어그램 생성 템플릿 (HTML → 2x PNG)
+└── diagrams/                # 아키텍처·개념 도식 생성 템플릿 (HTML → 2x PNG)
 ```
 
 ## 로컬 실행
