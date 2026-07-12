@@ -1,64 +1,41 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import SiteRail from "../components/SiteRail.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SideBar from "../components/SideBar.astro";
+import { ViewTransitions } from "astro:transitions";
 
-interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  ogType?: string;
-  pubDate?: Date;
-  updatedDate?: Date;
-  /** 우측 목차 등 넓은 레이아웃이 필요한 페이지의 main 폭 확장용 */
-  mainClass?: string;
-}
+import { SITE_TITLE, SITE_DESCRIPTION, TRANSITION_API } from "../config";
 
 const {
+  image,
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
-  image,
+  includeSidebar = true,
+  sideBarActiveItemID,
   ogType,
-  pubDate,
-  updatedDate,
-  mainClass = "max-w-[760px]",
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="lofi">
   <head>
-    <!-- 테마 결정은 스타일시트보다 먼저 실행해 FOUC를 막는다. ?theme=은 렌더 점검용 강제 값 -->
-    <script is:inline>
-      (() => {
-        const forced = new URLSearchParams(location.search).get("theme");
-        const saved = forced ?? localStorage.getItem("theme");
-        const theme =
-          saved === "light" || saved === "dark"
-            ? saved
-            : matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-        document.documentElement.dataset.theme = theme;
-      })();
-    </script>
-    <BaseHead
-      title={title}
-      description={description}
-      image={image}
-      ogType={ogType}
-      pubDate={pubDate}
-      updatedDate={updatedDate}
-    />
+    <BaseHead title={title} description={description} image={image} , ogType={ogType} />
+    {TRANSITION_API && <ViewTransitions />}
   </head>
-  <body class="min-h-screen lg:flex">
-    <SiteRail />
-    <div class="flex min-h-screen w-full min-w-0 flex-1 flex-col">
-      <main class:list={["mx-auto w-full grow px-6 pb-20", mainClass]}>
-        <slot />
-      </main>
-      <SiteFooter />
+  <body>
+    <div class="bg-base-100 drawer lg:drawer-open">
+      <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content bg-base-100">
+        <Header title={SITE_TITLE} />
+        <div class="md:flex md:justify-center">
+          <main class="p-6 pt-10 lg:max-w-[900px] max-w-[100vw]">
+            <slot />
+          </main>
+        </div>
+        <Footer />
+      </div>
+      {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
     </div>
   </body>
 </html>
